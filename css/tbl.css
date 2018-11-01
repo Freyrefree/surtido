@@ -1,0 +1,22 @@
+.tblLisado {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.tblLisado td, .tblLisado th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.tblLisado tr:nth-child(even){background-color: #f2f2f2;}
+
+.tblLisado tr:hover {background-color: #ddd;}
+
+.tblLisado th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #ffcc33;
+    color: black;
+}
