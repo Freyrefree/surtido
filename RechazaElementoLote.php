@@ -24,12 +24,12 @@
 
         if(isset($RazonRechazo)){
 
-           $QRechazo=mysql_query("UPDATE movimientosxlote SET RazonRechazo='$RazonRechazo' WHERE IdProducto='$IdProducto' AND IMEI='$IMEI' AND ICCID='$ICCID' AND IdFicha='$IdFicha' AND IdLote=$IdLote") or die (print("Error al procesar razón de rechazo".mysql_error()));      
+           $QRechazo=mysql_query("UPDATE movimientosxlote SET RazonRechazo='$RazonRechazo' WHERE IdProducto='$IdProducto' AND IMEI='$IMEI' AND ICCID='$ICCID' AND IdLote=$IdLote") or die (print("Error al procesar razón de rechazo".mysql_error()));      
            echo"<div class='alert alert-info' role='alert'><strong>Acción procesada</strong> El elemento ha sido marcado como rechazado</div>";
            exit();
         }
 
-        $ActLista=mysql_query("UPDATE movimientosxlote SET Recibido=2, FechaEntrada=NOW(), IdSucEntrada=$id_sucursal, UsuEntrada='$usu' WHERE IdProducto='$IdProducto' AND IMEI='$IMEI' AND ICCID='$ICCID' AND IdFicha='$IdFicha' AND IdLote=$IdLote") or die (print("Error al Aceptar Elemento de Lote".mysql_error())); 
+        $ActLista=mysql_query("UPDATE movimientosxlote SET Recibido=2, FechaEntrada=NOW(), UsuEntrada='$usu' WHERE IdProducto='$IdProducto' AND IMEI='$IMEI' AND ICCID='$ICCID' AND IdLote=$IdLote"); 
 
         $can1=mysql_query("SELECT * FROM producto WHERE (cod='$IdProducto' OR nom='$IdProducto') AND id_sucursal='$id_sucursal'") or die(print"Error al consultar cantidad de producto".mysql_error());
         if($dato1=mysql_fetch_array($can1)){
@@ -80,7 +80,7 @@
 
                                 if($IMEI!="" || $ICCID!="" || $IdFicha!=""){
 
-                                   $can4=mysql_query("UPDATE codigo_producto SET fecha=NOW(), id_sucursal='$id_sucursal' WHERE id_producto='$IdProducto' AND (identificador='$IMEI' OR identificador='$ICCID' OR identificador='$IdFicha')") or die (print("Error al Aceptar Elemento en codigo_producto".mysql_error()));     
+                                   $can4=mysql_query("UPDATE codigo_producto SET fecha=NOW() WHERE id_producto='$IdProducto' AND (identificador='$IMEI' OR identificador='$ICCID' OR identificador='$IdFicha')") or die (print("Error al Aceptar Elemento en codigo_producto".mysql_error()));     
                                                 
                                 }
                         }   
