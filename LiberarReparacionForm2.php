@@ -32,6 +32,7 @@ if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB))
             $nombreContacto   = $fila['nombre_contacto']." ".$fila['ap_contacto'];
             $comisionCajero   = $fila['comisionCajero'];
             $IMEI             = $fila['imei'];
+            $precioFinal      = $fila['precio'];
             
             ## Cosulta comision
             $consultaComision="SELECT porcentaje FROM comision WHERE id_comision = '$idComision'";
@@ -49,12 +50,40 @@ if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB))
                 WHERE id_reparacion = '$idReparacion'";
                 if ($paquete = actualizar($con, $consulta2)) {
 
-                    $consultaInsert = "INSERT INTO detalle(factura,nombre,codigo,IMEI,cantidad,valor,
-                    importe,modulo,fecha_op,usu,id_sucursal,tipo_comision,tipo) VALUES 
-                    ('$idReparacion','$nombreContacto','$codigo_cliente','$IMEI','1','$comisionCajero','$comisionCajero',
-                    'R',NOW(),'$usuarioEntrada','$idSucursalEntrada','reparacion','liberacion R')";
+                    ## validar si existe un abono. Si existe sólo se actualizará, de lo contrario será un nuevo registro en la tabla detalle
 
-                    if($paquete = agregar($con,$consultaInsert)){
+                    $existReparacion = "SELECT * FROM detalle WHERE factura = '$idReparacion' AND tipo = 'abono R'";
+                    if($paquete = consultar($con,$existReparacion)){
+
+                        $consultaDetalle = "UPDATE detalle SET 
+                        nombre      ='$nombreContacto',
+                        codigo      ='$codigo_cliente',
+                        IMEI        ='$IMEI',
+                        cantidad    ='1',
+                        valor       =$precioFinal,
+                        importe     =$precioFinal,
+                        modulo      ='R',
+                        fecha_op    =NOW(),
+                        usu         ='$usuarioEntrada',
+                        id_sucursal ='$idSucursalEntrada',
+                        tipo_comision='reparacion',
+                        tipo        ='liberacion R',
+                        esComision   =null
+                        WHERE factura = '$idReparacion' AND tipo = 'abono R'";
+
+
+                    }else{
+
+                        $consultaDetalle = "INSERT INTO detalle(factura,nombre,codigo,IMEI,cantidad,valor,
+                        importe,modulo,fecha_op,usu,id_sucursal,tipo_comision,tipo) VALUES 
+                        ('$idReparacion','$nombreContacto','$codigo_cliente','$IMEI','1','$precioFinal','$precioFinal',
+                        'R',NOW(),'$usuarioEntrada','$idSucursalEntrada','reparacion','liberacion R')";
+
+                    }
+
+
+
+                    if($paquete = agregar($con,$consultaDetalle)){
 
 
             ################# Insertar refacciones en detalle con perfil administrador y en matriz ##########################

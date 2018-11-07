@@ -527,6 +527,7 @@
                 {
                     $contador++;
                     //......nombre sucursal inicio.........................................................
+                    $factura = $dato['factura'];
                     $idsucursal=$dato['id_sucursal'];
                     $querynombresucursal="SELECT empresa FROM empresa WHERE id = '$idsucursal'";
                     $canempresa = consultar($con,$querynombresucursal);
@@ -608,13 +609,27 @@
                         $porcentaje_comision = $datoCom['porcentaje'];
                         $costo_producto = 0;
 
+                        ## obtener precio unitario para comision del cajero ##
+
+                        if($dato['tipo'] == 'liberacion R'){
+                            $precioU = 0;
+
+                            $finalReparacion = "SELECT comisionCajero FROM reparacion WHERE id_reparacion = '$factura'";
+                            $paqueteRepa = consultar($con,$finalReparacion);
+                            $datoRepa = mysqli_fetch_array($paqueteRepa);
+                            $precioU = $datoRepa[0];
+                        }
+
                     }else if($tipo_comision == "apartado"){
 
                         $queryCom = "SELECT porcentaje FROM comision WHERE tipo = 'APARTADO'";
                         $ejecCom = consultar($con,$queryCom);
                         $datoCom  = mysqli_fetch_array($ejecCom);
                         $porcentaje_comision = $datoCom['porcentaje'];
-                        $costo_producto = 0;
+
+                        ///$costo_producto = 0;
+
+                    
                        
                     }
                     //************************************************************************************************
@@ -629,8 +644,49 @@
 
                         if($precioU > 0){
 
-                            $pro_comision    = (($precioU-$costo_producto)*($porcentaje_comision/100)*$cantidad);
-                            $comisionEmpresa = (($precioU-$costo_producto)*(2/100)*$cantidad);
+                            if($tipo_comision == "apartado"){
+
+                                ## Obtener suma de comisiones de la tabla de creditoDetalle ##
+                                
+                                $pro_comision0 = 0;
+                                $comisionEmpresa0 = 0;
+
+                                $idCredito = $dato['factura'];
+                                $consultaCredito = "SELECT 
+                                cd.idCredito, 
+                                cd.idProducto,
+                                cd.precioUnitario,
+                                cd.cantidad,
+                                p.costo
+                                FROM creditodetalle cd INNER JOIN producto p ON cd.idProducto = p.cod
+                                WHERE idCredito = $idCredito GROUP BY p.cod";
+
+                                if($paqueteCr = consultar($con,$consultaCredito)){
+                                    while($datCredito = mysqli_fetch_array($paqueteCr)){
+
+                                        $precioU = $datCredito['precioUnitario'];
+                                        $costo_producto = $datCredito['costo'];
+                                        $cantidad = $datCredito['cantidad'];
+
+                                        $pro_comision0 += (($precioU-$costo_producto)*($porcentaje_comision/100)*$cantidad);
+                                        $comisionEmpresa0 += (($precioU-$costo_producto)*(2/100)*$cantidad);
+
+                                    }
+
+                                    $pro_comision = $pro_comision0;
+                                    $comisionEmpresa = $comisionEmpresa0;
+
+                                }
+
+
+                            }else{
+
+                                $pro_comision    = (($precioU-$costo_producto)*($porcentaje_comision/100)*$cantidad);
+                                $comisionEmpresa = (($precioU-$costo_producto)*(2/100)*$cantidad);
+
+                            }
+
+                            
 
                         }else{
 

@@ -134,46 +134,46 @@ if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB))
             $id_reparacion = agregarReparacion($con,$consulta2);
 
 
-            // if($abono > 0){
+            if($abono > 0){
 
-            //      ## SI el abono es diferente de 0 insertar en detalle ###
+                 ## SI el abono es diferente de 0 insertar en detalle ###
 
-            //     ### CONSULTAR DATOS REPARACION ##
-            //     $comisionCajero = $abono;
+                ### CONSULTAR DATOS REPARACION ##
+                $comisionCajero = $abono;
 
-            //     $porcent = "SELECT porcentaje FROM comision WHERE tipo = 'REPARACION'";
-            //     $paq = consultar($con,$porcent);
-            //     $dato = mysqli_fetch_array($paq);
-            //     $porcentaje = ($dato['porcentaje'] / 100);
-            //     $totalComisionCajero = $comisionCajero * $porcentaje;
+                $porcent = "SELECT porcentaje FROM comision WHERE tipo = 'REPARACION'";
+                $paq = consultar($con,$porcent);
+                $dato = mysqli_fetch_array($paq);
+                $porcentaje = ($dato['porcentaje'] / 100);
+                $totalComisionCajero = $comisionCajero * $porcentaje;
 
-            //     $consultare = "UPDATE reparacion SET 
-            //     comisionCajero      ='$comisionCajero',
-            //     totalComisionCajero ='$totalComisionCajero'
-            //     WHERE id_reparacion ='$id_reparacion'";
-            //     if($paquetere = actualizar($con, $consultare)){
+                $consultare = "UPDATE reparacion SET 
+                comisionCajero      ='$comisionCajero',
+                totalComisionCajero ='$totalComisionCajero'
+                WHERE id_reparacion ='$id_reparacion'";
+                if($paquetere = actualizar($con, $consultare)){
 
-            //         $consulta = "SELECT * FROM reparacion WHERE id_reparacion = '$id_reparacion'";
-            //         if ($paquete = consultar($con, $consulta)) {
-            //             $dato=mysqli_fetch_array($paquete);
-            //             $manoObra         = $dato['mano_obra'];
-            //             $idComision       = $dato['id_comision'];
-            //             $codigo_cliente   = $dato['cod_cliente'];
-            //             $nombreContacto   = $dato['nombre_contacto']." ".$dato['ap_contacto'];
-            //             $comisionCajero   = $dato['comisionCajero'];
-            //             $IMEI             = $dato['imei'];
+                    $consulta = "SELECT * FROM reparacion WHERE id_reparacion = '$id_reparacion'";
+                    if ($paquete = consultar($con, $consulta)) {
+                        $dato=mysqli_fetch_array($paquete);
+                        $manoObra         = $dato['mano_obra'];
+                        $idComision       = $dato['id_comision'];
+                        $codigo_cliente   = $dato['cod_cliente'];
+                        $nombreContacto   = $dato['nombre_contacto']." ".$dato['ap_contacto'];
+                        $comisionCajero   = $dato['comisionCajero'];
+                        $IMEI             = $dato['imei'];
     
-            //             $consultaInsert = "INSERT INTO detalle(factura,nombre,codigo,IMEI,cantidad,valor,
-            //             importe,modulo,fecha_op,usu,id_sucursal,tipo_comision,tipo) VALUES 
-            //             ('$id_reparacion','$nombreContacto','$codigo_cliente','$IMEI','1','$comisionCajero','$comisionCajero',
-            //             'R',NOW(),'$usu','$id_sucursal','reparacion','abono R')";
+                        $consultaInsert = "INSERT INTO detalle(factura,nombre,codigo,IMEI,cantidad,valor,
+                        importe,modulo,fecha_op,usu,id_sucursal,tipo_comision,tipo,esComision) VALUES 
+                        ('$id_reparacion','$nombreContacto','$codigo_cliente','$IMEI','1','$abono','$abono',
+                        'R',NOW(),'$usu','$id_sucursal','reparacion','abono R',0)";
     
-            //             agregar($con,$consultaInsert);
+                        agregar($con,$consultaInsert);
     
-            //         }
+                    }
 
-            //     }
-            // }
+                }
+            }
 
 
             $tipo = "REPARACION";
