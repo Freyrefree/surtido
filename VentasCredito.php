@@ -150,13 +150,8 @@
   </form>
 </table>
 
-<table width="50%" align="center">
-  <tr>
-    <td><p><div id = "listadoPrincipal"></div></div></p></td>
-  </tr>
-</table>
 
-
+<div id = "listadoPrincipal"></div>
 
 
 <!-- *****************************MODAL PRODUCTOS******************************* -->

@@ -810,8 +810,6 @@
                 <th>Total</th>
                 <th>A cuenta</th>
                 <th>Resta</th>
-                <th>Cancelar</th>
-                <th>cambio</th>
                 <th>Detalle Productos</th>
                 <th>Detalle Pagos</th>
                 <th>Agregar Pago</th>
@@ -861,15 +859,13 @@
                         $botonProductos = '<a  href="#" onclick="verProdcutos('.$idCA.')" <span class="label label-info ">VER<br> PRODUCTOS</span></a>';
                         $botonPagos     = '<a  href="#" onclick="verPagos('.$idCA.')" <span class="label label-info ">VER<br> PAGOS</span></a>';
                         $botonEnviar    = '<a  href="#" onclick="enviar('.$idCA.')" <span class="label label-info ">AGREGAR <br> PAGO</span>';
-                        $botonCancelar    = '<a  href="#"  <span class="label label-important"> CANCELAR</span>';
-                        $botonCambiar    = '<a  href="#"  <span class="label label-warning "> CAMBIAR</span>';
+                       
                     }else{
 
                         $botonProductos = '<a  href="#" onclick="verProdcutos('.$idCA.')" <span class="label label-info">VER <br> PRODUCTOS</span></a>';
                         $botonPagos     = '<a  href="#" onclick="verPagos('.$idCA.')" <span class="label label-info">VER<br> PAGOS</span></a>';
                         $botonEnviar    = '';
-                        $botonCancelar    = '';
-                        $botonCambiar    = '';
+                      
 
                     }
 
@@ -891,8 +887,7 @@
                         $codigohtml.='<td>$ '.number_format((float)$abono, 2, '.', '').'</td>';
                         $codigohtml.='<td>$ '.number_format((float)$restante, 2, '.', '').'</td>';
 
-                        $codigohtml.='<td>'.$botonCancelar.'</td>';
-                        $codigohtml.='<td>'.$botonCambiar.'</td>';
+
 
                         $codigohtml.='<td>'.$botonProductos.'</td>';
                         $codigohtml.='<td>'.$botonPagos.'</td>';
