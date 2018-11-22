@@ -44,6 +44,10 @@
     <script src="js/html2canvas.js"></script>
     <script src="js/jspdf.debug.js"></script>
 
+
+
+    
+
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="assets/js/html5shiv.js"></script>
@@ -64,6 +68,7 @@
             margin-left: 30px;
             margin-bottom: 0px;
             margin-right: 10px;
+            margin-top: 10px;
             padding: 5px;
         }
         .hr{
@@ -109,7 +114,8 @@
     	 	 <button class="btn incd" id="btnc"  type="submit">Confirmar Codigo</button>
                  <?php 
                     if (!empty($_POST['ccodigo']) or !empty($_GET['codigo'])) {
-                        echo "<canvas id='Barcode' class='codebar' width='229' height='70'></canvas>";
+                        //echo "<div id='barcode'></div>";
+                        echo "<canvas id='Barcode' class='codebar' width='235' height='70'></canvas>";
                         echo '<button class="btn down" id="btnd" onclick="downloadcodebar();" type="button">Guardar/PDF</button>';
                     
                  ?>
@@ -832,21 +838,22 @@
                 #formula obtener digito adicional de codigo de barras ||ean13|| 
                 $codig=$_POST['ccodigo'];
                 $ac = str_split($codig);
-                print_r($arrcodigo);
-                $suma_impares = $ac[0]+$ac[2]+$ac[4]+$ac[6]+$ac[8]+$ac[10];
-                $suma_pares = $ac[1]+$ac[3]+$ac[5]+$ac[7]+$ac[9]+$ac[11];
-                $multres = $suma_pares*3;
-                $suma_resultados = $multres+$suma_impares;
-                $arrdig = str_split($suma_resultados);
-                $cuenta = count($arrdig);
-                $suma_resultados = $suma_resultados-1000;
-                $ultimodig = $arrdig[$cuenta-1];
-                $valord = 10-$ultimodig;
-                if ($valord == 10) {
-                    $valord = 0;
-                }
-                $codigo = $ac[0].$ac[1].$ac[2].$ac[3].$ac[4].$ac[5].$ac[6].$ac[7].$ac[8].$ac[9].$ac[10].$ac[11].$valord;
+                
+                // $suma_impares = $ac[0]+$ac[2]+$ac[4]+$ac[6]+$ac[8]+$ac[10];
+                // $suma_pares = $ac[1]+$ac[3]+$ac[5]+$ac[7]+$ac[9]+$ac[11];
+                // $multres = $suma_pares*3;
+                // $suma_resultados = $multres+$suma_impares;
+                // $arrdig = str_split($suma_resultados);
+                // $cuenta = count($arrdig);
+                // $suma_resultados = $suma_resultados-1000;
+                // $ultimodig = $arrdig[$cuenta-1];
+                // $valord = 10-$ultimodig;
+                // if ($valord == 10) {
+                //     $valord = 0;
+                // }
+                //$codigo = $ac[0].$ac[1].$ac[2].$ac[3].$ac[4].$ac[5].$ac[6].$ac[7].$ac[8].$ac[9].$ac[10].$ac[11].$valord;
                 #Fin formula obtener digito adicional de codigo de barras ||ean13||
+                $codigo = $codig;
 
                 if($LongCode<13){   
                     $codigo = $CodOne;
@@ -1102,9 +1109,14 @@
   <script>
         $(document).ready(function(){
             var codigob = "<?= $valcog; ?>"//$('#codigo').val();
+            //alert(codigob);
 
-            $('#Barcode').barcode(codigob,"ean13",{barWidth:2,barHeight:50,output:"canvas"});//
-            //$("#Barcode").barcode(codigob, "ean13",{barWidth:2, barHeight:30});
+            //$('#Barcode').barcode(codigob,"ean13",{barWidth:2,barHeight:50,output:"canvas"});//
+            //$('#Barcode').barcode(codigob,"code128",{barWidth:1,barHeight:50,output:"Canvas"});//
+
+            $('#Barcode').barcode(codigob, "code128",{barWidth:1, barHeight:30,output:"Canvas"});;//
+            //$('#Barcode').barcode(codigob,"code128");
+
             
             //descargar en pdf automaticamente
             $('#btnd').click(function() {       

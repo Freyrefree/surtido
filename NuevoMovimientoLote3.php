@@ -390,7 +390,7 @@ function moverProducto($cod,$CantMover,$id_sucursal,$SucursalEntrada,$IdMovimien
             }
             else
             {
-                $consulta2 = "SELECT * FROM movimientosxlote WHERE IdProducto='$cod' AND IdSucSalida='$id_sucursal' AND IdLote=$IdMovimiento";        
+                $consulta2 = "SELECT * FROM movimientosxlote WHERE IdProducto='$cod' AND IdSucSalida='$id_sucursal' AND IdLote=$IdMovimiento AND IdSucEntrada = '$SucursalEntrada' ";        
                 $VerifLote=mysql_query($consulta2) or die(print"Error en comprobación de lote".mysql_error()); 
                 $ContarLote =  mysql_num_rows($VerifLote);
                 if($ContarLote != 0)
@@ -460,7 +460,7 @@ function moverProducto($cod,$CantMover,$id_sucursal,$SucursalEntrada,$IdMovimien
         
      }else if($respuestaBandera == 3)
      {
-        $mensajeAlerta = '<div class="alert alert-error" align="center"><button type="button" class="close" data-dismiss="alert"></button><strong>Ya existen Movimientos por Lote  Enviados desde ésta sucursal con la misma Información que no han sido aceptados por la sucursal destino</strong></div>'; 
+        $mensajeAlerta = '<div class="alert alert-error" align="center"><button type="button" class="close" data-dismiss="alert"></button><strong>(error 3)Ya existen Movimientos por Lote  Enviados desde ésta sucursal con la misma Información que no han sido aceptados por la sucursal destino</strong></div>'; 
              
     }else if($respuestaBandera == 1)
     {
@@ -485,11 +485,11 @@ function moverProducto($cod,$CantMover,$id_sucursal,$SucursalEntrada,$IdMovimien
        
     }else if($respuestaBandera == 5)
     {
-        $mensajeAlerta = '<div class="alert alert-error" align="center"><button type="button" class="close" data-dismiss="alert"></button><strong>Ya existen Movimientos por Lote  Enviados desde ésta sucursal con la misma Información que no han sido aceptados por la sucursal destino</strong></div>';         
+        $mensajeAlerta = '<div class="alert alert-error" align="center"><button type="button" class="close" data-dismiss="alert"></button><strong>(5error) Ya existen Movimientos por Lote  Enviados desde ésta sucursal con la misma Información que no han sido aceptados por la sucursal destino</strong></div>';         
                     
     }else if($respuestaBandera == 6)
     {   
-        $mensajeAlerta = '<div class="alert alert-error" align="center"><button type="button" class="close" data-dismiss="alert"></button><strong>Ya existen Movimientos por Lote  Enviados desde ésta sucursal con la misma Información que no han sido aceptados por la sucursal destino</strong></div>';      
+        $mensajeAlerta = '<div class="alert alert-error" align="center"><button type="button" class="close" data-dismiss="alert"></button><strong>(6 error)Ya existen Movimientos por Lote  Enviados desde ésta sucursal con la misma Información que no han sido aceptados por la sucursal destino</strong></div>';      
 
                        
     }
