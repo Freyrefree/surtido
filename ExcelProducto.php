@@ -3,7 +3,7 @@ error_reporting(0);
 session_start();
 include('php_conexion.php'); 
 $usu = $_SESSION['username'];
-if((!$_SESSION['tipo_usu']=='a') || (!$_SESSION['tipo_usu']=='su') || (!$_SESSION['tipo_usu']=='ca')){
+if((!$_SESSION['tipo_usu']=='a') || (!$_SESSION['tipo_usu']=='su') || (!$_SESSION['tipo_usu']=='ca') || (!$_SESSION['tipo_usu']=='te')){
     header('location:error.php');
 }
 
@@ -156,7 +156,7 @@ if ($_SESSION['tipo_usu']=='a')
     $objWriter->save('php://output');
     exit;
     
-}else if($_SESSION['tipo_usu']=='ca' || $_SESSION['tipo_usu']=='su')
+}else if($_SESSION['tipo_usu']=='ca' || $_SESSION['tipo_usu']=='su' || $_SESSION['tipo_usu']=='te')
 {
         #datos recibidos para consulta
         $id_sucursal = $_SESSION['id_sucursal'];
