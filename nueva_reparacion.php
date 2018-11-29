@@ -157,8 +157,8 @@
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 <!-- code add and update product -->
   
-<div class="control-group info">
-  <form name="form1" enctype="multipart/form-data" method="post" action="agrega_reparacion.php">
+<!-- <div class="control-group info"> -->
+  <form name="form1" id="form1" enctype="multipart/form-data" method="post" action="agrega_reparacion.php">
 <table width="80%" border="0" class="table">
 <tr>
     <td>
@@ -184,7 +184,7 @@
         <input type="radio" name="memoria" id="memoria" value="si" required> Si
         <input type="radio" name="memoria" id="memoria" value="no" > No
         <br><br>
-        <button class="btn btn-large btn-primary" type="submit"><?php echo $boton; ?></button>
+        <button id="btnPrimary" class="btn btn-large btn-primary" type="submit"><?php echo $boton; ?></button>
 
     </td>
     <td>
@@ -248,9 +248,33 @@
   </tr>
 </table>
 </form>
-</div>
+<!-- </div> -->
 </body>
 </html>
+
+
+<script>
+
+//## Validaciones para que no se utilice enter en sbmit y no presionar más de una vez los botones
+
+// $(document).on("keypress", ":input:not(textarea)", function(event) {
+//     if (event.keyCode == 13) {
+//         event.preventDefault();
+//     }
+// });
+
+
+$('form').submit(function() {
+  $(this).find("button[type='submit']").prop('disabled',true);
+});
+
+
+//###########################################################################################
+
+
+
+
+</script>
 
 
 <script>         
