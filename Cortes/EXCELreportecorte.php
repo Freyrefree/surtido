@@ -1,20 +1,51 @@
-<?php	
+<?php
 session_start();	
-
-
-
 error_reporting(0);
 $tipoUsuario  = $_SESSION['tipo_usu'];
-
-		
+header('Content-type: application/vnd.ms-excel');
+header("Content-Disposition: attachment; filename=Reporte Corte.xls");
 ?>
-<html>
+
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="../mpdfstyletables.css"> -->
+    <style>
+    .tblLisado {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .tblLisado td, .tblLisado th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .tblLisado tr:nth-child(even){background-color: #f2f2f2;}
+
+        .tblLisado tr:hover {background-color: #ddd;}
+
+        .tblLisado th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #ffcc33;
+            color: black;
+        }
+    </style>
+
 </head>
 <body>
 
+
 <?php
+
+
+
+
 $fecha_inicio = $_GET['fecha_ini11'];
 if($fecha_inicio == "--")
 {
@@ -73,17 +104,9 @@ $arrayConsultas = crearConsulta($arrayQuery);
 
 $codigoTabla = tabularPDFCorteVentas($arrayConsultas,$rango_fecha,$tipoUsuario);
 
-//echo $codigoTabla;
+echo $codigoTabla;
 
-include("../MPDF/mpdf.php");
 
-$mpdf=new mPDF('c','A4-L','','',10,10,10,10,5,5); 
-$mpdf->SetDisplayMode('fullpage');
-$mpdf->list_indent_first_level = 0; 
-$stylesheet = file_get_contents('../mpdfstyletables.css');
-$mpdf->WriteHTML($stylesheet,1);
-$mpdf->WriteHTML($codigoTabla);
-$mpdf->Output('Reporte Corte.pdf', 'D');
 
 function crearConsulta($arrayQuery){
 
@@ -586,5 +609,26 @@ return $arrayConsultas;
 
         return $codigohtml;
     }
-  
+
+
+
+
+
+
+
+
+
+
+
 ?>
+
+
+
+
+
+
+
+
+    
+</body>
+</html>

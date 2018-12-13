@@ -4,8 +4,8 @@
 		if(!$_SESSION['tipo_usu']=='a' or !$_SESSION['tipo_usu']=='ca'){
 			header('location:error.php');
 		}
-		include("../MPDF/mpdf.php");
-		$mpdf=new mPDF('utf-8' , 'A4','', 15, 15, 15, 10, 15, 10);
+		//include("../MPDF/mpdf.php");
+		//$mpdf=new mPDF('utf-8' , 'A4','', 15, 15, 15, 10, 15, 10);
 		
 		#fecha para input
 		$hoy = date("Y-m-d H:i:s");
@@ -117,49 +117,97 @@ body {
 }
 
 	function pdfcorte(){
-	var fecha_ini = document.getElementById("fechaini").value;
 
-    var mes = fecha_ini.substring(0,2);
-    var dia = fecha_ini.substring(3,5);
-    var ano = fecha_ini.substring(6,10);
-    var divide = "-"
-    var fecha_i = ano + divide +  mes + divide + dia;
-     
-	var fecha_fin = document.getElementById("to").value;
-	
-	var mes1 = fecha_fin.substring(0,2);
-    var dia1 = fecha_fin.substring(3,5);
-	    var ano1 = fecha_fin.substring(6,10);
-   	var divide1 = "-"
-            var fecha_f = ano1 + divide +  mes1 + divide + dia1;
+		var fecha_ini = document.getElementById("fechaini").value;
 
-	var cajero = document.getElementById("seccion").value;
-	//var producto = document.getElementById("product").value;
-	var codigo = document.getElementById("codigo").value;
-	var coincidencia = document.getElementById("coincidencia").value;
-	var categoria = document.getElementById("categoria").value;
-	var parametros = {
-                fecha_ini11: fecha_i, 
-		   		fecha_fin11: fecha_f,
-		   		cajero: cajero,
-		   		//producto: producto,
-				categoria: categoria,
-		   		coincidencia: coincidencia,
-		   		codigo:codigo
-        };
-        $.ajax({
-                data:  parametros,
-                url:   'PDFreportecorte.php',
-                type:  'post',
-                beforeSend: function () {
-                       
-                },
-                success:  function (response) {
+		var mes = fecha_ini.substring(0,2);
+		var dia = fecha_ini.substring(3,5);
+		var ano = fecha_ini.substring(6,10);
+		var divide = "-"
+		var fecha_i = ano + divide +  mes + divide + dia;
+		
+		var fecha_fin = document.getElementById("to").value;
+
+		var mes1 = fecha_fin.substring(0,2);
+		var dia1 = fecha_fin.substring(3,5);
+		var ano1 = fecha_fin.substring(6,10);
+		var divide1 = "-"
+		var fecha_f = ano1 + divide +  mes1 + divide + dia1;
+
+		var cajero       = document.getElementById("seccion").value;
+		//var producto     = document.getElementById("product").value;
+		var categoria    = document.getElementById("categoria").value;
+		var codigo       = document.getElementById("codigo").value;
+		var coincidencia = document.getElementById("coincidencia").value;
+
+
+		var f1 = $("#fechaini").val();
+		var f2 = $("#to").val();
+
+		if(f1 == "" && f2 != ""){
+			$("#fechaini").css("border-color", "red");
+		}else if(f1 != "" && f2 == ""){
+			$("#to").css("border-color", "red");
+
+		}else{
+
+			$("#fechaini").css("border-color", "");
+			$("#to").css("border-color", "");
+
 	
-						window.location = 'PDFreportecorte.php?fecha_ini11='+fecha_i+'&fecha_fin11='+fecha_f+'&cajero='+cajero+'&producto='+producto+'&codigo='+codigo+'&coincidencia='+coincidencia+'&categoria='+categoria;
-                }
-        });
-	
+
+			window.location = 'PDFreportecorte.php?fecha_ini11='+fecha_i+'&fecha_fin11='+fecha_f+'&cajero='+cajero+'&codigo='+codigo+'&coincidencia='+coincidencia+'&categoria='+categoria;
+
+			
+		}		
+
+	}
+
+
+	function excelcorte(){
+
+		var fecha_ini = document.getElementById("fechaini").value;
+
+		var mes = fecha_ini.substring(0,2);
+		var dia = fecha_ini.substring(3,5);
+		var ano = fecha_ini.substring(6,10);
+		var divide = "-"
+		var fecha_i = ano + divide +  mes + divide + dia;
+
+		var fecha_fin = document.getElementById("to").value;
+
+		var mes1 = fecha_fin.substring(0,2);
+		var dia1 = fecha_fin.substring(3,5);
+		var ano1 = fecha_fin.substring(6,10);
+		var divide1 = "-"
+		var fecha_f = ano1 + divide +  mes1 + divide + dia1;
+
+		var cajero       = document.getElementById("seccion").value;
+		//var producto     = document.getElementById("product").value;
+		var categoria    = document.getElementById("categoria").value;
+		var codigo       = document.getElementById("codigo").value;
+		var coincidencia = document.getElementById("coincidencia").value;
+
+
+		var f1 = $("#fechaini").val();
+		var f2 = $("#to").val();
+
+		if(f1 == "" && f2 != ""){
+			$("#fechaini").css("border-color", "red");
+		}else if(f1 != "" && f2 == ""){
+			$("#to").css("border-color", "red");
+
+		}else{
+
+			$("#fechaini").css("border-color", "");
+			$("#to").css("border-color", "");
+
+
+
+			window.location = 'EXCELreportecorte.php?fecha_ini11='+fecha_i+'&fecha_fin11='+fecha_f+'&cajero='+cajero+'&codigo='+codigo+'&coincidencia='+coincidencia+'&categoria='+categoria;
+
+			
+		}	
 
 	}
 	
@@ -181,7 +229,7 @@ body {
     <td width="37%" align="center" class="ui-widget-content ui-corner-all"><img src="../img/user_orange.png" width="32" height="32"> Selecciona Cajero</td>
 	<!-- <td width="20%" align="center" class="ui-widget-content ui-corner-all"><img src="../img/product.png" width="32" height="32">Producto específico</td> -->
     <td width="20%" align="center" class="ui-widget-content ui-corner-all"><img src="../img/product.png" width="32" height="32"><br>Tipo Producto</td>
-    <td width="37%" align="center" class="ui-widget-content ui-corner-all"><a href="#" onClick="consultacortes();" ><img src="../img/report.png" width="32" height="32">Consultar</a></td>
+    <td colspan="2" width="45%" align="center" class="ui-widget-content ui-corner-all"><a href="#" onClick="consultacortes();" ><img src="../img/report.png" width="32" height="32">Consultar</a></td>
   </tr>
   
   <tr>
@@ -228,6 +276,7 @@ body {
     
             
              <td width="37%"  class="ui-widget-content ui-state-hover" align="center"><a href="#" id="cmd" onClick="pdfcorte();" ><img src="../img/file_extension_pdf.png" width="32" height="32"> Exportar</a></td>
+			 <td width="37%"  class="ui-widget-content ui-state-hover" align="center"><a href="#" id="cmd" onClick="excelcorte();" ><img src="../img/ZA102602607.png" width="32" height="32"> Exportar</a></td>
   </tr>
   <tr>
   	<p id="resultado"></p>

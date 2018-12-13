@@ -3,7 +3,7 @@
     //include('../php_conexion.php');
     include('../funciones.php');
     include('../host.php');
-    error_reporting(0);
+    //error_reporting(0);
 
     $idSucursal = $_SESSION['id_sucursal'];
     $usuario      = $_SESSION['username'];
