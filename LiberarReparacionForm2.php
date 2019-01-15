@@ -33,6 +33,11 @@ if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB))
             $comisionCajero   = $fila['comisionCajero'];
             $IMEI             = $fila['imei'];
             $precioFinal      = $fila['precio'];
+            $adelanto         = $fila['abono'];
+
+            $precioFinal = $precioFinal - $adelanto;
+
+
             
             ## Cosulta comision
             $consultaComision="SELECT porcentaje FROM comision WHERE id_comision = '$idComision'";
@@ -73,6 +78,8 @@ if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB))
 
 
                     }else{
+
+                        
 
                         $consultaDetalle = "INSERT INTO detalle(factura,nombre,codigo,IMEI,cantidad,valor,
                         importe,modulo,fecha_op,usu,id_sucursal,tipo_comision,tipo) VALUES 
