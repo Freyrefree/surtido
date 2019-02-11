@@ -132,7 +132,7 @@ $(document).ready(function(){
 	            <li class="dropdown">
               <?php       
                   if($_SESSION['tipo_usu']=='a'){
-                  echo'<a class="brand" href="existenciaGeneral.php"  target="admin" style="font-size:16px"><i class="icon-bar"></i> Administrador</a>';
+                  echo'<a class="brand" href=""  target="admin" style="font-size:16px"><i class="icon-bar"></i> Administrador</a>';
                   }
                 ?>
               </li>
@@ -416,7 +416,7 @@ $(document).ready(function(){
     <td>
     
     <?php       if($_SESSION['tipo_usu']=='a'){
-echo'<pre><iframe src="existenciaGeneral.php" frameborder="0" scrolling="auto" name="admin" width="100%" height="720"></iframe></pre>';
+echo'<pre><iframe src="" frameborder="0" scrolling="auto" name="admin" width="100%" height="720"></iframe></pre>';
 }else {
 	
 	echo'<pre><iframe src="caja.php?ddes=0" frameborder="0" scrolling="auto" name="admin" width="100%" height="720"></iframe></pre>';

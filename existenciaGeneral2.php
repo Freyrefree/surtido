@@ -7,7 +7,7 @@
 ?>
 
 <?php
-ini_set('max_execution_time', 600); //600 seconds = 10 minutes
+ini_set('max_execution_time', 0); //600 seconds = 10 minutes
 
 $codigoHTML= '<font size="2" face="Courier New" ><table id="example" class="display" cellspacing="0" width="100%">';
 $consultaSucursales = "SELECT id,empresa FROM empresa";

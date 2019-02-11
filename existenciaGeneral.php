@@ -74,7 +74,8 @@
 <table class="table">
 <tr class="success">
     <td>        
-        <button onclick="consultarExistencia();" type="button" class="btn btn-primary">Consultar Existencia General</button>
+        <!-- <button onclick="consultarExistencia();" type="button" class="btn btn-primary">Consultar Existencia General</button> -->
+            <button onclick="" type="button" class="btn btn-primary">Consultar Existencia General</button>
     </td>
 </tr>
 </table>

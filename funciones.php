@@ -550,9 +550,7 @@
                     } else if($dato['tipo'] == 'mano R'){
                         $tipov = "Mano de Obra";
                     }else{
-
                         $tipov = "INDEFINIDO";
-
                     }
 
                     $precioU = $dato['valor'];
@@ -563,15 +561,20 @@
                     if(($dato['modulo'] != 'CR') && ($dato['modulo'] != 'R')){
 
                         $consultaProducto = "SELECT * FROM producto WHERE cod='$id_producto' LIMIT 1";
-                        $ejecutar2 = consultar($con,$consultaProducto);
-                        $dato2 = mysqli_fetch_array($ejecutar2);
+                        if($ejecutar2 = consultar($con,$consultaProducto)){
 
-                        $id_comision = $dato2['id_comision'];
-                        $costo_producto = $dato2['costo'];
+                            $dato2 = mysqli_fetch_array($ejecutar2);
 
-                        $consultaComision="SELECT * FROM comision WHERE id_comision = '$id_comision'";
-                        $ejecutar3 = consultar($con,$consultaComision);
-                        $dato3  =   mysqli_fetch_array($ejecutar3);
+                            $id_comision = $dato2['id_comision'];
+                            $costo_producto = $dato2['costo'];
+
+                            $consultaComision="SELECT * FROM comision WHERE id_comision = '$id_comision'";
+                            $ejecutar3 = consultar($con,$consultaComision);
+                            $dato3  =   mysqli_fetch_array($ejecutar3);
+
+                        }
+
+                        
 
                     }
 
@@ -591,6 +594,8 @@
                         $tipo_comisionshow ="REPARACIÓN";
                     }else if($tipo_comision == "apartado"){
                         $tipo_comisionshow ="APARTADO";
+                    }else if($tipo_comision == ""){
+                        $tipo_comisionshow ="";
                     }
                     //************************************************************/
                     //**************************Tipo porcentaje de acuerdo al tipo de venta************************
@@ -628,6 +633,14 @@
                         $porcentaje_comision = $datoCom['porcentaje'];
 
                         ///$costo_producto = 0;
+
+                    
+                       
+                    }else if($tipo_comision == ""){
+
+                      
+                        $porcentaje_comision = 0;
+                        $costo_producto = 0;
 
                     
                        
@@ -909,71 +922,71 @@
 
     }
 
-    function tabularCAProdcutos($idCa)
-    {
+    // function tabularCAProdcutos($idCa)
+    // {
 
-        include("host.php");
+    //     include("host.php");
 
-        if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) {
-            $codigohtml = '<table class="tblLisado">
-            <thead>
-            <tr> 
-                <th>No</th> 
-                <th>Codigo Producto</th> 
-                <th>Nombre Producto</th>
-                <th>ICCID</th>
-                <th>IMEI</th>
-                <th>Cantidad</th>
-                <th>Precio Unitario</th>
-                <th>Total</th>
-            </tr>
-            </thead>
-            <tbody>';
+    //     if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) {
+    //         $codigohtml = '<table class="tblLisado">
+    //         <thead>
+    //         <tr> 
+    //             <th>No</th> 
+    //             <th>Codigo Producto</th> 
+    //             <th>Nombre Producto</th>
+    //             <th>ICCID</th>
+    //             <th>IMEI</th>
+    //             <th>Cantidad</th>
+    //             <th>Precio Unitario</th>
+    //             <th>Total</th>
+    //         </tr>
+    //         </thead>
+    //         <tbody>';
 
 
-            $consultaProd = "SELECT 
-            cd.idProducto AS codigo,
-            p.nom AS nombreProd,
-            cd.precioUnitario AS precioUnitario,
-            cd.precioProducto AS precioProducto,
-            cd.cantidad AS cantidad,
-            cd.iccid AS iccid,
-            cd.imei AS imei 
-            FROM creditodetalle cd
-            LEFT JOIN producto p 
-            ON cd.idProducto = p.cod
-            WHERE cd.idCredito = '$idCa'
-            GROUP BY cd.id";
+    //         $consultaProd = "SELECT 
+    //         cd.idProducto AS codigo,
+    //         p.nom AS nombreProd,
+    //         cd.precioUnitario AS precioUnitario,
+    //         cd.precioProducto AS precioProducto,
+    //         cd.cantidad AS cantidad,
+    //         cd.iccid AS iccid,
+    //         cd.imei AS imei 
+    //         FROM creditodetalle cd
+    //         LEFT JOIN producto p 
+    //         ON cd.idProducto = p.cod
+    //         WHERE cd.idCredito = '$idCa'
+    //         GROUP BY cd.id";
 
-            if($paqueteProd = consultar($con,$consultaProd)){
-                $contador = 0;
+    //         if($paqueteProd = consultar($con,$consultaProd)){
+    //             $contador = 0;
 
-                while($dato = mysqli_fetch_array($paqueteProd)){
-                    $contador++;
+    //             while($dato = mysqli_fetch_array($paqueteProd)){
+    //                 $contador++;
 
-                    $codigohtml.='<tr>';
+    //                 $codigohtml.='<tr>';
                         
-                        $codigohtml.='<td>'.$contador.'</td>';
-                        $codigohtml.='<td>'.saltoCadena(utf8_encode($dato['codigo'])).'</td> ';  
-                        $codigohtml.='<td>'.saltoCadena(utf8_encode($dato['nombreProd'])).'</td>';
-                        $codigohtml.='<td>'.saltoCadena($dato['iccid']).'</td>';
-                        $codigohtml.='<td>'.saltoCadena($dato['imei']).'</td>';   
-                        $codigohtml.='<td>'.$dato['cantidad'].'</td>';
+    //                     $codigohtml.='<td>'.$contador.'</td>';
+    //                     $codigohtml.='<td>'.saltoCadena(utf8_encode($dato['codigo'])).'</td> ';  
+    //                     $codigohtml.='<td>'.saltoCadena(utf8_encode($dato['nombreProd'])).'</td>';
+    //                     $codigohtml.='<td>'.saltoCadena($dato['iccid']).'</td>';
+    //                     $codigohtml.='<td>'.saltoCadena($dato['imei']).'</td>';   
+    //                     $codigohtml.='<td>'.$dato['cantidad'].'</td>';
                             
-                        $codigohtml.='<td>$ '.number_format((float)$dato['precioUnitario'], 2, '.', '').'</td>';
-                        $codigohtml.='<td>$ '.number_format((float)$dato['precioProducto'], 2, '.', '').'</td>';
+    //                     $codigohtml.='<td>$ '.number_format((float)$dato['precioUnitario'], 2, '.', '').'</td>';
+    //                     $codigohtml.='<td>$ '.number_format((float)$dato['precioProducto'], 2, '.', '').'</td>';
 
-                    $codigohtml.='</tr>';
+    //                 $codigohtml.='</tr>';
 
-                }                
+    //             }                
 
-            }else{
-                $codigohtml = "";
-            }
-        }
-        return $codigohtml;
+    //         }else{
+    //             $codigohtml = "";
+    //         }
+    //     }
+    //     return $codigohtml;
 
-    }
+    // }
 
     function tabularCAPagos($idCa)
     {
@@ -1019,6 +1032,1526 @@
         return $codigohtml;
 
     }
+
+
+
+
+    
+
+function tabularCAProdcutos($idCa, $ti_usu)
+    {
+
+        include("host.php");
+        $jo="";
+
+        if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) {
+            $codigohtml = '<table class="tblLisado">
+            <thead>
+            <tr> 
+                <th>No</th> 
+                <th>Codigo Producto</th>
+                <th>Codigo Producto Chip</th>
+                <th>Nombre Producto</th>
+                <th>ICCID</th>
+                <th>IMEI</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+                <th>Cancelar</th>
+                <th>Estatus</th>
+                <th>Cambiar</th>
+            </tr>
+            </thead>
+            <tbody>';
+
+
+            $consultaProd = "SELECT 
+            cd.idProducto AS codigo,
+            cd.idProductoChip AS codigoChip,
+            cd.idCredito AS credito,
+            cd.estatus AS estatuscd,
+            p.nom AS nombreProd,
+            cd.precioUnitario AS precioUnitario,
+            cd.precioProducto AS precioProducto,
+            cd.cantidad AS cantidad,
+            cd.iccid AS iccid,
+            cd.imei AS imei,
+            cd.estatus AS Estatuscd,
+            cr.estatus AS estatus
+            FROM creditodetalle cd
+            LEFT JOIN producto p 
+            ON cd.idProducto = p.cod
+            LEFT JOIN credito cr
+            ON  cd.idCredito = cr.id 
+            WHERE cd.idCredito = '$idCa'
+            GROUP BY cd.id";
+
+            if($paqueteProd = consultar($con,$consultaProd)){
+                $contador = 0;
+
+                while($dato = mysqli_fetch_array($paqueteProd)){
+                   
+                    $contador++;
+                    $iccidenviar=$dato['iccid'];
+                    $imeienviar=$dato['imei'];
+                    $esta=$dato['estatus'];
+                    $estacd=$dato['estatuscd'];
+                    $idp=$dato['codigo'];
+                    $idc=$dato['credito'];
+                    $idusu=$ti_usu;
+                    // $iccidenviar = (string) $iccidenviar;
+                    // echo "<br>".$idp;
+                    if($esta==0 and $estacd=="En Lista")
+                    {
+                        // $encabezado='<th>Cancelar</th>';
+                    $botonCancelar = "<a  href=\"#\" onclick=\"CancelarProducto1('".$idp."','".$idc."','".$idusu."','".$imeienviar."','".$iccidenviar."')\" <span class=\"label label-info\">Cancelar<br> PRODUCTO</span></a>";
+                      // $botonCancelar = <span onClick="dataUser(3,'admin');" style="cursor: pointer">Ver Usuario</span>;
+                     
+                    // escapar las comillas dobles para poder ponerlas dentro de las comillas del onclick y poder enviar cadena  y las otras comillas simples las puedes dejar igual o escaparlas también
+                    $botonCambiar = "<a  href=\"#\" onclick=\"CambiarProducto('".$idp."','".$idc."','".$idusu."','".$imeienviar."','".$iccidenviar."')\" <span class=\"label label-info\">Cambiar<br> PRODUCTO</span></a>";
+                    // $botonCambiar="<input type=\"button\" name=\"agregar\" id=\"agregar\" value=\"Agregar\" class=\"boton\" onClick=\"CambiarProducto('".$idp."','".$idc."','".$idusu."','".$imeienviar."','".$iccidenviar."')\" />";
+                    $btncancelartodos= "<a  href='#' onclick='Cancelartodos(".$idc.",".$idusu.")' <span class='label label-info'>Cancelar<br> PRODUCTO</span></a>";
+                    } 
+                    else
+                    {
+                        // $encabezado='';
+                        $botonCancelar = '';
+                        $checks = '';  
+                        $botonCambiar='';
+                        $btncancelartodos='';
+                    }
+
+                    $codigohtml.='<tr>';
+                        
+                        $codigohtml.='<td>'.$contador.'</td>';
+                        $codigohtml.='<td>'.saltoCadena(utf8_encode($dato['codigo'])).'</td> ';
+                        $codigohtml.='<td>'.saltoCadena(utf8_encode($dato['codigoChip'])).'</td> ';
+
+                        $codigohtml.='<td>'.saltoCadena(utf8_encode($dato['nombreProd'])).'</td>';
+                        $codigohtml.='<td>'.saltoCadena($dato['iccid']).'</td>';
+                        $codigohtml.='<td>'.saltoCadena($dato['imei']).'</td>';   
+                        $codigohtml.='<td>'.$dato['cantidad'].'</td>';
+                            
+                        $codigohtml.='<td>$ '.number_format((float)$dato['precioUnitario'], 2, '.', '').'</td>';
+                        $codigohtml.='<td>$ '.number_format((float)$dato['precioProducto'], 2, '.', '').'</td>';
+                        $codigohtml.='<td>'.$botonCancelar.'</td>';
+                      $codigohtml.='<td>'.saltoCadena($dato['Estatuscd']).'</td>';  
+                      $codigohtml.='<td>'.$botonCambiar.'</td>';
+                        
+                    $codigohtml.='</tr>';
+             
+                }    
+                 // $codigohtml.=$btncancelartodos;
+          
+
+                 
+                             
+
+
+            }else{
+                $codigohtml = "";
+            }
+        }
+        return $codigohtml;
+
+    }
+
+
+     function validarcancelar($valorcheck,$idp,$idc,$idu,$enviaicid,$enviaimei)
+    {
+       include("host.php");
+        if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) 
+        {
+             // echo $idu;
+            // echo $idp;
+            // echo $idc;
+            $condicioncreditodet="";
+            if($enviaicid !="" and  $enviaimei !="")
+            {
+                  $condicioncreditodet="WHERE idProducto='$idp' and idCredito='$idc' and iccid='$enviaicid' and imei='$enviaimei'";
+            }
+            elseif($enviaimei !="")
+            {
+                 $condicioncreditodet="WHERE idProducto='$idp' and idCredito='$idc' and imei='$enviaimei'";
+            }
+            elseif($enviaicid !="")
+            {
+               $condicioncreditodet="WHERE idProducto='$idp' and idCredito='$idc' and iccid='$enviaicid'"; 
+            }
+            elseif($enviaicid =="" and $enviaimei =="")
+            {
+                 $condicioncreditodet="WHERE idProducto='$idp' and idCredito='$idc'";
+            }
+
+             $consulta="SELECT * FROM creditodetalle ".$condicioncreditodet."";
+             // echo $consulta."<br>";
+            if($resultado = consultar($con,$consulta))
+            {
+                while($dato = mysqli_fetch_array($resultado))
+                {
+
+                  
+                    $preunitario=$dato['precioUnitario'];
+                    $preproducto=$dato['precioProducto'];
+                   
+       
+                
+                    // echo "VALOR DE CHECK:".$valorcheck."<br>";
+                #************DATOS PARA REGRESAR A STOCK *******************#
+                    $producto=$dato['idProducto'];
+                    $imei=$dato['imei'];
+                    $iccid=$dato['iccid'];
+                    $idProductoChip=$dato['idProductoChip'];
+                    date_default_timezone_set("America/Mexico_City");
+                    $fecha= date ("Y/m/d H:i.s",time()) ;
+                    $idsuc=$idu;
+                    // echo "<br>"."<br>"."<br>"."<br>";
+                    // echo "PRODUCTO A REGRESAR A STOCK"."<br>";
+                    // echo "ID PRODCUTO:".$producto."<br>";
+                    // echo "IMEI PRODUCTO:".$imei."<br>";
+                    // echo "ID PRODUCTO ICCID:".$idProductoChip."<br>";
+                    // echo "ICCID PRODUCTO:".$iccid."<br>";
+                    // echo "PRECIO PRODUCTO:".$preproducto."<br>";
+                    // echo "SUCURSAL".$idsuc."<br>";
+                }
+            }
+
+            $consultaresta="SELECT * FROM credito WHERE id='$idc' and id_sucursal='$idu' ";
+            if($resultadocr = consultar($con,$consultaresta))
+            {
+                while($dato2 = mysqli_fetch_array($resultadocr))
+                {
+                  
+
+                    $totalcr=  $dato2['total'];
+                    $adelantocr= $dato2['adelanto'];
+                    $restocr=  $dato2['resto'];
+
+                    if($valorcheck == "si")
+                    {
+                        $comision=0.1;
+                        number_format($comision);
+                        $restatotalcr= $totalcr - $preproducto;
+                        number_format($restatotalcr);
+                        $opecomosion= $preproducto * $comision;
+                        number_format($opecomosion);
+                        $nuevototalcr = $restatotalcr;
+                    }
+                    else
+                    {
+                        $comision=0;
+                        number_format($comision);
+                        $restatotalcr= $totalcr - $preproducto;
+                        number_format($restatotalcr);
+                        $opecomosion= $preproducto * $comision;
+                        number_format($opecomosion);
+                        $nuevototalcr = $restatotalcr;
+
+                    }
+
+                    
+                    // echo "<br>"."<br>"."<br>"."<br>";
+                    // echo "CREDITO SIN CAMBIOS"."<br>";
+                    // echo "COMISION POR CANCELAR PRODUCTO:".$opecomosion."<br>";
+                    // echo "TOTAL CREDITO:".$totalcr."<br>";
+                    // echo "ADELANTO:".$adelantocr."<br>";
+                    // echo "RESTO CREDITO:".$restocr."<br>"."<br>"."<br>";
+
+                    // echo "TOTAL CREDITO - PRECIO PRODUCTO A CANCELAR:".$nuevototalcr."<br>";
+
+                    if($nuevototalcr == 0)
+                    {
+                        $nuevototalcr=0;
+
+                        // $restaopnue= $opecomosion - $nuevototalcr;
+                        // echo $nuevototalcr."<br>";
+                        $sumanuevototal= $nuevototalcr + $opecomosion;
+                        // echo "NUEVO TOTAL:".$sumanuevototal."<br>";
+                        $restaresto= $adelantocr - $sumanuevototal;
+                        // echo "NUEVO RESTO CREDITO:".$restaresto."<br>";
+
+                        $actualizatotalresto="UPDATE credito set total='$sumanuevototal', resto='$restaresto' WHERE id='$idc' AND id_sucursal='$idu'";
+                        $actutores= actualizar($con,$actualizatotalresto);
+
+                        $actualizacreddetalle="UPDATE creditodetalle set precioUnitario='$opecomosion', precioProducto='$opecomosion', estatus='Cancelado' where idCredito='$idc' and idProducto='$idp' ";
+                        $actualizacredet= actualizar($con,$actualizacreddetalle);
+                        
+                    }
+                    else
+                    {
+                        $sumanuevototalcr= $nuevototalcr + $opecomosion;
+                         // echo "NUEVO TOTAL:".$sumanuevototalcr."<br>";
+                         $restatotaladelanto= $sumanuevototalcr - $adelantocr;
+                        number_format($restatotaladelanto);
+                        // echo "NUEVO RESTO:".$restatotaladelanto."<br>";
+
+                        $actualizatotalresto="UPDATE credito set total='$sumanuevototalcr', resto='$restatotaladelanto' WHERE id='$idc' AND id_sucursal='$idu'";
+                        $actutores= actualizar($con,$actualizatotalresto);
+
+                        $actualizacreddetalle="UPDATE creditodetalle set precioUnitario='$opecomosion', precioProducto='$opecomosion', estatus='Cancelado' where idCredito='$idc' and idProducto='$idp' ";
+                        $actualizacredet= actualizar($con,$actualizacreddetalle);
+
+
+                    }
+
+                }
+            }
+         
+            if($imei != "" and $iccid != "")
+            {
+                $sql = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                VALUES ('$producto', 'IMEI', '$imei','0','$fecha','s','$idsuc')";
+                // $result2 = mysqli_query($con,$sql) or die("Couldn't execute query.".mysql_error()); 
+                $agregaimei = agregar($con,$sql);
+           
+                $sql2 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                VALUES ('$idProductoChip', 'ICCID', '$iccid','0','$fecha','s','$idsuc')";
+                $agregaiccid = agregar($con,$sql2);
+                // $result3 = mysqli_query($con,$sql2) or die("Couldn't execute query.".mysql_error()); 
+
+                $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$producto' AND id_sucursal='$idsuc'";
+                $actuproimei= actualizar($con,$actualizaproductoimei);
+
+                $actualizaproductoiccid="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoChip' AND id_sucursal='$idsuc'";
+                $actuproiccid= actualizar($con,$actualizaproductoiccid);
+
+                   $finproceso="";
+                    if($actuproiccid)
+                    {
+                        $finproceso="si";
+                        return $finproceso;
+                    }
+                    else
+                    {
+                        $finproceso="no";
+                        return $finproceso;
+                    }
+            }
+            elseif ($imei != "") 
+            {
+                $sql3 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                VALUES ('$producto', 'IMEI', '$imei','0','$fecha','s','$idsuc')";
+                // $result2 = mysqli_query($con,$sql) or die("Couldn't execute query.".mysql_error()); 
+                $agregaimei2 = agregar($con,$sql3);
+
+                $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$producto' AND id_sucursal='$idsuc'";
+                $actuproimei= actualizar($con,$actualizaproductoimei);
+                   $finproceso="";
+                    if($actuproimei)
+                    {
+                        $finproceso="si";
+                        return $finproceso;
+                    }
+                    else
+                    {
+                        $finproceso="no";
+                        return $finproceso;
+                    }
+                
+            }
+            elseif ($iccid != "") 
+            {
+                $idprochip=$producto;
+                $sql4 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                VALUES ('$idprochip', 'ICCID', '$iccid','0','$fecha','s','$idsuc')";
+                $agregaiccid = agregar($con,$sql4);
+
+                $actualizaproductoiccid="UPDATE producto SET cantidad= cantidad+1 where cod='$idprochip' AND id_sucursal='$idsuc'";
+                $actuproiccid= actualizar($con,$actualizaproductoiccid);
+                   $finproceso="";
+                    if($actuproiccid)
+                    {
+                        $finproceso="si";
+                        return $finproceso;
+                    }
+                    else
+                    {
+                        $finproceso="no";
+                        return $finproceso;
+                    }
+
+            }
+            elseif ($imei == "" and $iccid == "")
+            {
+                $actualizaproductoaccesorio="UPDATE producto SET cantidad= cantidad+1 where cod='$producto' AND id_sucursal='$idsuc'";
+                $actuproaccesorio= actualizar($con,$actualizaproductoaccesorio);
+                   $finproceso="";
+                    if($actuproaccesorio)
+                    {
+                        $finproceso="si";
+                        return $finproceso;
+                    }
+                    else
+                    {
+                        $finproceso="no";
+                        return $finproceso;
+                    }
+
+            }
+         
+        }
+
+    }
+
+    function validarcambios($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$idcrecam,$iccidenvia,$imeenvia,$iccid2,$valorcheck)
+    {
+        
+        if($Codimei !="" and $Codiccid !="")
+        {
+            $retornar= productoconiccideimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$idcrecam,$iccidenvia,$imeenvia,$iccid2,$valorcheck);
+            
+            if($retornar == "si")
+            {
+                return $retornar;
+            }
+            elseif($retornar == "no")
+            {
+                return $retornar;
+            }
+            elseif($retornar == "no hay existencia")
+            {
+                return $retornar;
+            }
+
+        }
+        elseif($Codimei !="" and $Codiccid =="")
+        {
+            $retornar= productoconimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$idcrecam,$iccidenvia,$imeenvia,$iccid2,$valorcheck);
+            
+            if($retornar == "si")
+            {
+                return $retornar;
+            }
+            elseif($retornar == "no")
+            {
+                return $retornar;
+            }
+            elseif($retornar == "no hay existencia")
+            {
+                return $retornar;
+            }
+        }
+        elseif($iccid2 !="")
+        {
+            $retornar= productochip($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$idcrecam,$iccidenvia,$imeenvia,$iccid2,$valorcheck);
+            
+            if($retornar == "si")
+            {
+                return $retornar;
+            }
+            elseif($retornar == "no")
+            {
+                return $retornar;
+            }
+            elseif($retornar == "no hay existencia")
+            {
+                return $retornar;
+            }
+        }
+        elseif($codpronompro !="" and $Codimei =="" and $Codiccid =="")
+        {
+            $retornar= productoaccesorioreparacion($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$idcrecam,$iccidenvia,$imeenvia,$iccid2,$valorcheck);
+            
+            if($retornar == "si")
+            {
+                return $retornar;
+            }
+            elseif($retornar == "no")
+            {
+                return $retornar;
+            }
+            elseif($retornar == "no hay existencia")
+            {
+                return $retornar;
+            }
+        }
+
+    }
+function productoconiccideimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$idcrecam,$iccidenvia,$imeenvia,$iccid2,$valorcheck)
+    {
+        include("host.php");
+        // echo "ENTRO EN LA PRIMERA VALIDACION:------>Codimei != and Codiccid !="."<br>"."<br>";
+        // echo "VALOR DE CHECK:".$valorcheck."<br>";
+        // echo "ICCI QUE ENVIA EL BOTON:".$iccidenvia."<br>";
+        // echo "IMEI QUE ENVIA EL BOTON:".$imeenvia."<br>";
+        // echo "IDPRODUCCTO QUE ENVIA EL BOTON:".$idprocam."<br>";
+        // echo "IDCREDITO QUE ENVIA EL BOTON:".$idcrecam."<br>";
+        if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) 
+        {
+            $cantidad="";
+            $consultaCam = "SELECT  * FROM producto WHERE cod='$codpronompro'   AND id_sucursal='$ids' ";
+            if($paqueteCam = consultar($con,$consultaCam))
+            {
+                while($dato = mysqli_fetch_array($paqueteCam))
+                { 
+                    $venta=  $dato['venta']; 
+                    // $nom= $dato['nom'];
+                    $cantidad=  $dato['cantidad'];
+                    // echo "cantidad telefono:".$cantidad."<br>";
+                }
+            }
+
+            $consultachip="SELECT id_producto, COUNT(*) AS cantidadchips FROM codigo_producto WHERE identificador='$Codiccid' AND id_sucursal='$ids'"; 
+            if($paquetechip = consultar($con,$consultachip))
+            {
+                while($datooo = mysqli_fetch_row($paquetechip))
+                {    $idproductochipp= $datooo[0];
+                    $cantidadchip=  $datooo[1];
+                    // echo "identificadror iccid:".$Codiccid."<br>";
+                    // echo "cantidad de chips:".$cantidadchip."<br>";
+                }
+            }
+            if($cantidad > 0 and $cantidadchip > 0)
+            {
+                // echo "SI HAY EXISTENCIAS DE LOS DOS PRODUCTOS"."<br>";
+                // echo "idSucursal:".$ids."<br>";
+                // echo "Codigo Producto de nuevo producto:".$codpronompro."<br>";
+                // echo "IMEI nuevo producto:".$Codimei."<br>";
+                // echo "Codigo ICCID Producto de nuevo CHIP:".$idproductochipp."<br>";
+                // echo "ICCID nuevo producto:".$Codiccid."<br>";
+                // echo "precio nuevo producto:".$venta."<br>";
+
+                $consultacodpro="SELECT * FROM codigo_producto WHERE id_producto='$codpronompro' and identificador='$Codimei' and id_sucursal='$ids' ";
+                if($resultadocp = consultar($con,$consultacodpro))
+                {
+                    while($dato2 = mysqli_fetch_array($resultadocp))
+                    {
+                       
+                        $id_producto=  $dato2['id_producto'];
+                        $tipo_ident= $dato2['tipo_identificador'];
+                        $identificador=  $dato2['identificador'];
+                        // echo "TipoI dentificador imei:".$tipo_ident."<br>";
+                    }
+                }
+
+                $consultacodprochip="SELECT * FROM codigo_producto WHERE identificador='$Codiccid' and id_sucursal='$ids' ";
+                if($resultadocpchip = consultar($con,$consultacodprochip))
+                {
+                    while($dato3 = mysqli_fetch_array($resultadocpchip))
+                    {
+               
+                        $id_productochip=  $dato3['id_producto'];
+                        $tipo_identchip= $dato3['tipo_identificador'];
+                        $identificadorchip=  $dato3['identificador'];
+                        // echo "TipoI dentificador icid:".$tipo_identchip."<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                    }
+                }
+                $condicioncreditodet="";
+                if($iccidenvia !="" and  $imeenvia !="")
+                {
+                      $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and iccid='$iccidenvia' and imei='$imeenvia'";
+                }
+                elseif($imeenvia !="")
+                {
+                     $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and imei='$imeenvia'";
+                }
+                elseif($iccidenvia !="")
+                {
+                   $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and iccid='$iccidenvia'"; 
+                }
+                elseif($iccidenvia =="" and $imeenvia =="")
+                {
+                     $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam'";
+                }
+                $consultaregresarstock="SELECT * FROM creditodetalle ".$condicioncreditodet."";
+                if($resultadoregrestock = consultar($con,$consultaregresarstock))
+                {
+                    while($dato4 = mysqli_fetch_array($resultadoregrestock))
+                    {
+                   
+                        // $id_creditoimei=  $dato4['idCredito'];
+                        $idProductoimei= $dato4['idProducto'];
+                        $proime=  $dato4['imei'];
+                        $idProductoiccid= $dato4['idProductoChip'];
+                        $proiccid= $dato4['iccid'];
+                        $precioProducto= $dato4['precioProducto'];
+                        date_default_timezone_set("America/Mexico_City");
+                        $fecha= date ("Y/m/d H:i.s",time());
+
+                        // echo "TipoI dentificador icid:".$tipo_identchip."<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "PRODUCTOS A REGRESAR A ESTOCK"."<br>";
+                        // echo "idproductoimei:".$idProductoimei."<br>";
+                        // echo "IMEI:".$proime."<br>";
+                        // echo "PRECIO PRODUCTO:".$precioProducto."<br>";
+
+                        // echo "idproductoICCID:".$idProductoiccid."<br>";
+                        // echo "ICCID:".$proiccid."<br>";
+                    }
+                }
+
+                $consultaresta="SELECT * FROM credito WHERE id='$idcrecam' and id_sucursal='$ids' ";
+                if($resultadocr = consultar($con,$consultaresta))
+                {
+                    while($dato5 = mysqli_fetch_array($resultadocr))
+                    {
+
+                      
+                        $preciopro=$precioProducto;
+                        $totalcr=  $dato5['total'];
+                        $adelantocr= $dato5['adelanto'];
+                        $restocr=  $dato5['resto'];
+                        $precionuevopro=$venta;
+                        // echo "total".$totalcr."<br>";
+                        if($valorcheck =="si")
+                        {
+
+
+                        $comision=0.1;
+                        number_format($comision);
+                      
+                        $comisioncambio= $preciopro * $comision;
+                        $nuevototalcr=$totalcr - $preciopro;
+
+                        $sumacomtotal=$nuevototalcr + $comisioncambio + $precionuevopro;
+
+                        $nuevoresto= $sumacomtotal - $adelantocr;
+                        }
+                        else
+                        {
+                        $comision=0;
+                        number_format($comision);
+                        $comisioncambio= $preciopro * $comision;
+                        $nuevototalcr=$totalcr - $preciopro;
+
+                        $sumacomtotal=$nuevototalcr + $comisioncambio + $precionuevopro;
+
+                        $nuevoresto= $sumacomtotal - $adelantocr;
+
+                        }
+                        $nuevoprecioproducto=$precionuevopro + $comisioncambio;
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "OPERACIONES:"."<br>";
+                        // echo "TOTAL CREDITO SIN CAMBIOS:".$totalcr."<br>";
+                        // echo "ADELANTO CREDITO SIN CAMBIOS:".$adelantocr."<br>";
+                        // echo "RESTO CREDITO SIN CAMBIOS:".$restocr."<br>";
+                        // echo "<br>";
+
+
+
+                        // echo "PRECIO DEL PRODUCTO A CAMBIAR:".$preciopro."<br>";
+                        // echo "COMISION DEL PRODUCTO A CAMBIAR:".$comisioncambio."<br>";
+                        // echo "<br>";
+                         
+                        // echo "PRECIO NUEVO PRODUCTO:".$precionuevopro."<br>";
+                        // echo "<br>";
+                        // echo "NUEVO TOTAL1= RESTA TOTAL CREDITO - PRECIO DEL PRODUCTO A CAMBIAR :".$nuevototalcr."<br>";
+                        // echo "SUMA DE NUEVO TOTAL1 +COMISION + NUEVO PRODCUTO = NUEVO TOTAL2 :".$sumacomtotal."<br>";
+                        // echo "NUEVO RESTO:".$nuevoresto."<br>";
+                        $actualizacredito="";
+                        $actualizacredito="UPDATE credito SET total='$sumacomtotal', resto='$nuevoresto' where id='$idcrecam' AND id_sucursal='$ids'";
+                        $actucredi= actualizar($con,$actualizacredito);
+
+                        if($proime !="" and $proiccid !="")
+                        {
+                            // echo "los dos campos estan llenos";
+                            $sql = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idProductoimei', 'IMEI', '$proime','0','$fecha','s','$ids')";
+                           
+                            $agregaimei = agregar($con,$sql);
+                       
+                            $sql2 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idProductoiccid', 'ICCID', '$proiccid','0','$fecha','s','$ids')";
+                            $agregaiccid = agregar($con,$sql2);
+
+                            $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoimei' AND id_sucursal='$ids'";
+                            $actuproimei= actualizar($con,$actualizaproductoimei);
+
+                            $actualizaproductoiccid="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoiccid' AND id_sucursal='$ids'";
+                            $actuproiccid= actualizar($con,$actualizaproductoiccid);
+                        }
+                        elseif($proime !="")
+                        {
+                            // echo "solo IMEI tiene el prodcuto";
+                             $sql = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idProductoimei', 'IMEI', '$proime','0','$fecha','s','$ids')";
+                            // $result2 = mysqli_query($con,$sql) or die("Couldn't execute query.".mysql_error()); 
+                            $agregaimei = agregar($con,$sql);
+                            $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoimei' AND id_sucursal='$ids'";
+                            $actuproimei= actualizar($con,$actualizaproductoimei);
+
+                        }
+                        elseif($proiccid !="")
+                        {
+                                $idproicid =$idProductoimei;
+                            // echo "solo ICCID tiene el prodcuto";
+                             $sql2 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idproicid', 'ICCID', '$proiccid','0','$fecha','s','$ids')";
+                            $agregaiccid = agregar($con,$sql2);
+
+                            $actualizaproductoiccid="UPDATE producto SET cantidad= cantidad+1 where cod='$idproicid' AND id_sucursal='$ids'";
+                            $actuproiccid= actualizar($con,$actualizaproductoiccid);
+                        }elseif($proime =="" and $proiccid =="") 
+                        {
+                            // echo "es un accesorio o refaccion";
+
+                            $actualizaproductoacc="UPDATE producto SET cantidad= cantidad+1 where cod='$idprocam' AND id_sucursal='$ids'";
+                            $actuproacc= actualizar($con,$actualizaproductoacc);
+
+                        }  
+
+             
+                        
+
+                        $actualizaproducdetalle="UPDATE creditodetalle SET idProducto='$codpronompro',precioUnitario='$nuevoprecioproducto',precioProducto='$nuevoprecioproducto',
+                        iccid='$identificadorchip', imei='$Codimei', idProductoChip='$id_productochip' where idProducto='$idprocam' AND idCredito='$idcrecam'";
+                        $actuprodet= actualizar($con,$actualizaproducdetalle);
+                        
+                        $actualizastocknuevoproductotelefono="UPDATE producto SET cantidad= cantidad-1 where cod='$codpronompro' AND id_sucursal='$ids'";
+                        $actunuevostocktelefono= actualizar($con,$actualizastocknuevoproductotelefono);
+
+                        $actualizastocknuevoproductochip="UPDATE producto SET cantidad= cantidad-1 where cod='$idproductochipp' AND id_sucursal='$ids'";
+                        $actunuevostockchip= actualizar($con,$actualizastocknuevoproductochip);
+
+                        $eliminarimei   = "DELETE FROM codigo_producto WHERE identificador  =  '$Codimei' AND id_sucursal='$ids' ";
+                        $paqElimiarimei = eliminar($con,$eliminarimei);
+
+                        $eliminariccid   = "DELETE FROM codigo_producto WHERE identificador  =  '$Codiccid' AND id_sucursal='$ids' " ;
+                        $paqElimiariccid = eliminar($con,$eliminariccid);
+                            
+                            $finproceso="";
+                            if($paqElimiariccid)
+                            {
+                                $finproceso="si";
+                                return $finproceso;
+                            }
+                            else
+                            {
+                                $finproceso="no";
+                                return $finproceso;
+                            }
+                                                            
+                    }
+                }
+            }//llave de existencias
+             else
+            {   
+                $noexistencia="";
+                $noexistencia="no hay existencia";
+                return $noexistencia;
+            }
+        }
+    }
+
+    function productoconimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$idcrecam,$iccidenvia,$imeenvia,$iccid2,$valorcheck)
+    {
+         include("host.php");
+        // echo "ENTRO EN LA 2 VALIDACION: -------->Codimei != and $Codiccid == "."<br>"."<br>";
+        // echo "VALOR DE CHECK:".$valorcheck."<br>";
+        // echo "ICCI QUE ENVIA EL BOTON:".$iccidenvia."<br>";
+        // echo "IMEI QUE ENVIA EL BOTON:".$imeenvia."<br>";
+        // echo "IDPRODUCCTO QUE ENVIA EL BOTON:".$idprocam."<br>";
+        // echo "IDCREDITO QUE ENVIA EL BOTON:".$idcrecam."<br>";
+        if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) 
+        {
+            $consultaCam = "SELECT  * FROM producto WHERE cod='$codpronompro'   AND id_sucursal='$ids' ";
+            if($paqueteCam = consultar($con,$consultaCam))
+            {
+                while($dato = mysqli_fetch_array($paqueteCam))
+                { 
+                    $venta=  $dato['venta']; 
+                    // $nom= $dato['nom'];
+                    $cantidad=  $dato['cantidad'];
+                    // echo "cantidad telefono:".$cantidad."<br>";
+                }
+            }
+            if($cantidad > 0 )
+            {
+                // echo "SI HAY EXISTENCIA DEL PRODUCTO"."<br>";
+                // echo "idSucursal:".$ids."<br>";
+                // echo "Codigo Producto de nuevo producto:".$codpronompro."<br>";
+                // echo "IMEI nuevo producto:".$Codimei."<br>";
+                // echo "precio nuevo producto:".$venta."<br>";
+
+                $condicioncreditodet="";
+                if($iccidenvia !="" and  $imeenvia !="")
+                {
+                      $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and iccid='$iccidenvia' and imei='$imeenvia'";
+                }
+                elseif($imeenvia !="")
+                {
+                     $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and imei='$imeenvia'";
+                }
+                elseif($iccidenvia !="")
+                {
+                   $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and iccid='$iccidenvia'"; 
+                }
+                elseif($iccidenvia =="" and $imeenvia =="")
+                {
+                     $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam'";
+                }
+
+                $consultaregresarstock="SELECT * FROM creditodetalle ".$condicioncreditodet."";
+                if($resultadoregrestock = consultar($con,$consultaregresarstock))
+                {
+                    while($dato4 = mysqli_fetch_array($resultadoregrestock))
+                    {
+                   
+                        // $id_creditoimei=  $dato4['idCredito'];
+                        $idProductoimei= $dato4['idProducto'];
+                        $proime=  $dato4['imei'];
+                        $idProductoiccid= $dato4['idProductoChip'];
+                        $proiccid= $dato4['iccid'];
+                        $precioProducto= $dato4['precioProducto'];
+                        date_default_timezone_set("America/Mexico_City");
+                        $fecha= date ("Y/m/d H:i.s",time());
+
+                        // echo "TipoI dentificador icid:".$tipo_identchip."<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "PRODUCTOS A REGRESAR A ESTOCK"."<br>";
+                        // echo "idproductoimei:".$idProductoimei."<br>";
+                        // echo "IMEI:".$proime."<br>";
+                        // echo "PRECIO PRODUCTO:".$precioProducto."<br>";
+
+                        // echo "idproductoICCID:".$idProductoiccid."<br>";
+                        // echo "ICCID:".$proiccid."<br>";
+                    }
+                }
+
+                $consultaresta="SELECT * FROM credito WHERE id='$idcrecam' and id_sucursal='$ids' ";
+                if($resultadocr = consultar($con,$consultaresta))
+                {
+                    while($dato5 = mysqli_fetch_array($resultadocr))
+                    {
+
+                      
+                        $preciopro=$precioProducto;
+                        $totalcr=  $dato5['total'];
+                        $adelantocr= $dato5['adelanto'];
+                        $restocr=  $dato5['resto'];
+                        $precionuevopro=$venta;
+                        // echo "total".$totalcr."<br>";
+                        if($valorcheck =="si")
+                        {
+
+
+                        $comision=0.1;
+                        number_format($comision);
+                      
+                        $comisioncambio= $preciopro * $comision;
+                        $nuevototalcr=$totalcr - $preciopro;
+
+                        $sumacomtotal=$nuevototalcr + $comisioncambio + $precionuevopro;
+
+                        $nuevoresto= $sumacomtotal - $adelantocr;
+                        }
+                        else
+                        {
+                        $comision=0;
+                        number_format($comision);
+                        $comisioncambio= $preciopro * $comision;
+                        $nuevototalcr=$totalcr - $preciopro;
+
+                        $sumacomtotal=$nuevototalcr + $comisioncambio + $precionuevopro;
+
+                        $nuevoresto= $sumacomtotal - $adelantocr;
+
+                        }
+                        $nuevoprecioproducto=$precionuevopro + $comisioncambio;
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "OPERACIONES:"."<br>";
+                        // echo "TOTAL CREDITO SIN CAMBIOS:".$totalcr."<br>";
+                        // echo "ADELANTO CREDITO SIN CAMBIOS:".$adelantocr."<br>";
+                        // echo "RESTO CREDITO SIN CAMBIOS:".$restocr."<br>";
+                        // echo "<br>";
+
+
+
+                        // echo "PRECIO DEL PRODUCTO A CAMBIAR:".$preciopro."<br>";
+                        // echo "COMISION DEL PRODUCTO A CAMBIAR:".$comisioncambio."<br>";
+                        // echo "<br>";
+                         
+                        // echo "PRECIO NUEVO PRODUCTO:".$precionuevopro."<br>";
+                        // echo "<br>";
+                        // echo "NUEVO TOTAL1= RESTA TOTAL CREDITO - PRECIO DEL PRODUCTO A CAMBIAR :".$nuevototalcr."<br>";
+                        // echo "SUMA DE NUEVO TOTAL1 +COMISION + NUEVO PRODCUTO = NUEVO TOTAL2 :".$sumacomtotal."<br>";
+                        // echo "NUEVO RESTO:".$nuevoresto."<br>";
+                        $actualizacredito="";
+                        $actualizacredito="UPDATE credito SET total='$sumacomtotal', resto='$nuevoresto' where id='$idcrecam' AND id_sucursal='$ids'";
+                        $actucredi= actualizar($con,$actualizacredito);
+
+                        if($proime !="" and $proiccid !="")
+                        {
+                            // echo "los dos campos estan llenos";
+                            $sql = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idProductoimei', 'IMEI', '$proime','0','$fecha','s','$ids')";
+                           
+                            $agregaimei = agregar($con,$sql);
+                       
+                            $sql2 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idProductoiccid', 'ICCID', '$proiccid','0','$fecha','s','$ids')";
+                            $agregaiccid = agregar($con,$sql2);
+
+                            $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoimei' AND id_sucursal='$ids'";
+                            $actuproimei= actualizar($con,$actualizaproductoimei);
+
+                            $actualizaproductoiccid="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoiccid' AND id_sucursal='$ids'";
+                            $actuproiccid= actualizar($con,$actualizaproductoiccid);
+                        }
+                        elseif($proime !="")
+                        {
+                            // echo "solo IMEI tiene el prodcuto";
+                             $sql = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idProductoimei', 'IMEI', '$proime','0','$fecha','s','$ids')";
+                            // $result2 = mysqli_query($con,$sql) or die("Couldn't execute query.".mysql_error()); 
+                            $agregaimei = agregar($con,$sql);
+                            $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoimei' AND id_sucursal='$ids'";
+                            $actuproimei= actualizar($con,$actualizaproductoimei);
+
+                        }
+                        elseif($proiccid !="")
+                        {
+                            $idproicid =$idProductoimei;
+                            // echo "solo ICCID tiene el prodcuto";
+                             $sql2 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idproicid', 'ICCID', '$proiccid','0','$fecha','s','$ids')";
+                            $agregaiccid = agregar($con,$sql2);
+
+                            $actualizaproductoiccid="UPDATE producto SET cantidad= cantidad+1 where cod='$idproicid' AND id_sucursal='$ids'";
+                            $actuproiccid= actualizar($con,$actualizaproductoiccid);
+                        }elseif($proime =="" and $proiccid =="") 
+                        {
+                            // echo "es un accesorio o refaccion";
+
+                            $actualizaproductoacc="UPDATE producto SET cantidad= cantidad+1 where cod='$idprocam' AND id_sucursal='$ids'";
+                            $actuproacc= actualizar($con,$actualizaproductoacc);
+
+                        }  
+
+             
+                        
+
+                        $actualizaproducdetalle="UPDATE creditodetalle SET idProducto='$codpronompro',precioUnitario='$nuevoprecioproducto',precioProducto='$nuevoprecioproducto',iccid='',
+                        imei='$Codimei',idProductoChip='' where idProducto='$idprocam' AND idCredito='$idcrecam'";
+                        $actuprodet= actualizar($con,$actualizaproducdetalle);
+                        
+                        $actualizastocknuevoproductotelefono="UPDATE producto SET cantidad= cantidad-1 where cod='$codpronompro' AND id_sucursal='$ids'";
+                        $actunuevostocktelefono= actualizar($con,$actualizastocknuevoproductotelefono);
+
+                        
+
+                        $eliminarimei   = "DELETE FROM codigo_producto WHERE identificador  ='$Codimei' AND id_sucursal='$ids' ";
+                        $paqElimiarimei = eliminar($con,$eliminarimei);
+
+                         $finproceso="";
+                            if($paqElimiarimei)
+                            {
+                                $finproceso="si";
+                                return $finproceso;
+                            }
+                            else
+                            {
+                                $finproceso="no";
+                                return $finproceso;
+                            }
+
+                                                            
+                    }
+                }
+
+
+            }//llave de existencias
+             else
+            {   
+                $noexistencia="";
+                $noexistencia="no hay existencia";
+                return $noexistencia;
+            }
+        }
+
+    }
+
+    function productochip($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$idcrecam,$iccidenvia,$imeenvia,$iccid2,$valorcheck)
+    {
+        include("host.php");
+        // echo "ENTRO EN LA TERCERA VALIDACION:------>iccid2 !="."<br>"."<br>";
+        // echo "VALOR DE CHECK:".$valorcheck."<br>";
+        // echo "ICCI QUE ENVIA EL BOTON:".$iccidenvia."<br>";
+        // echo "IMEI QUE ENVIA EL BOTON:".$imeenvia."<br>";
+        // echo "IDPRODUCCTO QUE ENVIA EL BOTON:".$idprocam."<br>";
+        // echo "IDCREDITO QUE ENVIA EL BOTON:".$idcrecam."<br>";
+        // echo "iccid2:".$iccid2."<br>";
+        if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) 
+        {
+            // $consultaCam = "SELECT  * FROM producto WHERE cod='$codpronompro'   AND id_sucursal='$ids' ";
+            // if($paqueteCam = consultar($con,$consultaCam))
+            // {
+            //     while($dato = mysqli_fetch_array($paqueteCam))
+            //     { 
+            //         $venta=  $dato['venta']; 
+            //         // $nom= $dato['nom'];
+            //         $cantidad=  $dato['cantidad'];
+            //         echo "cantidad telefono:".$cantidad."<br>";
+            //     }
+            // }
+
+
+            $consultachip="SELECT id_producto, COUNT(*) AS cantidadchips FROM codigo_producto WHERE identificador='$iccid2' AND id_sucursal='$ids'"; 
+            if($paquetechip = consultar($con,$consultachip))
+            {
+                while($datooo = mysqli_fetch_row($paquetechip))
+                {   $idproductochipp= $datooo[0];
+                    $cantidadchip=  $datooo[1];
+                    // echo "identificadror iccid:".$Codiccid."<br>";
+                    // echo "cantidad de chips:".$cantidadchip."<br>";
+                }
+            }
+             $consultacodigochip = "SELECT  * FROM producto WHERE cod='$idproductochipp'   AND id_sucursal='$ids' ";
+            if($paqueteCodChip = consultar($con,$consultacodigochip))
+            {
+                while($dato8 = mysqli_fetch_array($paqueteCodChip))
+                { 
+                    $ventachip=  $dato8['venta']; 
+                }
+            }
+
+            if($cantidadchip > 0)
+            {
+                
+                // echo "si hay existencai";
+               
+                // echo "idSucursal:".$ids."<br>";
+                
+                // echo "Codigo ICCID Producto de nuevo CHIP:".$idproductochipp."<br>";
+                // echo "ICCID nuevo producto:".$iccid2."<br>";
+                
+                // echo "precio nuevo producto:".$ventachip."<br>";
+                $consultacodprochip="SELECT * FROM codigo_producto WHERE identificador='$iccid2' and id_sucursal='$ids' ";
+                if($resultadocpchip = consultar($con,$consultacodprochip))
+                {
+                    while($dato3 = mysqli_fetch_array($resultadocpchip))
+                    {
+               
+                        $id_productochip=  $dato3['id_producto'];
+                        $tipo_identchip= $dato3['tipo_identificador'];
+                        $identificadorchip=  $dato3['identificador'];
+                        // echo "TipoI dentificador icid:".$tipo_identchip."<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                    }
+                }
+               $condicioncreditodet="";
+                if($iccidenvia !="" and  $imeenvia !="")
+                {
+                      $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and iccid='$iccidenvia' and imei='$imeenvia'";
+                }
+                elseif($imeenvia !="")
+                {
+                     $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and imei='$imeenvia'";
+                }
+                elseif($iccidenvia !="")
+                {
+                   $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and iccid='$iccidenvia'"; 
+                }
+                elseif($iccidenvia =="" and $imeenvia =="")
+                {
+                     $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam'";
+                }
+                $consultaregresarstock="SELECT * FROM creditodetalle ".$condicioncreditodet."";
+                if($resultadoregrestock = consultar($con,$consultaregresarstock))
+                {
+                    while($dato4 = mysqli_fetch_array($resultadoregrestock))
+                    {
+                   
+                        // $id_creditoimei=  $dato4['idCredito'];
+                        $idProductoimei= $dato4['idProducto'];
+                        $proime=  $dato4['imei'];
+                        $idProductoiccid= $dato4['idProductoChip'];
+                        $proiccid= $dato4['iccid'];
+                        $precioProducto= $dato4['precioProducto'];
+                        date_default_timezone_set("America/Mexico_City");
+                        $fecha= date ("Y/m/d H:i.s",time());
+
+                        // echo "TipoI dentificador icid:".$tipo_identchip."<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "PRODUCTOS A REGRESAR A ESTOCK"."<br>";
+                        // echo "idproductoimei:".$idProductoimei."<br>";
+                        // echo "IMEI:".$proime."<br>";
+                        // echo "PRECIO PRODUCTO:".$precioProducto."<br>";
+
+                        // echo "idproductoICCID:".$idProductoiccid."<br>";
+                        // echo "ICCID:".$proiccid."<br>";
+                    }
+                    $consultaresta="SELECT * FROM credito WHERE id='$idcrecam' and id_sucursal='$ids' ";
+                    if($resultadocr = consultar($con,$consultaresta))
+                    {
+                        while($dato5 = mysqli_fetch_array($resultadocr))
+                        {
+
+                           
+                            $preciopro=$precioProducto;
+                            $totalcr=  $dato5['total'];
+                            $adelantocr= $dato5['adelanto'];
+                            $restocr=  $dato5['resto'];
+                            $precionuevopro=$ventachip;
+                            // echo "total".$totalcr."<br>";
+                            if($valorcheck =="si")
+                            {
+                                $comision=0.1;
+                                number_format($comision);
+                                $comisioncambio= $preciopro * $comision;
+
+                                $nuevototalcr=$totalcr - $preciopro;
+
+                                $sumacomtotal=$nuevototalcr + $comisioncambio + $precionuevopro;
+
+                                $nuevoresto= $sumacomtotal - $adelantocr;
+                                $nuevoprecioproducto=$precionuevopro + $comisioncambio;
+
+                            }
+                            else
+                            {
+                                $comision=0;
+                                number_format($comision);
+                                $comisioncambio= $preciopro * $comision;
+
+                                $nuevototalcr=$totalcr - $preciopro;
+
+                                $sumacomtotal=$nuevototalcr + $comisioncambio + $precionuevopro;
+
+                                $nuevoresto= $sumacomtotal - $adelantocr;
+                                $nuevoprecioproducto=$precionuevopro + $comisioncambio;
+
+                            }
+                            // echo "<br>";
+                            // echo "<br>";
+                            // echo "<br>";
+                            // echo "<br>";
+                            // echo "OPERACIONES:"."<br>";
+                            // echo "TOTAL CREDITO SIN CAMBIOS:".$totalcr."<br>";
+                            // echo "ADELANTO CREDITO SIN CAMBIOS:".$adelantocr."<br>";
+                            // echo "RESTO CREDITO SIN CAMBIOS:".$restocr."<br>";
+                            // echo "<br>";
+
+
+
+                            // echo "PRECIO DEL PRODUCTO A CAMBIAR:".$preciopro."<br>";
+                            // echo "COMISION DEL PRODUCTO A CAMBIAR:".$comisioncambio."<br>";
+                            // echo "<br>";
+                             
+                            // echo "PRECIO NUEVO PRODUCTO:".$precionuevopro."<br>";
+                            // echo "<br>";
+                            // echo "NUEVO TOTAL1= RESTA TOTAL CREDITO - PRECIO DEL PRODUCTO A CAMBIAR :".$nuevototalcr."<br>";
+                            // echo "SUMA DE NUEVO TOTAL1 +COMISION + NUEVO PRODCUTO = NUEVO TOTAL2 :".$sumacomtotal."<br>";
+                            // echo "NUEVO RESTO:".$nuevoresto."<br>";
+
+                            $actualizacredito="";
+                            $actualizacredito="UPDATE credito SET total='$sumacomtotal', resto='$nuevoresto' where id='$idcrecam' AND id_sucursal='$ids'";
+                            $actucredi= actualizar($con,$actualizacredito);
+
+                            if($proime !="" and $proiccid !="")
+                            {
+                                // echo "los dos campos estan llenos";
+                                $sql = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                                VALUES ('$idProductoimei', 'IMEI', '$proime','0','$fecha','s','$ids')";
+                               
+                                $agregaimei = agregar($con,$sql);
+                           
+                                $sql2 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                                VALUES ('$idProductoiccid', 'ICCID', '$proiccid','0','$fecha','s','$ids')";
+                                $agregaiccid = agregar($con,$sql2);
+
+                                $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoimei' AND id_sucursal='$ids'";
+                                $actuproimei= actualizar($con,$actualizaproductoimei);
+
+                                $actualizaproductoiccid="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoiccid' AND id_sucursal='$ids'";
+                                $actuproiccid= actualizar($con,$actualizaproductoiccid);
+                            }
+                            elseif($proime !="")
+                            {
+                                // echo "solo IMEI tiene el prodcuto";
+                                 $sql = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                                VALUES ('$idProductoimei', 'IMEI', '$proime','0','$fecha','s','$ids')";
+                                // $result2 = mysqli_query($con,$sql) or die("Couldn't execute query.".mysql_error()); 
+                                $agregaimei = agregar($con,$sql);
+                                $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoimei' AND id_sucursal='$ids'";
+                                $actuproimei= actualizar($con,$actualizaproductoimei);
+
+                            }
+                            elseif($proiccid !="")
+                            {
+                                // echo "solo ICCID tiene el prodcuto";
+                                  $idproicid =$idProductoimei;
+                                 $sql2 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                                VALUES ('$idproicid', 'ICCID', '$proiccid','0','$fecha','s','$ids')";
+                                $agregaiccid = agregar($con,$sql2);
+
+                                $actualizaproductoiccid="UPDATE producto SET cantidad= cantidad+1 where cod='$idproicid' AND id_sucursal='$ids'";
+                                $actuproiccid= actualizar($con,$actualizaproductoiccid);
+                            }elseif($proime =="" and $proiccid =="") 
+                            {
+                                // echo "es un accesorio o refaccion";
+
+                                $actualizaproductoacc="UPDATE producto SET cantidad= cantidad+1 where cod='$idprocam' AND id_sucursal='$ids'";
+                                $actuproacc= actualizar($con,$actualizaproductoacc);
+
+                            }  
+
+                 
+                            
+
+                            $actualizaproducdetalle="UPDATE creditodetalle SET idProducto='$idproductochipp',precioUnitario='$nuevoprecioproducto',precioProducto='$nuevoprecioproducto',
+                            iccid='$iccid2', imei='', idProductoChip='' where idProducto='$idprocam' AND idCredito='$idcrecam'";
+                            $actuprodet= actualizar($con,$actualizaproducdetalle);
+                            
+                        
+                            $actualizastocknuevoproductochip="UPDATE producto SET cantidad= cantidad-1 where cod='$idproductochipp' AND id_sucursal='$ids'";
+                            $actunuevostockchip= actualizar($con,$actualizastocknuevoproductochip);
+
+                            
+                            $eliminariccid   = "DELETE FROM codigo_producto WHERE identificador  =  '$iccid2' AND id_sucursal='$ids'" ;
+                            $paqElimiariccid = eliminar($con,$eliminariccid);
+
+                            $finproceso="";
+                            if($paqElimiariccid)
+                            {
+                                $finproceso="si";
+                                return $finproceso;
+                            }
+                            else
+                            {
+                                $finproceso="no";
+                                return $finproceso;
+                            }
+
+
+                        }
+                    }
+                }
+            }
+             else
+            {   
+                $noexistencia="";
+                $noexistencia="no hay existencia";
+                return $noexistencia;
+            }
+        }
+
+    }
+
+    function productoaccesorioreparacion($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$idcrecam,$iccidenvia,$imeenvia,$iccid2,$valorcheck)
+    {
+         include("host.php");
+        // echo "ENTRO EN LA 4 VALIDACION:------>codpronompro !="."<br>"."<br>";
+        //  echo "VALOR DE CHECK:".$valorcheck."<br>";
+       
+        // echo "ICCI QUE ENVIA EL BOTON:".$iccidenvia."<br>";
+        // echo "IMEI QUE ENVIA EL BOTON:".$imeenvia."<br>";
+        // echo "IDPRODUCCTO QUE ENVIA EL BOTON:".$idprocam."<br>";
+        // echo "IDCREDITO QUE ENVIA EL BOTON:".$idcrecam."<br>";
+        if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) 
+        {   $cantidad="";
+            $consultaCam = "SELECT  * FROM producto WHERE cod='$codpronompro'   AND id_sucursal='$ids' ";
+            if($paqueteCam = consultar($con,$consultaCam))
+            {
+                while($dato = mysqli_fetch_array($paqueteCam))
+                { 
+                    $venta=  $dato['venta']; 
+                    // $nom= $dato['nom'];
+                    $cantidad=  $dato['cantidad'];
+                    // echo "cantidad accesorio o reparacion:".$cantidad."<br>";
+                }
+            }
+            if($cantidad > 0)
+            {
+           
+                // echo "<br>"."si hay existencias";
+                // echo "idSucursal:".$ids."<br>";
+                // echo "Codigo Producto de nuevo producto:".$codpronompro."<br>";
+                // echo "precio nuevo producto:".$venta."<br>";
+
+                $condicioncreditodet="";
+                if($iccidenvia !="" and  $imeenvia !="")
+                {
+                      $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and iccid='$iccidenvia' and imei='$imeenvia'";
+                }
+                elseif($imeenvia !="")
+                {
+                     $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and imei='$imeenvia'";
+                }
+                elseif($iccidenvia !="")
+                {
+                   $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam' and iccid='$iccidenvia'"; 
+                }
+                elseif($iccidenvia =="" and $imeenvia =="")
+                {
+                     $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam'";
+                }
+                $consultaregresarstock="SELECT * FROM creditodetalle ".$condicioncreditodet."";
+                if($resultadoregrestock = consultar($con,$consultaregresarstock))
+                {
+                    while($dato4 = mysqli_fetch_array($resultadoregrestock))
+                    {
+                   
+                        // $id_creditoimei=  $dato4['idCredito'];
+                        $idProductoimei= $dato4['idProducto'];
+                        $proime=  $dato4['imei'];
+                        $idProductoiccid= $dato4['idProductoChip'];
+                        $proiccid= $dato4['iccid'];
+                        $precioProducto= $dato4['precioProducto'];
+                        date_default_timezone_set("America/Mexico_City");
+                        $fecha= date ("Y/m/d H:i.s",time());
+
+                        // echo "TipoI dentificador icid:".$tipo_identchip."<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "PRODUCTOS A REGRESAR A ESTOCK"."<br>";
+                        // echo "idproductoimei:".$idProductoimei."<br>";
+                        // echo "IMEI:".$proime."<br>";
+                        // echo "PRECIO PRODUCTO:".$precioProducto."<br>";
+
+                        // echo "idproductoICCID:".$idProductoiccid."<br>";
+                        // echo "ICCID:".$proiccid."<br>";
+                    }
+                }
+                $consultaresta="SELECT * FROM credito WHERE id='$idcrecam' and id_sucursal='$ids' ";
+                if($resultadocr = consultar($con,$consultaresta))
+                {
+                    while($dato5 = mysqli_fetch_array($resultadocr))
+                    {
+
+                      
+                        $preciopro=$precioProducto;
+                        $totalcr=  $dato5['total'];
+                        $adelantocr= $dato5['adelanto'];
+                        $restocr=  $dato5['resto'];
+                        $precionuevopro=$venta;
+                        // echo "total".$totalcr."<br>";
+                        if($valorcheck =="si")
+                        {
+                            $comision=0.1;
+                            number_format($comision);
+                            $comisioncambio= $preciopro * $comision;
+
+                            $nuevototalcr=$totalcr - $preciopro;
+
+                            $sumacomtotal=$nuevototalcr + $comisioncambio + $precionuevopro;
+
+                            $nuevoresto= $sumacomtotal - $adelantocr;
+                            $nuevoprecioproducto=$precionuevopro + $comisioncambio;
+                        }
+                        else
+                        {
+                            $comision=0;
+                            number_format($comision);
+                            $comisioncambio= $preciopro * $comision;
+
+                            $nuevototalcr=$totalcr - $preciopro;
+
+                            $sumacomtotal=$nuevototalcr + $comisioncambio + $precionuevopro;
+
+                            $nuevoresto= $sumacomtotal - $adelantocr;
+                            $nuevoprecioproducto=$precionuevopro + $comisioncambio;
+                        }
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "<br>";
+                        // echo "OPERACIONES:"."<br>";
+                        // echo "TOTAL CREDITO SIN CAMBIOS:".$totalcr."<br>";
+                        // echo "ADELANTO CREDITO SIN CAMBIOS:".$adelantocr."<br>";
+                        // echo "RESTO CREDITO SIN CAMBIOS:".$restocr."<br>";
+                        // echo "<br>";
+
+
+
+                        // echo "PRECIO DEL PRODUCTO A CAMBIAR:".$preciopro."<br>";
+                        // echo "COMISION DEL PRODUCTO A CAMBIAR:".$comisioncambio."<br>";
+                        // echo "<br>";
+                         
+                        // echo "PRECIO NUEVO PRODUCTO:".$precionuevopro."<br>";
+                        // echo "<br>";
+                        // echo "NUEVO TOTAL1= RESTA TOTAL CREDITO - PRECIO DEL PRODUCTO A CAMBIAR :".$nuevototalcr."<br>";
+                        // echo "SUMA DE NUEVO TOTAL1 +COMISION + NUEVO PRODCUTO = NUEVO TOTAL2 :".$sumacomtotal."<br>";
+                        // echo "NUEVO RESTO:".$nuevoresto."<br>";
+
+                        $actualizacredito="";
+                        $actualizacredito="UPDATE credito SET total='$sumacomtotal', resto='$nuevoresto' where id='$idcrecam' AND id_sucursal='$ids'";
+                        $actucredi= actualizar($con,$actualizacredito);
+
+                        if($proime !="" and $proiccid !="")
+                        {
+                            // echo "los dos campos estan llenos"."<br>";
+                            $sql = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idProductoimei', 'IMEI', '$proime','0','$fecha','s','$ids')";
+                           
+                            $agregaimei = agregar($con,$sql);
+                       
+                            $sql2 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idProductoiccid', 'ICCID', '$proiccid','0','$fecha','s','$ids')";
+                            $agregaiccid = agregar($con,$sql2);
+
+                            $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoimei' AND id_sucursal='$ids'";
+                            $actuproimei= actualizar($con,$actualizaproductoimei);
+
+                            $actualizaproductoiccid="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoiccid' AND id_sucursal='$ids'";
+                            $actuproiccid= actualizar($con,$actualizaproductoiccid);
+                        }
+                        elseif($proime !="")
+                        {
+                            // echo "solo IMEI tiene el prodcuto"."<br>";
+                             $sql = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idProductoimei', 'IMEI', '$proime','0','$fecha','s','$ids')";
+                             // echo $sql2."<br>";
+                            // $result2 = mysqli_query($con,$sql) or die("Couldn't execute query.".mysql_error()); 
+                            $agregaimei = agregar($con,$sql);
+                            $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoimei' AND id_sucursal='$ids'";
+                            $actuproimei= actualizar($con,$actualizaproductoimei);
+
+                        }
+                        elseif($proiccid !="")
+                        {
+                            // echo "solo ICCID tiene el prodcuto"."<br>";
+                           $idproicid =$idProductoimei;
+                             $sql2 = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
+                            VALUES ('$idproicid', 'ICCID', '$proiccid','0','$fecha','s','$ids')";
+                            // echo $sql2."<br>";
+                            $agregaiccid = agregar($con,$sql2);
+
+                            $actualizaproductoiccid="UPDATE producto SET cantidad= cantidad+1 where cod='$idproicid' AND id_sucursal='$ids'";
+                            $actuproiccid= actualizar($con,$actualizaproductoiccid);
+                        }elseif($proime =="" and $proiccid =="") 
+                        {
+                            // echo "es un accesorio o refaccion";
+
+                            $actualizaproductoacc="UPDATE producto SET cantidad= cantidad+1 where cod='$idprocam' AND id_sucursal='$ids'";
+                            $actuproacc= actualizar($con,$actualizaproductoacc);
+
+                        }  
+
+             
+                        
+
+                        $actualizaproducdetalle="UPDATE creditodetalle SET idProducto='$codpronompro',precioUnitario='$nuevoprecioproducto',precioProducto='$nuevoprecioproducto',
+                        iccid='', imei='', idProductoChip='' where idProducto='$idprocam' AND idCredito='$idcrecam'";
+                        $actuprodet= actualizar($con,$actualizaproducdetalle);
+
+                        $actualizastock="UPDATE producto SET cantidad= cantidad-1 where cod='$codpronompro' AND id_sucursal='$ids'";
+                        $actunuevostock= actualizar($con,$actualizastock);
+                         
+                        $finproceso="";
+                        if($actunuevostock)
+                            {
+                                $finproceso="si";
+                                return $finproceso;
+                            }
+                            else
+                            {
+                                $finproceso="no";
+                                return $finproceso;
+                            }
+                    }
+                }
+            }//llave validacion existencia
+            else
+            {   
+                $noexistencia="";
+                $noexistencia="no hay existencia";
+                return $noexistencia;
+            }
+
+        }
+
+    }
+
+    function validardescuentovigencia($idcredd,$idsucc,$valorcheck)
+    {
+        // echo "ID CREDITO:".$idcredd."<br>";
+        // echo "ID SUCURSAL:".$idsucc."<br>";
+        // echo "VALOR CHECK:".$valorcheck."<br>";
+           include("host.php");
+      
+        if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) 
+        {   
+            $consultaDesVigencia = "SELECT  * FROM credito WHERE id='$idcredd'   AND id_sucursal='$idsucc' ";
+            if($paqueteCamVigencia = consultar($con,$consultaDesVigencia))
+            {
+                while($dato = mysqli_fetch_array($paqueteCamVigencia))
+                { 
+                    $total = $dato['total'];
+                    $adelanto = $dato['adelanto'];
+                    $resto = $dato['resto'];
+                     // echo "<br>"."<br>"."<br>"."DATOS CREDITO SIN CAMBIOS";
+                     //    echo "TOTAL:".$total."<br>";
+                     //    echo "ADELANTO:".$adelanto."<br>";
+                     //    echo "RESTO:".$resto."<br>";
+
+                    if($valorcheck =="si")
+                    {
+                        $comision= 0.1;
+                        number_format($comision);
+                        $valorcomision= $total * $comision;
+
+                        $suma= $total + $valorcomision;
+                        $resta= $suma - $adelanto;
+
+                       //  echo "<br>"."<br>"."<br>"."RESULTADOS OPERACIONES"."<br>"."<br>"."<br>";
+                       // echo "VALOR DE COMISION POR VIGENCIA:".$valorcomision."<br>";
+                       //  echo "NUEVO TOTAL:".$suma."<br>";
+                       //  echo "ADELANTOL:".$adelanto."<br>";
+                       //  echo "NUEVO RESTO:".$resta."<br>";
+                    }
+                    else
+                    {
+                        $comision= 0;
+                        number_format($comision);
+                        $valorcomision= $total * $comision;
+
+                        $suma= $total + $valorcomision;
+                        $resta= $suma - $adelanto;
+
+                       //  echo "<br>"."<br>"."<br>"."RESULTADOS OPERACIONES"."<br>"."<br>"."<br>";
+                       // echo "VALOR DE COMISION POR VIGENCIA:".$valorcomision."<br>";
+                       //  echo "NUEVO TOTAL:".$suma."<br>";
+                       //  echo "ADELANTOL:".$adelanto."<br>";
+                       //  echo "NUEVO RESTO:".$resta."<br>";
+
+                    }
+                    $actualizacredito="UPDATE credito SET total='$suma', resto='$resta', vigenciacredito='1' where id='$idcredd' AND id_sucursal='$idsucc'";
+                    $actucred= actualizar($con,$actualizacredito);
+
+                     $finproceso="";
+                        if($actucred)
+                            {
+                                $finproceso="si";
+                                return $finproceso;
+                            }
+                            else
+                            {
+                                $finproceso="no";
+                                return $finproceso;
+                            }
+
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 
 
