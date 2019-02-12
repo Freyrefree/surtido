@@ -156,7 +156,8 @@ body {
 
 	
 
-			window.location = 'PDFreportecorte.php?fecha_ini11='+fecha_i+'&fecha_fin11='+fecha_f+'&cajero='+cajero+'&codigo='+codigo+'&coincidencia='+coincidencia+'&categoria='+categoria;
+			//window.location = 'PDFreportecorte.php?fecha_ini11='+fecha_i+'&fecha_fin11='+fecha_f+'&cajero='+cajero+'&codigo='+codigo+'&coincidencia='+coincidencia+'&categoria='+categoria;
+			window.open('PDFreportecorte.php?fecha_ini11='+fecha_i+'&fecha_fin11='+fecha_f+'&cajero='+cajero+'&codigo='+codigo+'&coincidencia='+coincidencia+'&categoria='+categoria,'_blank');
 
 			
 		}		

@@ -3,8 +3,11 @@
     error_reporting(E_ALL ^ E_DEPRECATED);
     error_reporting(0);
     include("host.php");
-    include("funciones.php"); 
-    $usu=$_SESSION['username'];
+    include("funciones.php");
+    
+if(isset($_SESSION['id_sucursal'])){
+
+    $usu = $_SESSION['username'];
     $idSucursal = $_SESSION['id_sucursal'];
 
 
@@ -12,6 +15,7 @@
     $idReparacion = trim($_POST['noReparacion']);
     $descripLi = $_POST['descripLi'];
     ##############
+
 if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) 
 {
     //Sólo puede liberar el cajero
@@ -213,67 +217,12 @@ if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB))
     
 }
 
-// function comisionTecnico($hostDB, $usuarioDB, $claveDB, $baseDB,$IdReparacion,$manoObra,$idSucursal,$comision){
+}else{
+    echo 6; //Error Sesion 
+}
 
-//     $totalComision = 0;
-//     $sumVenta = 0;
-//     $masVenta = 0;
-  
-//     $sumEspecial = 0;
-//     $masEspecial = 0;
-//     $sumTipoPrecio=array();
-  
-//     $countArray = 0;
-//     $contador = 0;
-      
-//     if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) 
-//     {
-  
-//         $consulta1="SELECT * FROM reparacion_refaccion WHERE id_reparacion = '$IdReparacion'";
-//         if ($paquete = consultar($con, $consulta1)) {
-//             while ($fila=mysqli_fetch_array($paquete)) {
-//                 $array[] = array(
-//                 'id_producto' => $fila['id_producto']
-//             );
-//             }
-//             $countArray = count($array);
-  
-//             foreach ($array as $row) 
-//             {
-  
-  
-//               $masVenta = $sumVenta;
-//               $masEspecial = $sumEspecial;
-//                 $idProducto = $row['id_producto'];
-//                 $consulta2 = "SELECT * FROM producto WHERE cod = '$idProducto' AND id_sucursal = '$idSucursal'";
-//                 if($paquete2 = consultar($con,$consulta2)){
     
-//                     $fila = mysqli_fetch_array($paquete2);
-//                     $precioVenta    = $fila['venta'];
-//                     $sumVenta = $precioVenta + $masVenta;
-  
-//                     $precioEspecial = $fila['especial'];
-//                     $sumEspecial = $precioEspecial + $masEspecial;
-//                 }
-  
-                
-//                 $contador++;
-//                 if($contador == $countArray){
-//                   $sumTipoPrecio[] = array('totalVentaPublico' => $sumVenta, 'totalVentaEspecial' => $sumEspecial);
-//                 }
-//             }
-  
-//             $totalVentaPublico  = $sumTipoPrecio[0]['totalVentaPublico'];
-//             $totalVentaEspecial = $sumTipoPrecio[0]['totalVentaEspecial'];
-  
-//             $totalComision = (($totalVentaPublico) - ($totalVentaEspecial + $manoObra)) * ($comision);
-//             if($totalComision < 0){
-//               $totalComision = 0;
-//             }
-  
-//         }
-//     }
-//     return $totalComision;
-//   }
+
+
     
 ?>

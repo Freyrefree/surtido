@@ -139,10 +139,9 @@ body {
 		<label for="to">hasta</label>
 		<input type="text" id="to" name="to" value="<?php echo $fechaInput; ?>"/>
 	</td>
-
-    
             
     <td width="37%"  class="ui-widget-content ui-state-hover" align="center"><a href="#" id="cmd" onClick="pdfcorte();" ><img src="img/file_extension_pdf.png" width="32" height="32"> Exportar</a></td>
+	
   </tr>
   <tr>
   	<p id="resultado"></p>
@@ -159,45 +158,62 @@ body {
 </body>
 </html>
 
+
+
+
+
+
+
 <script>
-$( document ).ready(function() {
+
+
+function pdfcorte(){
+
+var fecha_ini = document.getElementById("fechaini").value;
+
+var mes = fecha_ini.substring(0,2);
+var dia = fecha_ini.substring(3,5);
+var ano = fecha_ini.substring(6,10);
+var divide = "-"
+var fecha_i = ano + divide +  mes + divide + dia;
+
+var fecha_fin = document.getElementById("to").value;
+
+var mes1 = fecha_fin.substring(0,2);
+var dia1 = fecha_fin.substring(3,5);
+var ano1 = fecha_fin.substring(6,10);
+var divide1 = "-"
+var fecha_f = ano1 + divide +  mes1 + divide + dia1;
+
+var cajero       = ""
+//var producto     = document.getElementById("product").value;
+var categoria    = ""
+var codigo       = ""
+var coincidencia = ""
+
+
+var f1 = $("#fechaini").val();
+var f2 = $("#to").val();
+
+if(f1 == "" && f2 != ""){
+	$("#fechaini").css("border-color", "red");
+}else if(f1 != "" && f2 == ""){
+	$("#to").css("border-color", "red");
+
+}else{
+
+	$("#fechaini").css("border-color", "");
+	$("#to").css("border-color", "");
+
+
+
+	//window.location = 'PDFreportecorte.php?fecha_ini11='+fecha_i+'&fecha_fin11='+fecha_f+'&cajero='+cajero+'&codigo='+codigo+'&coincidencia='+coincidencia+'&categoria='+categoria;
+	window.open('PDFmiCorte.php?fecha_ini11='+fecha_i+'&fecha_fin11='+fecha_f+'&cajero='+cajero+'&codigo='+codigo+'&coincidencia='+coincidencia+'&categoria='+categoria,'_blank');
 
 	
-    
+}		
 
-});
-</script>
-
+}
 
 
-
-
-<script>
-// function consultaPDFMiCorte(){
-
-// var fecha_ini = document.getElementById("fechainicio").value;
-// var mes = fecha_ini.substring(0,2);
-// var dia = fecha_ini.substring(3,5);
-// var ano = fecha_ini.substring(6,10);
-// var divide = "-";
-// var fecha_i = ano + divide +  mes + divide + dia;
- 
-// var fecha_fin = document.getElementById("fechafin").value;	
-// var mes1 = fecha_fin.substring(0,2);
-// var dia1 = fecha_fin.substring(3,5);
-// var ano1 = fecha_fin.substring(6,10);
-//  var divide1 = "-";
-// var fecha_f = ano1 + divide1 +  mes1 + divide1 + dia1;
-
-// // $.ajax({
-// //         method: "POST",
-// //         url: "PDFmiCorte.php",
-// //         data: { fechainicio: fecha_i, fechafin: fecha_f}
-// //         })
-// //         .done(function(respuesta) {
-// // 					//$("#recargado").html(respuesta);
-// //         });
-
-// window.location.href = "PDFmiCorte.php?fechainicio=" + fecha_i + "&fechafin=" + fecha_f;
-// }
 </script>

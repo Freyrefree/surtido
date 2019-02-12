@@ -6,7 +6,7 @@
     //error_reporting(0);
 
     $idSucursal = $_SESSION['id_sucursal'];
-    $usuario      = $_SESSION['username'];
+    $usuarioSession      = $_SESSION['username'];
     $tipoUsuario  = $_SESSION['tipo_usu'];
 
 		
@@ -110,14 +110,14 @@ $arrayQuery[5] = $categoria;
 
 $rango_fecha = $fecha_inicio ." / " .$fecha_fin;
 
-$arrayConsultas = crearConsulta($arrayQuery);
+$arrayConsultas = crearConsulta($arrayQuery,$usuarioSession);
 
 $codigoTabla = tabularCorteVentas($arrayConsultas,$rango_fecha,$tipoUsuario);
 
 echo $codigoTabla;
 
 
-function crearConsulta($arrayQuery){
+function crearConsulta($arrayQuery,$usuarioSession){
 
     $countArray = 0;
     $queryMas = "";
@@ -236,9 +236,9 @@ function crearConsulta($arrayQuery){
         $countArray++;
     }
 
-    $consultaDetalle    = "SELECT * from detalle ".$queryMas;
-    $consultaCantidad   = "SELECT SUM(cantidad)FROM detalle".$queryMas;
-    $consultaImporte    = "SELECT SUM(importe)FROM detalle".$queryMas;
+    $consultaDetalle    = "SELECT * from detalle ".$queryMas. " AND usu = '$usuarioSession'"; 
+    $consultaCantidad   = "SELECT SUM(cantidad)FROM detalle".$queryMas. " AND usu = '$usuarioSession'"; 
+    $consultaImporte    = "SELECT SUM(importe)FROM detalle".$queryMas. " AND usu = '$usuarioSession'"; 
 
     $arrayConsultas[0] = $consultaDetalle;
     $arrayConsultas[1] = $consultaCantidad;

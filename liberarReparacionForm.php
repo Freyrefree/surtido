@@ -192,6 +192,9 @@ $(document).ready(function()
 
                 }else if(respuesta == 5){
                     swal("¡ERROR!", "¡La reparación ya está liberada!", "error");
+
+                }else if(respuesta == 6){
+                    swal("¡ERROR!", "¡Intente de nuevo por favor la Sesion ha Caducado. Cierre el Sistema e Inicie de nuevo", "error");
                 }
             });
         
