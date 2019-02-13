@@ -1241,7 +1241,7 @@ if($estado==1){
       <pre style="font-size:30px"><center><?php echo '$ '.number_format($_SESSION['neto'],2,",","."); ?></center></pre>
     <p align="center" class="text-info"><strong>Forma de Pago "Contado"</strong></p>
      <div align="center">
-      <form id="form1" name="contado" method="get" action="CobrarContado.php">
+      <form id="form1Contado" name="contado" method="get" action="CobrarContado.php">
       <p>
         <table border="0" width="100%">
         <tr>
@@ -1260,7 +1260,7 @@ if($estado==1){
                     <span class="add-on">.00</span>
                 </div><br>
                 <input type="hidden" name="tipocompra" id="tipocompra" value="CONTADO">
-                <input type="submit" class="btn btn-success" name="button" id="button" value="Cobrar Dinero Recibido" />
+                <input type="submit" class="btn btn-success buttonContado" name="button" id="buttonContado" value="Cobrar Dinero Recibido" />
           </form>
         </div>
   </div>
@@ -1956,3 +1956,18 @@ function formCheck(cb) {
       </div>
     </div>
 </div>
+
+<script>
+
+
+$(document).ready(function () {
+$("#buttonContado").click(function () {
+    setTimeout(function () { disableButton(); }, 0);
+});
+
+function disableButton() {
+    $("#buttonContado").prop('disabled', true);
+}
+});
+
+</script>
