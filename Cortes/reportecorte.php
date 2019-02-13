@@ -236,9 +236,9 @@ function crearConsulta($arrayQuery,$usuarioSession){
         $countArray++;
     }
 
-    $consultaDetalle    = "SELECT * from detalle ".$queryMas. " AND usu = '$usuarioSession'"; 
-    $consultaCantidad   = "SELECT SUM(cantidad)FROM detalle".$queryMas. " AND usu = '$usuarioSession'"; 
-    $consultaImporte    = "SELECT SUM(importe)FROM detalle".$queryMas. " AND usu = '$usuarioSession'"; 
+    $consultaDetalle    = "SELECT * from detalle ".$queryMas; 
+    $consultaCantidad   = "SELECT SUM(cantidad)FROM detalle".$queryMas; 
+    $consultaImporte    = "SELECT SUM(importe)FROM detalle".$queryMas; 
 
     $arrayConsultas[0] = $consultaDetalle;
     $arrayConsultas[1] = $consultaCantidad;
