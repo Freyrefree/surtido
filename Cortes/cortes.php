@@ -1,5 +1,6 @@
 <?php
 		session_start();
+		error_reporting(0);
 		include('../php_conexion.php'); 
 		if(!$_SESSION['tipo_usu']=='a' or !$_SESSION['tipo_usu']=='ca'){
 			header('location:error.php');

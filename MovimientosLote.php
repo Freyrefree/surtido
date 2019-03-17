@@ -175,13 +175,25 @@ td {
             <?php
             //$id_sucursal=$IdSucEntrada; //solo para pruebas
             if($IdSucEntrada==$id_sucursal){
-               echo "
-               <div id='ConfCheck$y'>
-                ✓ <input type='checkbox' name='ChekRecib$y' id='ChekRecib$y' value='$IdProducto?$IMEI?$ICCID?$IdFicha?$IdLote'>
-                X <input type='checkbox' name='CheckRechazar$y' id='CheckRechazar$y' value='$IdProducto?$IMEI?$ICCID?$IdFicha?$IdLote' data-target='#myModal'>
-               </div>
-                "; 
+
+                 $cadena = '"'.$IdProducto.'?'.$IMEI.'?'.$ICCID.'?'.$IdFicha.'?'.$IdLote.'"';
+
+                echo"<div id='ConfCheck$y'>
+            
+                <button type='button' id='btnAceptar$y'  onclick='aceptarItem($cantidad,$y,$cadena)'; class='btn btn-primary  '>✓</button>
+                <button type='button' id='btnRechazar$y'  onclick='rechazarItem($cantidad,$y,$cadena)'; class='btn btn-danger '>X</button>
+                ";
+
+
+            //    echo "
+            //    <div id='ConfCheck$y'>
+            //     ✓ <input type='checkbox' name='ChekRecib$y' id='ChekRecib$y' value='$IdProducto?$IMEI?$ICCID?$IdFicha?$IdLote'>
+            //      <input type='checkbox' name='CheckRechazar$y' id='CheckRechazar$y' value='$IdProducto?$IMEI?$ICCID?$IdFicha?$IdLote' data-target='#myModal'>
+            //    </div>
+            //     "; 
+
             } 
+
             ?>
         </td>
     </tr>
@@ -220,9 +232,52 @@ $(function () {
 </table>
 </div>
 
+<script>
+
+function aceptarItem(cantidad,y,cadena){
+    
+    var selectorA = "btnAceptar"+y
+    var selectorB = "btnRechazar"+y
+
+    var cadena2 = cadena.replace('"', "");
+
+    $("#"+selectorA).prop("disabled", true);
+    $("#"+selectorB).prop("disabled", true);
+
+    $('#ConfCheck'+y).load('MarcaElementoLote.php?Elemento=' + cadena2 + '&Aceptados='+ cantidad);
+
+}
+
+function rechazarItem(cantidad,y,cadena){
+
+    var selectorA = "btnAceptar"+y
+    var selectorB = "btnRechazar"+y
+
+    var cadena2 = cadena.replace('"', "");
+
+    $("#"+selectorA).prop("disabled", true);
+    $("#"+selectorB).prop("disabled", true);
+
+     $('#ConfCheck'+y).load('RechazaElementoLote.php?Elemento=' + cadena2 + '&Aceptados='+ cantidad);
+    
+
+
+}
+
+var enableSubmit = function(ele) {
+    $(".btnAceptar").attr("disabled", false);
+}
+
+
+
+
+</script>
+
 <button onclick="imprimir();" class="btn">
   Imprimir
 </button>
+
+
 
 <script type="text/javascript">
 function imprimir(){
