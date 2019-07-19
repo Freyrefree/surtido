@@ -1,5 +1,6 @@
 <?php
-        session_start();
+        // session_start();
+        include_once 'APP/config.php';
         include('php_conexion.php'); 
         $usu=$_SESSION['username'];
         $tipo_usu=$_SESSION['tipo_usu'];
@@ -10,50 +11,195 @@
         $y=0;
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <title>Movimientos</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Movimientos Aceptados</title>
 
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    <!-- <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> -->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="jsV2/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="jsV2/tether.min.js"></script>
+  <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <!-- MODAL LOAD -->
-		<script src="js/jquery.loadingModal.min.js" type="text/javascript"></script>		
-		<link href="css/jquery.loadingModal.css" rel="stylesheet" type="text/css"/>
-	<!--  -->
 
-    <!-- Date Picker -->
-    <link rel="stylesheet" href="cortes/themes/base/jquery.ui.all.css">
-    <script src="cortes/ui/jquery.ui.core.js"></script>	
-	<script src="cortes/ui/jquery.ui.datepicker.js"></script>
-    <link rel="stylesheet" href="cortes/demos/demos.css">
+ <!-- Date Picker -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- ************* -->
+
+  <!-- "DATA TABLE" -->
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+  <!-- ********* -->
+
+     
+
+
+  <style>
+
+    body{
+            
+            background: #F7D358;
+    }
+    .titulo{
+
+            background: #e7e7e7;
+            color: #F2F2F2;
+    }
+    .modal-header{
+
+            background: #0275d8;
+            color: #F2F2F2;
+    }
+    .listado-tareas {
+            max-height: calc(50vh - 70px);
+            overflow-y: auto;
+    }
+    .btn{
+            border-radius: 0px;
+    }
+    .finish{
+            text-decoration:line-through;
+    }
+    .dropdown-item{
+            color: #E5E8E8;
+    }
+    .dropdown-item:hover{
+            color:#F4F6F6;
+    }
+    .form-control{
+            margin: 0px;
+    }
+    .black{
+        color: black;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+
+  </style>
+
+
+
+</head>
+<?php include_once "layout.php"; ?>
+<body>
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
+
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">MOVIMIENTOS PENDIENTES</p>
+										</div>
+									</div>
+
+
+
+                                    <div class="row">
+                                        <div class="col-md-3">                        
+                                            <a href="NuevoMovimientoLote.php" class="btn btn-info">Nuevo Movimiento</a>
+                                        </div>
+
+                                        <div class="col-md-3">                        
+                                        <a href="MovimientosLote.php" class="btn  btn-warning">Movimientos Pendientes</a>
+                                        </div>
+
+                                        <div class="col-md-3">                        
+                                            <a href="MovimientosRechazadosLote.php" class="btn  btn-danger">Movimientos Rechazados</a>
+                                        </div>
+
+                                        <div class="col-md-3">                        
+
+                                        </div>
+                                    </div>
+                  
+                                    <br>
+
+									<div class="row">
+										<div class="col-md-12">
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                Desde<input class="form-control" type="text" id="fechainicio" name="fechainicio" value=""/>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                Hasta<input class="form-control" type="text" id="fechafin" name="fechafin" value=""/>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                            Categoría
+                                                <select class="form-control" name="tipo" id="tipo">
+                                                    <option value="0">Selecciona Una Opción</option>
+                                                    <option value="1">Telefonía</option>
+                                                    <option value="2">Accesorios</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                            <button onclick="consultarMA2();" type="button" class="btn btn-primary">Consultar</button>
+                                            <i id="loading" class="fa fa-circle-o-notch fa-spin fa-2x fa-fw" style="color:#007bff; display:none;"></i>
+                                            </div>
+
+                                            
+
+                                        </div>
+
+									    </div>
+
+								    </div>
+
+                                    <div class="row">
+                                    <div class="col-md-12">
+                                    <br>
+                                        <div id="imprimeme"></div>
+                                    </div>
+                                    </div>
+
+							</div>
+
+							<div class="col-md-12">
+                               
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
     
-    <script>
+</body>
+</html>
+
+<script>
     $(function() {
             $( "#fechainicio" ).datepicker({
                 defaultDate: "",
@@ -70,89 +216,86 @@
                 }
             });
         });
-    </script>
-  <!-- Date Picker -->   
-</head>
-
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-<div align="center">
-<a href="NuevoMovimientoLote.php" class="btn btn-lg btn-info">Nuevo Movimiento</a>
-<a href="MovimientosLote.php" class="btn btn-lg btn-warning">Movimientos Pendientes</a>
-<a href="MovimientosRechazadosLote.php" class="btn btn-lg btn-danger">Movimientos Rechazados</a>
-
-<br><br>
-<table class="table">
-<tr class="success">
-    <td>        
-        Desde<input type="text" id="fechainicio" name="fechainicio" value=""/>        
-        Hasta<input type="text" id="fechafin" name="fechafin" value=""/>
-
-        <select name="tipo" id="tipo">
-            <option value="0">Selecciona Una Opción</option>
-            <option value="1">Telefonía</option>
-            <option value="2">Accesorios</option>
-        </select>
-        <button onclick="consultarMA2();" type="button" class="btn btn-primary">Consultar</button>
-    </td>
-</tr>
-</table>
-
-<div id="imprimeme"></div>
-
-    <button onclick="imprimir();" class="btn">
-    Imprimir
-    </button>
-
-    <script type="text/javascript">
-        function imprimir(){
-        var objeto=document.getElementById('imprimeme');  //obtenemos el objeto a imprimir
-        var ventana=window.open('','_blank');  //abrimos una ventana vacía nueva
-        ventana.document.write(objeto.innerHTML);  //imprimimos el HTML del objeto en la nueva ventana
-        ventana.document.close();  //cerramos el documento
-        ventana.print();  //imprimimos la ventana
-        ventana.close();  //cerramos la ventana
-        }
-
-        function consultarMA2()
-        {
-            var fecha_ini = document.getElementById("fechainicio").value;
-            var mes = fecha_ini.substring(0,2);
-            var dia = fecha_ini.substring(3,5);
-            var ano = fecha_ini.substring(6,10);
-            var divide = "-";
-            var fecha_i = ano + divide +  mes + divide + dia;
-            
-            var fecha_fin = document.getElementById("fechafin").value;	
-            var mes1 = fecha_fin.substring(0,2);
-            var dia1 = fecha_fin.substring(3,5);
-            var ano1 = fecha_fin.substring(6,10);
-            var divide1 = "-";
-            var fecha_f = ano1 + divide1 +  mes1 + divide1 + dia1;
-
-            var tipo = document.getElementById("tipo").value;
+</script>
 
 
-            $('body').loadingModal({text: 'Showing loader animations...', 'animation': 'wanderingCubes'});
-			$('body').loadingModal('text', 'Consultando');
-			$('body').loadingModal('animation', 'foldingCube');
-			$('body').loadingModal('color', '#000');
-			$('body').loadingModal('backgroundColor', '#F7D358');
-			$('body').loadingModal('opacity', '0.9');
-			$('body').loadingModal('show');
-            $.ajax({
-                method: "POST",
-                url: "MovimientosAceptadosLote2.php",
-                data: {fechainicio: fecha_i, fechafin: fecha_f, tipo: tipo}
-                })
-                .done(function(respuesta) 
-                {
-                    $('body').loadingModal('hide');
-					$('body').loadingModal('destroy');
-                    $("#imprimeme").html(respuesta);
-                });
-        }
-    </script>
+<script>
 
-</div>
-</body>
-</html>
+
+    function consultarMA2()
+    {
+        $("#loading").show();
+        $("#imprimeme").html("");
+
+
+        var fecha_ini = document.getElementById("fechainicio").value;
+        var mes = fecha_ini.substring(0,2);
+        var dia = fecha_ini.substring(3,5);
+        var ano = fecha_ini.substring(6,10);
+        var divide = "-";
+        var fecha_i = ano + divide +  mes + divide + dia;
+        
+        var fecha_fin = document.getElementById("fechafin").value;	
+        var mes1 = fecha_fin.substring(0,2);
+        var dia1 = fecha_fin.substring(3,5);
+        var ano1 = fecha_fin.substring(6,10);
+        var divide1 = "-";
+        var fecha_f = ano1 + divide1 +  mes1 + divide1 + dia1;
+
+        var tipo = document.getElementById("tipo").value;
+
+
+
+        $.ajax({
+            method: "POST",
+            url: "MovimientosAceptadosLote2.php",
+            data: {fechainicio: fecha_i, fechafin: fecha_f, tipo: tipo}
+            })
+            .done(function(respuesta) 
+            {
+                $("#loading").hide();
+                $("#imprimeme").html(respuesta);
+                tabla();
+            });
+    }
+
+</script>
+
+<script>
+function tabla(){
+
+$('#example').DataTable({
+              "ordering": true,
+              "language": {
+                  "paginate": {
+                      "previous": "<i class='mdi mdi-chevron-left'>",
+                      "next": "<i class='mdi mdi-chevron-right'>"
+                  }
+              },
+              language: {
+              "decimal": "",
+              "emptyTable": "No hay información",
+              "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+              "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+              "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+              "infoPostFix": "",
+              "thousands": ",",
+              "lengthMenu": "Mostrar _MENU_ Entradas",
+              "loadingRecords": "Cargando...",
+              "processing": "Procesando...",
+              "search": "Buscar:",
+              "zeroRecords": "Sin resultados encontrados",
+              "paginate": {
+                  "first": "Primero",
+                  "last": "Ultimo",
+                  "next": "Siguiente",
+                  "previous": "Anterior"
+              }
+              },
+             
+          });
+
+}
+     
+</script>
+

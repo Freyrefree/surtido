@@ -12,103 +12,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Empleado</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Empleado</title>
 
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="jsV2/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="jsV2/tether.min.js"></script>
+  <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap-transition.js"></script>
-<script src="js/bootstrap-alert.js"></script>
-<script src="js/bootstrap-modal.js"></script>
-<script src="js/bootstrap-dropdown.js"></script>
-<script src="js/bootstrap-scrollspy.js"></script>
-<script src="js/bootstrap-tab.js"></script>
-<script src="js/bootstrap-tooltip.js"></script>
-<script src="js/bootstrap-popover.js"></script>
-<script src="js/bootstrap-button.js"></script>
-<script src="js/bootstrap-collapse.js"></script>
-<script src="js/bootstrap-carousel.js"></script>
-<script src="js/bootstrap-typeahead.js"></script>
-<script src="js/bootstrap-affix.js"></script>
-<script src="js/holder/holder.js"></script>
-<script src="js/google-code-prettify/prettify.js"></script>
-<script src="js/application.js"></script>
+  <!-- DATA TABLE -->
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+  <!-- ********* -->
 
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="ico/favicon.png">
-    <!-- SWAL -->
-    <script src="js/sweetalert2.all.min.js"></script>
+      <!-- SWAL -->
+      <script src="js/sweetalert2.all.min.js"></script>
     <!--**-->
 
+  <style>
+
+    body{
+            
+            background: #F7D358;
+    }
+    .titulo{
+
+            background: #e7e7e7;
+            color: #F2F2F2;
+    }
+    .modal-header{
+
+            background: #0275d8;
+            color: #F2F2F2;
+    }
+    .listado-tareas {
+            max-height: calc(50vh - 70px);
+            overflow-y: auto;
+    }
+    .btn{
+            border-radius: 0px;
+    }
+    .finish{
+            text-decoration:line-through;
+    }
+    .dropdown-item{
+            color: #E5E8E8;
+    }
+    .dropdown-item:hover{
+            color:#F4F6F6;
+    }
+    .form-control{
+            margin: 0px;
+    }
+    .black{
+        color: black;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+
+</style>
+
+
 </head>
+<?php include_once "layout.php"; ?>
+<body>
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
+
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">COMISIONES</p>
+										</div>
+									</div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">                        
+                                            <button type="button" class="btn btn-info" onClick="window.location='crear_empleado.php'">Nuevo Empleado</button>
+                                        </div>
+
+                                        <div class="col-md-3">                        
+                                            
+                                        </div>
+                                        <div class="col-md-3">
+
+                                        </div>
+                                        <div class="col-md-3">
+                                          <a href="PDFusuarios.php" class="red"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+<hr>
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                                 
+                                      </div>
+                                    </div>
+                  
+                                    <br>
+
+									<div class="row">
+										<div class="col-md-12">
+                    <div id="tblUsuarios"></div>
+
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+  
+</body>
+</html>
+
+
+
 <!-- ***************************************************************************************************************************************** -->
-<div id="mymodalmsg" class="modal hide fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-<div class="modal-dialog modal-sm">
+
+
+<div  id="mymodalmsg" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
-  <div class="modal-header" id="modalmsghead">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="">Usuarios</h3>
-  </div>
-  <div class="modal-body">
-    <center><div id="modalmsg"></div></center>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-  </div>
-  </div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Usuarios</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div id="modalmsg"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
   </div>
 </div>
 <!-- ************************************************************************************************************ -->
 
 <!-- ************************* -->
-<div class="modal fade bd-example-modal-sm" id="modalConfirmarEliminar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
+
+
+<div  id="modalConfirmarEliminar" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
-    <div class="modal-header" id="modalConfirmarEliminarhead">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h3 id="">Usuarios</h3>
-    </div>
-    <div class="modal-body">
-      <center><div id="msgmodalConfirmarEliminar"><div/></center>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" id="btnConfirmarusr" onclick="confirmar(this.value)" data-dismiss="modal" aria-hidden="true">Aceptar</button>
-    </div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Usuarios</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div id="msgmodalConfirmarEliminar">
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="btnConfirmarusr" onclick="confirmar(this.value)" data-dismiss="modal" aria-hidden="true">Aceptar</button>
+      </div>
     </div>
   </div>
 </div>
 <!-- ************************* -->
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-<table width="100%" border="0">
-  <tr>
-    <td>
-    <div class="btn-group" data-toggle="buttons-checkbox">
-        <button type="button" class="btn btn-primary" onClick="window.location='PDFusuarios.php'">Reporte PDF</button>
-        <button type="button" class="btn btn-primary" onClick="window.location='crear_empleado.php'">Ingresar Nuevo</button>
-    </div>
-    </td>
-  </tr>
-</table>
-</div>
-<div align="center">
-<div id="tblUsuarios"></div>
-</div>
-</body>
-</html>
-<script type="text/javascript">
+
+
+
+<script>
 
 $(document).ready(function() {
 
@@ -119,27 +222,28 @@ $(document).ready(function() {
     })
     .done(function(respuesta) {
         $("#tblUsuarios").html(respuesta);
+        tabla();
     });
 
 });
 
 function eliminarUsuario(id)
 {
-    //alert(id);
+    
     $.ajax({
     method: "POST",
     url: "eliminarUsuario.php",
     data: {id_usuario : id, opc: 1}
     })
     .done(function(respuesta) {
-        //$("#tblUsuarios").html(respuesta);
+        
         if(respuesta == 2)
         {
             swal("¡Error!", "No se puede Elimianr el Usuario, primero debe desactivarlo", "error");
         }else if(respuesta == 1){
             $("#msgmodalConfirmarEliminar").html("¿Está seguro que desea eliminar el usuario?")
             $("#btnConfirmarusr").val(id);
-            $("#modalConfirmarEliminarhead").css({"background-color":"#d9534f","color":"white"});        
+           
             $('#modalConfirmarEliminar').modal('show');
         }
 
@@ -156,11 +260,11 @@ function confirmar(id)
     data: {id_usuario : id, opc: 2}
     })
     .done(function(respuesta) {
-        //$("#tblUsuarios").html(respuesta);
+       
         if(respuesta != 1)
         {
             $("#modalmsg").html("Error, intente mas tarde");
-            $("#modalmsghead").css({"background-color":"#d9534f","color":"white"});
+           
             $('#mymodalmsg').modal('show');
         }else{
 
@@ -169,6 +273,50 @@ function confirmar(id)
 
     });
 }
+
+
+</script>
+<script>
+
+
+  
+
+
+function tabla(){
+
+  $('#example').DataTable({
+              "ordering": true,
+              "language": {
+                  "paginate": {
+                      "previous": "<i class='mdi mdi-chevron-left'>",
+                      "next": "<i class='mdi mdi-chevron-right'>"
+                  }
+              },
+              language: {
+              "decimal": "",
+              "emptyTable": "No hay información",
+              "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+              "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+              "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+              "infoPostFix": "",
+              "thousands": ",",
+              "lengthMenu": "Mostrar _MENU_ Entradas",
+              "loadingRecords": "Cargando...",
+              "processing": "Procesando...",
+              "search": "Buscar:",
+              "zeroRecords": "Sin resultados encontrados",
+              "paginate": {
+                  "first": "Primero",
+                  "last": "Ultimo",
+                  "next": "Siguiente",
+                  "previous": "Anterior"
+              }
+              },
+              
+          });
+
+}
+
 
 
 </script>

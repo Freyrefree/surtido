@@ -1,6 +1,7 @@
 <?php
-  setlocale(LC_ALL,"es_ES");
- 		session_start();
+    include_once 'APP/config.php';
+    setlocale(LC_ALL,"es_ES");
+ 		// session_start();
     include('php_conexion.php'); 
 		include('IMP_contado.php');
     include('IMP_Reparacion.php');
@@ -35,7 +36,8 @@
       if ($cambio <= 0) {
         $cambio = 0;
       }
-		}
+    }
+    
     if ($_GET['tipo'] == "REPARACION") {
       $id_reparacion = $_GET['id_reparacion'];
       $sent=mysql_query("SELECT * FROM reparacion where id_reparacion='$id_reparacion' AND id_sucursal = '$id_sucursal'");
@@ -75,199 +77,236 @@
     $confirm = $_GET['confirm'];
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Contado</title>
 
-    <meta charset="utf-8">
-    <title>Contado</title>
-    <style type="text/css" media="print">
-    	#Imprime {
-    		height: auto;
-    		width: 310px;
-    		margin: 0px;
-    		padding: 0px;
-    		float: left;
-    		font-family: Arial, Helvetica, sans-serif;
-    		
-    		color: #000;
-    	}
-    	@page{
-    	   margin: 0;
-    	}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="jsV2/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="jsV2/tether.min.js"></script>
+  <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-      .nota{
-        border-collapse: collapse;border: 1px solid #0B2161;font-size: 14px;
-        border-radius: 25px;
-        color: #0B2161;
-      }
-      .product{
-        border: 1px solid black;
-      }
-    </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <style>
 
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    <script language="javascript">
+    body{
+            
+            background: #F7D358;
+    }
+    .titulo{
 
-	  function imprSelec(nombre) {
-	  
-		  var ficha = document.getElementById(nombre);
-		  var ventimp = window.open(' ', 'popimpr');
-		  ventimp.document.write( ficha.innerHTML );
-		  ventimp.document.close();
-		  ventimp.print( );
-		  ventimp.close();
-	  }
-    
-	</script> 
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-	  <script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
-    <!-- descargar en pdf -->
-    <script src="js/jspdf.min.js"></script>
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
+            background: #e7e7e7;
+            color: #F2F2F2;
+    }
+    .modal-header{
+
+            background: #0275d8;
+            color: #F2F2F2;
+    }
+    .listado-tareas {
+            max-height: calc(50vh - 70px);
+            overflow-y: auto;
+    }
+    .btn{
+            border-radius: 0px;
+    }
+    .finish{
+            text-decoration:line-through;
+    }
+    .dropdown-item{
+            color: #E5E8E8;
+    }
+    .dropdown-item:hover{
+            color:#F4F6F6;
+    }
+    .form-control{
+            margin: 0px;
+    }
+    .black{
+        color: black;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+
+  </style>
 </head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-<?php
-  if($OtrosMensajes=='sinusuario'){
-                echo '<div class="alert alert-error" align="center">
-                      <strong>Solo los clientes registrados pueden tener credito</strong> <br>
-                      <strong><a href="caja.php?ddes='.$_SESSION['ddes'].'">Regresar a la caja</a></strong>
-                    </div>';
-            }else{
- ?>           
+<?php include_once "layout.php"; ?>
+<body>
 
-<?php if($error=='no'){ ?>
-<center><a href="caja.php?ddes=0" class="btn"><i class="icon-backward"></i> Regresar a Ventas</a>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
-<!-- <a href="IMP_contado.php?factura=<?php echo $factura; ?>" class="btn"><i class="icon-print"></i> Imprimir Factura</a> -->
-</center><br>
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
 
-<table width="100%" border="0">
-  <tr>
-    <td width="50%"><center>
-        <pre style="font-size:24px"><strong class="text-success">Total a Pagar</strong></pre>
-        <pre style="font-size:24px"><strong>$ <?php echo number_format($tpagar,2); ?></strong></pre>
-        <pre style="font-size:24px"><strong class="text-success">Dinero Recibido</strong></pre>
-        <pre style="font-size:24px"><strong>$ <?php echo number_format($ccpago,2); ?></strong></pre>
-        <pre style="font-size:24px"><strong class="text-success">Cambio</strong></pre>
-        <pre style="font-size:24px"><strong>$ <?php echo number_format($cambio,2); ?></strong></pre>
-    </center></td>
-    <td width="50%" rowspan="2">
-    <?php 
-      $can=mysql_query("SELECT * FROM empresa where id=1");	
-        if($dato=mysql_fetch_array($can)){
-      	$empresa=$dato['empresa'];		$direccion=$dato['direccion'];
-      	$telefono=$dato['tel1'];		$nit=$dato['nit'];
-      	$fecha=date("d-m-y H:i:s");		$pagina=$dato['web'];
-      	$tama=$dato['tamano'];
-      }
-      $can=mysql_query("SELECT * FROM factura where factura='$factura' AND id_sucursal = '$id_sucursal'");
-        if($datos=mysql_fetch_array($can)){	
-      	$cajera=$datos['cajera'];
-      }
-      $can=mysql_query("SELECT * FROM usuarios where usu='$cajera'");	
-        if($datos=mysql_fetch_array($can)){	
-      	$cajero=$datos['nom'];
-      }
-      $dia=date("d");
-      setlocale(LC_ALL,"es_ES");
-      $mes=strtoupper(date("M"));
-      $year=date("o");
-      $rfc = $_GET['rfc'];
-      $tipoventa=$_GET['tipo'];
-      if ($_GET['tipo'] == "REPARACION") {
-        
-        PDFR($id_reparacion);
-      }else {if ($_GET['tipo'] == "ABONO") {
-        $num = $_GET['n'];
-      }else {
-        $nombrecliente = $_GET['nombrecliente']; 
-        PDF($factura,$tipoventa,$ccpago,$rfc,$tpagar,$numero,$confirm,$nombrecliente);
-      }
-      }
-    ?>
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">CONTADO</p>
+										</div>
+									</div>
+
+                      <div class="row">
+                          <div class="col-md-6">  
+                          <?php if($error=='no'){ ?>
+                            <a href="caja.php?ddes=0" class="btn btn-info">REGRESAR A CAJA</a>
+                          <?php } ?>
+                          </div>
+
+                          <div class="col-md-2">                        
+                          
+                          
+                          </div>
+
+                          <div class="col-md-4">
+
+            
+                            
+                          </div>
+
+                      </div>
+                  
+                  <br>
+
+									<div class="row">
+										<div class="col-md-12">
+
+                      <?php
+                      if($OtrosMensajes=='sinusuario'){
+                        echo '<div class="alert alert-error" align="center">
+                        <strong>Solo los clientes registrados pueden tener credito</strong> <br>
+                        <strong><a href="caja.php?ddes='.$_SESSION['ddes'].'">REGRESAR A CAJA</a></strong>
+                        </div>';
+                      }else{
+                      ?>           
+
+                      <?php if($error=='no'){ ?>
+                       
+                      <br>
+
+                      <div class="row">
+
+                      <div class="col-md-3">
+
+                        <p style="font-size:24px"><strong class="text-success">Total a Pagar</strong></p>
+                        <p style="font-size:24px"><strong>$ <?php echo number_format($tpagar,2); ?></strong></p>
+                        <p style="font-size:24px"><strong class="text-success">Dinero Recibido</strong></p>
+                        <p style="font-size:24px"><strong>$ <?php echo number_format($ccpago,2); ?></strong></p>
+                        <p style="font-size:24px"><strong class="text-success">Cambio</strong></p>
+                        <p style="font-size:24px"><strong>$ <?php echo number_format($cambio,2); ?></strong></p>
+
+                        <?php 
+                          $can=mysql_query("SELECT * FROM empresa where id=1");	
+                            if($dato=mysql_fetch_array($can)){
+                            $empresa=$dato['empresa'];		$direccion=$dato['direccion'];
+                            $telefono=$dato['tel1'];		$nit=$dato['nit'];
+                            $fecha=date("d-m-y H:i:s");		$pagina=$dato['web'];
+                            $tama=$dato['tamano'];
+                          }
+                          $can=mysql_query("SELECT * FROM factura where factura='$factura' AND id_sucursal = '$id_sucursal'");
+                            if($datos=mysql_fetch_array($can)){	
+                            $cajera=$datos['cajera'];
+                          }
+                          $can=mysql_query("SELECT * FROM usuarios where usu='$cajera'");	
+                            if($datos=mysql_fetch_array($can)){	
+                            $cajero=$datos['nom'];
+                          }
+                          $dia=date("d");
+                          setlocale(LC_ALL,"es_ES");
+                          $mes=strtoupper(date("M"));
+                          $year=date("o");
+                          $rfc = $_GET['rfc'];
+                          $tipoventa=$_GET['tipo'];
+                          if ($_GET['tipo'] == "REPARACION") {
+                            
+                            PDFR($id_reparacion);
+                          }else {if ($_GET['tipo'] == "ABONO") {
+                            $num = $_GET['n'];
+                          }else {
+                            $nombrecliente = $_GET['nombrecliente']; 
+                            PDF($factura,$tipoventa,$ccpago,$rfc,$tpagar,$numero,$confirm,$nombrecliente);
+                          }
+                          }
+                        ?>
+
+                      </div>
+
+                      <div class="col-md-9">
+                      
+                      <?php if ($_GET['tipo'] == "REPARACION") { ?>
+                        <embed src="Facturas/R<?php echo $id_reparacion."_".$id_sucursal; ?>.pdf?#zoom=160" width="100%" height="380" internalinstanceid="4" title>
+                      <?php }else { if ($_GET['tipo'] == "ABONO") {  ?>
+                        <embed src="Facturas/<?php echo "A".$num."_".$factura."_".$id_sucursal; ?>.pdf?#zoom=160" width="100%" height="380" internalinstanceid="4" title>
+                      <?php 
+                      }else { ?>
+                        <embed src="Facturas/<?php echo $factura."_".$id_sucursal; ?>.pdf?#zoom=160" width="100%" height="380" internalinstanceid="4" title>
+                      <?php } ?>
+                      <?php } //?#zoom=170 ?#zoom=170?>
 
 
-<!-- ticket a imprimir -->
-<!-- style="color:#00A4DF" -->
-<div id="titulo"></div>
-<div id="Imprime" >
-  <?php if ($_GET['tipo'] == "REPARACION") { ?>
-    <embed src="Facturas/R<?php echo $id_reparacion."_".$id_sucursal; ?>.pdf?#zoom=160" width="100%" height="380" internalinstanceid="4" title>
-  <?php }else { if ($_GET['tipo'] == "ABONO") {  ?>
-    <embed src="Facturas/<?php echo "A".$num."_".$factura."_".$id_sucursal; ?>.pdf?#zoom=160" width="100%" height="380" internalinstanceid="4" title>
-  <?php 
-  }else { ?>
-    <embed src="Facturas/<?php echo $factura."_".$id_sucursal; ?>.pdf?#zoom=160" width="100%" height="380" internalinstanceid="4" title>
-  <?php } ?>
-  <?php } //?#zoom=170 ?#zoom=170?>
-</div>
-</div>
-    </td>
-  </tr>
-  <tr>
-    <td><center>
-        <div class="alert alert-success">
-            <strong>Pago realizado con exito</strong><br><a href="caja.php?ddes=<?php echo $_SESSION['ddes']; ?>">Regresar a la caja</a>
-        </div>
-        
-        <?php } 
-            if($error=='si'){
-        ?>
-                    <div class="alert alert-error" align="center">
-                      <strong>El dinero recibido es menor al valor a pagar</strong> <br>
-                      <strong><a href="caja.php?ddes=<?php echo $_SESSION['ddes']; ?>">Regresar a la caja</a></strong>
-                    </div>
-        <?php } 
-            if($error=='num'){
-                echo '<div class="alert alert-error" align="center">
-                      <strong>Solo debe de ingresar numeros en este campo</strong> <br>
-                      <strong><a href="caja.php?ddes='.$_SESSION['ddes'].'">Regresar a la caja</a></strong>
-                    </div>';
-            }
-}
-        ?>
-	</center>
-    </td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-</table>
-<center>
+                      <div class="alert alert-success">
+                        <strong>Pago realizado con exito</strong><br><a href="caja.php?ddes=<?php echo $_SESSION['ddes']; ?>">REGRESAR A CAJA</a>
+                      </div>
+
+                      <?php } 
+                        if($error=='si'){
+                      ?>
+                      <div class="alert alert-error" align="center">
+                        <strong>El dinero recibido es menor al valor a pagar</strong> <br>
+                        <strong><a href="caja.php?ddes=<?php echo $_SESSION['ddes']; ?>">Regresar a la caja</a></strong>
+                      </div>
+                      <?php } 
+                      if($error=='num'){
+                        echo '<div class="alert alert-error" align="center">
+                              <strong>Solo debe de ingresar numeros en este campo</strong> <br>
+                              <strong><a href="caja.php?ddes='.$_SESSION['ddes'].'">Regresar a la caja</a></strong>
+                              </div>';
+                        }
+                      }
+
+
+
+
+                      ?>
+
+
+                      </div>
+                      </div>
+
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
   
-
-<br>
-
-</center>
 </body>
 </html>

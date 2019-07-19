@@ -1,5 +1,6 @@
 <?php
-		session_start();
+
+	session_start();
     //include('../php_conexion.php');
     include('../funciones.php');
     include('../host.php');
@@ -9,51 +10,9 @@
     $usuarioSession      = $_SESSION['username'];
     $tipoUsuario  = $_SESSION['tipo_usu'];
 
-		
+
+    
 ?>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <script src="jquery-1.9.1.js"></script>
-
-
-    <style type="text/css">
-        .fila_0 { background-color: #FFFFFF;}
-        .fila_1 { background-color: #E1E8F1;}
-        .botone{
-        background-color: #FFBF00;
-        border-radius: 40px;
-        border: 0px;
-        }
-        .botone:hover{
-        background-color: #F7D358;
-        }
-
-        .tblLisado {
-            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        .tblLisado td, .tblLisado th {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        .tblLisado tr:nth-child(even){background-color: #f2f2f2;}
-
-        .tblLisado tr:hover {background-color: #ddd;}
-
-        .tblLisado th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #ffcc33;
-            color: black;
-        }
-    </style>
-</head>
-<body>
 
 <?php
 $fecha_inicio = $_POST['fecha_ini11'];
@@ -114,7 +73,7 @@ $arrayConsultas = crearConsulta($arrayQuery,$usuarioSession);
 
 $codigoTabla = tabularCorteVentas($arrayConsultas,$rango_fecha,$tipoUsuario);
 
-echo $codigoTabla;
+echo json_encode($codigoTabla);
 
 
 function crearConsulta($arrayQuery,$usuarioSession){

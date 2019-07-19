@@ -1,8 +1,8 @@
 <?php
- 		session_start();
+ 		include_once 'APP/config.php';
 		include('php_conexion.php'); 
 		$usu=$_SESSION['username'];
-    $id_sucursal = $_SESSION['id_sucursal'];
+        $id_sucursal = $_SESSION['id_sucursal'];
     
 		if(!$_SESSION['tipo_usu']=='a' or !$_SESSION['tipo_usu']=='ca'){
 			header('location:error.php');
@@ -13,99 +13,175 @@
         }
    
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
 
-    <meta charset="utf-8">
-    <title>Liberar Reparacion</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Liberar Reparacion</title>
 
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-
-    <!-- MODAL LOAD -->
-    <script src="js/jquery.loadingModal.min.js" type="text/javascript"></script>		
-    <link href="css/jquery.loadingModal.css" rel="stylesheet" type="text/css"/>
-	<!--  -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="jsV2/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="jsV2/tether.min.js"></script>
+    <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <!-- SWAL -->
-    <script src="js/sweetalert2.all.min.js"></script>
+        <script src="js/sweetalert2.all.min.js"></script>
     <!--**-->
 
+    <style>
+
+        body{
+                
+                background: #F7D358;
+        }
+        .titulo{
+
+                background: #e7e7e7;
+                color: #F2F2F2;
+        }
+        .modal-header{
+
+                background: #0275d8;
+                color: #F2F2F2;
+        }
+        .listado-tareas {
+                max-height: calc(50vh - 70px);
+                overflow-y: auto;
+        }
+        .btn{
+                border-radius: 0px;
+        }
+        .finish{
+                text-decoration:line-through;
+        }
+        .dropdown-item{
+                color: #E5E8E8;
+        }
+        .dropdown-item:hover{
+                color:#F4F6F6;
+        }
+        .form-control{
+                margin: 0px;
+        }
+        .black{
+            color: black;
+        }
+        .red{
+            color: red;
+        }
+        .green{
+            color: green;
+        }
+
+    </style>
+
 </head>
+
+<?php include_once "layout.php"; ?>
 <body>
-<center>
-    <form method="POST" id="formLiberar" >
-        
-        <label for="">Ingrese el Número de Reparación</label>
-        <input type="text" name="noReparacion" id="noReparacion" onkeypress="return isNumberKey(event)" required>
-        <br/>
-        <button type="button" id="btnBuscar" onclick="buscaReparacion();" class="btn btn-primary">Buscar</button>
-
-        <div id="detalle" style="display:none">
-
-            <label for="" class="col-form-label">Equipo</label>
-            <input type="text" id="equipo" name="equipo" readonly>
 
 
-            <label for="">Resto reparación</label>
-            <div class="input-prepend input-append">
-                <span class="add-on">$</span>
-                <input type="number" name="resto" id="resto"  min="0" step="any" readonly>
-            </div>
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
 
-            <label for="ccpago">Descripción Liberación</label>
-            <textarea name="descripLi" id="descripLi" rows="4" cols="10"></textarea>
+							<div class="col-md-12">
+								<br>
 
-            <label for="">Dinero Recibido</label>
-            <div class="input-prepend input-append">
-                <span class="add-on">$</span>
-                <input type="number" name="dineroRecibo" id="dineroRecibo"  min="0" step="any" required>
-            </div>
+								<div class="container">
 
-            <br/>
-            <button type="submit" id="btnLiberar" class="btn btn-primary">Aceptar</button>
-            <button type="button" id="btnCancelar" onclick="cancelar();" class="btn btn-primary">Cancelar</button>
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">LIBERAR REPARACIÓN</p>
+										</div>
+									</div>
 
-        </div>
+                                    <div class="row">
+                                        <div class="col-md-3">                        
+                                            <button type="button" class="btn btn-info" onClick="window.location='nueva_reparacion.php'">Nueva Reparación</button>
+                                        </div>
 
-    </form>
-</center>
+                                        <div class="col-md-3">                        
+                                            <button type="button" class="btn btn-info" onClick="window.location='reparaciones.php'">Listado Reparaciones</button>
+                                        </div>
+
+                                        <div class="col-md-2">                        
+
+                                        </div>
+                                    </div>
+                  
+                                    <br>
+
+									<div class="row">
+										<div class="col-md-4">
+                      
+                                            <form method="POST" id="formLiberar" >
+
+                                                <div class="form-group">
+                                                    <label for="">Ingrese el Número de Reparación</label>
+                                                    <input type="text" class="form-control" name="noReparacion" id="noReparacion" onkeypress="return isNumberKey(event)" required>
+                                                </div>
+                                                <button type="button" id="btnBuscar" onclick="buscaReparacion();" class="btn btn-primary">Buscar</button>
+
+                                                    <div id="detalle" style="display:none">
+
+                                                        <div class="form-group">
+                                                            <label for="">Equipo</label>
+                                                            <input class="form-control" type="text" id="equipo" name="equipo" readonly>                                                        
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="">Resto reparación</label>                                                  
+                                                            <input type="number" class="form-control" name="resto" id="resto"  min="0" step="any" readonly>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="ccpago">Descripción Liberación</label>
+                                                            <textarea class="form-control" name="descripLi" id="descripLi" rows="4" cols="10"></textarea>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="">Dinero Recibido</label>                                                        
+                                                            <input type="number" class="form-control" name="dineroRecibo" id="dineroRecibo"  min="0" step="any" required>
+                                                        </div>
+
+                                                            <button type="submit" id="btnLiberar" class="btn btn-primary">Aceptar</button>
+                                                            <button type="button" id="btnCancelar" onclick="cancelar();" class="btn btn-primary">Cancelar</button>
+
+                                                    </div>
+
+                                            </form>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>
-
-
-
 
 <!-- ************** -->
 <script>
@@ -164,8 +240,13 @@ $(document).ready(function()
     $('#formLiberar').submit(function(e) {
         e.preventDefault();
         var data = $(this).serializeArray();
-        //data.push({name: 'tag', value: 'login'});
+        
         var dineroRecibo = $("#dineroRecibo").val();
+        var resto = $("#resto").val();
+
+        data.push({name: 'resto', value: resto});
+        data.push({name: 'dineroRecibo', value: dineroRecibo});
+
         var id = $("#noReparacion").val();
         //alert(dineroRecibo +" " + id);
         $.ajax({
@@ -195,6 +276,9 @@ $(document).ready(function()
 
                 }else if(respuesta == 6){
                     swal("¡ERROR!", "¡Intente de nuevo por favor la Sesion ha Caducado. Cierre el Sistema e Inicie de nuevo", "error");
+               
+                }else if(respuesta == 7){
+                    swal("¡ERROR!", "El dinero recibido es menor al resto de la reparación", "error");
                 }
             });
         
@@ -209,4 +293,3 @@ function isNumberKey(evt){
 }
 
 </script>
-<!-- ************** -->

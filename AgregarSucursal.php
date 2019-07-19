@@ -21,64 +21,107 @@
             $boton="Guardar Sucursal";
         }
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <title>Agregar Sucursal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Agregar Sucursal</title>
 
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="jsV2/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="jsV2/tether.min.js"></script>
+  <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
-    <![endif]-->
 
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-    <style>
-    input{
-        text-transform:uppercase;
+
+  <style>
+
+    body{
+            
+            background: #F7D358;
     }
-    .thumb{
-             height: 140px;
-             width: 240px;
-             border: 1px solid #BDBDBD;
-             margin: 5px 5px 0 0;
-        }
-    </style>
+    .titulo{
+
+            background: #e7e7e7;
+            color: #F2F2F2;
+    }
+    .modal-header{
+
+            background: #0275d8;
+            color: #F2F2F2;
+    }
+    .listado-tareas {
+            max-height: calc(50vh - 70px);
+            overflow-y: auto;
+    }
+    .btn{
+            border-radius: 0px;
+    }
+    .finish{
+            text-decoration:line-through;
+    }
+    .dropdown-item{
+            color: #E5E8E8;
+    }
+    .dropdown-item:hover{
+            color:#F4F6F6;
+    }
+    .form-control{
+            margin: 0px;
+    }
+    .black{
+        color: black;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+
+</style>
 </head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-  <?php
+<?php include_once "layout.php"; ?>
+<body>
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
+
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">SUCURSALES</p>
+										</div>
+									</div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">                        
+                                            <button type="button" class="btn btn-info" onClick="window.location='Sucursales.php'">Listado</button>
+                                        </div>
+                                        <div class="col-md-3">                        
+                                        </div>
+                                        <div class="col-md-3">                         
+                                        </div>
+                                        <div class="col-md-3">
+                                        </div>
+                                    </div>
+
+                                    <?php
     if(!empty($_POST['id'])){
 
         $id_sucursal=$_POST['id']; $sucursal=strtoupper($_POST['sucursal']);$numint=$_POST['numint'];
@@ -127,37 +170,104 @@
         //---------------------------------------------------------------------------
     }
     ?>
-<div class="control-group info">
-  <form name="form1" enctype="multipart/form-data" method="post" action="">
-<table width="80%" border="0" class="table">
-  <tr class="info">
-    <td colspan="3"><center><strong>Registro Sucursal</strong></center></td>
-  </tr>
-  <tr>
-    <td>
-        <label for="textfield">* Identificador: </label>
-        <input type="text" name="id" id="id" <?php if(!empty($id_sucursal)){echo 'readonly';} ?> value="<?php echo $id_sucursal; ?>" required>
-        <label for="textfield">* Sucursal: </label><input type="text" name="sucursal" id="sucursal" value="<?php echo $sucursal; ?>" autocomplete="off" maxlength="40" required>
-        <label for="textfield">* Direccion: </label><input type="text" name="direccion" id="direccion" value="<?php echo $direccion; ?>" autocomplete="off" maxlength="70" required><br>
-        <label for="textfield">* Ciudad: </label><input type="text" name="ciudad" id="ciudad" value="<?php echo $ciudad; ?>" autocomplete="off" maxlength="30"><br>
-        <label for="textfield">* N. Interior: </label><input type="text" name="numint" id="numint" value="<?php echo $numint; ?>" autocomplete="off" maxlength="6" required><br>
-        <button class="btn btn-large btn-primary" type="submit"><?php echo $boton; ?></button>
-        <?php if($boton=='Actualizar Gasto'){ ?> <a href="AgregarGastos.php" class="btn btn-large">Cancelar</a><?php }  ?>
-    </td>
-    <td>
-        <label for="textfield">* Telefono: </label><input type="text" name="telefono" id="telefono" value="<?php echo $telefono; ?>" autocomplete="off" maxlength="15" required><br>
-        <label for="textfield">* Web: </label><input type="text" name="web" id="web" value="<?php echo $web; ?>" autocomplete="off" maxlength="50" required><br>
-        <label for="textfield">* Correo: </label><input type="email" name="correo" id="correo" value="<?php echo $correo; ?>" autocomplete="off" maxlength="40" required><br>
-        <?php if ($id_sucursal == "1") { ?>
-        <label for="textfield">* Logo de Empresa: </label>
-        <output id="list"></output><br>
-        <input type="file" name="files" id="files">
-        <?php } ?>
-    </td>
-  </tr>
-</table>
-</form>
-</div>
+<hr>
+                                    <div class="row">
+
+                                      <div class="col-md-3">
+                                      <form name="form1" enctype="multipart/form-data" method="post" action="">
+                                        <label for="">Identificador: </label>
+                                        <input class="form-control" type="text" name="id" id="id" <?php if(!empty($id_sucursal)){echo 'readonly';} ?> value="<?php echo $id_sucursal; ?>" required>  
+                                      </div>
+
+                                      <div class="col-md-3">
+                                        <label for="">Sucursal: </label>
+                                        <input class="form-control" type="text" name="sucursal" id="sucursal" value="<?php echo $sucursal; ?>" autocomplete="off" maxlength="40" required>                      
+                                      </div>
+
+                                      <div class="col-md-3">
+                                        <label for="">Direccion</label>
+                                        <input class="form-control" type="text" name="direccion" id="direccion" value="<?php echo $direccion; ?>" autocomplete="off" maxlength="70" required>                       
+                                      </div>
+                                      <div class="col-md-3">
+                                        <label for="">Ciudad</label>
+                                        <input class="form-control" type="text" name="ciudad" id="ciudad" value="<?php echo $ciudad; ?>" autocomplete="off" maxlength="30">                      
+                                      </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                      <div class="col-md-3">
+                                        <label for="">N. Interior</label>
+                                        <input class="form-control" type="text" name="numint" id="numint" value="<?php echo $numint; ?>" autocomplete="off" maxlength="6" required>                     
+                                      </div>
+                                      <div class="col-md-3">                        
+                                        <label for="">Telefono</label>
+                                        <input class="form-control" type="text" name="telefono" id="telefono" value="<?php echo $telefono; ?>" autocomplete="off" maxlength="15" required>
+                                      </div>
+                                      <div class="col-md-3">                        
+                                        <label for="">Web</label>
+                                        <input class="form-control" type="text" name="web" id="web" value="<?php echo $web; ?>" autocomplete="off" maxlength="50" required>
+                                      </div>
+                                      <div class="col-md-3">                        
+                                        <label for="">Correo</label>
+                                        <input class="form-control" type="email" name="correo" id="correo" value="<?php echo $correo; ?>" autocomplete="off" maxlength="40" required>
+                                      </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                      <div class="col-md-3">
+
+                                      <?php if ($id_sucursal == "1") { ?>
+                                      <label for="">Logo de Empresa</label>
+                                      <output id="list"></output><br>
+                                      <input  class="form-control" type="file" name="files" id="files">
+                                      <?php } ?>
+                    
+                                      </div>
+                                      <div class="col-md-3">                        
+                                        
+                                      </div>
+                                      <div class="col-md-3">                        
+
+                                      </div>
+                                      <div class="col-md-3"><br>
+                                        <button class="btn btn-large btn-primary" type="submit"><?php echo $boton; ?></button>
+                                                           
+                                      </form>
+                                      </div>
+
+                                  </div>
+                  
+                                    <br>
+
+									<div class="row">
+										<div class="col-md-12">
+                      
+
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+</body>
+</html>
+
+
 <script>
           function archivo(evt) {
               var files = evt.target.files; // FileList object
@@ -179,5 +289,3 @@
           }
           document.getElementById('files').addEventListener('change', archivo, false);
 </script>
-</body>
-</html>

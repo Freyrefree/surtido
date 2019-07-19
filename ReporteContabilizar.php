@@ -7,90 +7,6 @@
         $id_sucursal = $_SESSION['id_sucursal'];
         $usu = $_SESSION['username'];
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Cancelar Venta</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
-    <script src="js/jquery-barcode.js"></script>
-    <script src="js/html2canvas.js"></script>
-    <script src="js/jspdf.debug.js"></script>
-
-
-    
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-    <style>
-     .Saldos{
-            background-color: #8acae8;
-        }
-
-        .codebar{
-            border: 1px;
-            border-style: solid;
-            border-color: #000;
-            margin-left: 30px;
-            margin-bottom: 0px;
-            margin-right: 10px;
-            padding: 5px;
-        }
-        .hr{
-            /* background: blue; */
-            margin-bottom: -20px;
-        }
-        .thumb{
-             height: 140px;
-             width: 200px;
-             border: 1px solid #000;
-             margin: 5px 5px 0 0;
-        }
-        .panel-compra{
-            padding-left: 10px;
-            padding-top: 10px;
-          border-style: solid;
-          border-color: #BDBDBD;
-          border-top-width: 1px;
-          border-right-width: 1px;
-          border-bottom-width: 1px;
-          border-left-width: 1px;
-
-        }
-        /* .incd{
-            margin-top: 20px;
-        } */
-    </style>
-</head>
-<!-- fin de los estilos -->
 <?php 
 $datestart  = $_POST['inicio'];
 $datefinish = $_POST['fin'];
@@ -100,95 +16,245 @@ if(!isset($datestart) or !isset($datefinish)){
 }
  ?>
 
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-<div align="center">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Billetes y Monedas </title>
 
-<form name="f1" id="f1" action="" method="post" enctype="multipart/form-data">
-<table>
-<tr>
-<td>Fecha Inicial<br><input type="date" name="inicio" id="inicio" value="<?php echo $datestart ?>"  required></td>
-<td>Fecha Final<br><input type="date" name="fin" id="fin" value="<?php echo $datefinish ?>" required></td>
-</tr>
-<tr>
-<td colspan="2"><center><input type="submit" class="btn btn-lg btn-info" value="Mostrar reporte"></center></td>
-<!-- <td><center><button type="button" class="btn btn-lg btn-success" onClick="GenerarExcel();" >Generar Excel</button></center></td> -->
-</tr>
-</form>
 
-<table width="80%" border="0" class="table">
-<tbody>
-    <tr class="info">
-        <td colspan="17"><center><strong>Reporte de Billetes y Monedas contabilizados</strong></center></td>
-    </tr>
-    <tr>
-        <th><strong>Codigo</strong></th>
-        <th><strong>Cajero</strong></th>
-        <th><strong>Sucursal</strong></th>
-        <th><strong>B. de $20</strong></th>
-        <th><strong>B. de $50</strong></th>
-        <th><strong>B. de $100</strong></th>
-        <th><strong>B. de $200</strong></th>
-        <th><strong>B. de $500</strong></th>
-        <th><strong>B. de $1000</strong></th>
-        <th><strong>M. de  $0.50</strong></th>
-        <th><strong>M. de  $1</strong></th>
-        <th><strong>M. de  $2</strong></th>
-        <th><strong>M. de  $5</strong></th>
-        <th><strong>M. de  $10</strong></th>
-        <th><strong>M. de  $20</strong></th>
-        <th width="7%"><strong>Fecha</strong></th>
-        <th><strong>Hora de Cierre</strong></th>
-    </tr>
-<?php
-        $query2=mysql_query("SELECT * FROM billetes_monedas WHERE Fecha BETWEEN '$datestart' AND '$datefinish'");
-        while($dato=mysql_fetch_array($query2)){
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="jsV2/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="jsV2/tether.min.js"></script>
+  <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-                $IdCajero            = $dato['id_cajero'];
-                $sucursal            = $dato['sucursal'];
+    <!-- DATA TABLE -->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
-            $query3=mysql_query("SELECT * FROM usuarios WHERE ced='$IdCajero'");
-            if($dato3=mysql_fetch_array($query3)){
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+    <!-- ********* -->
 
-                $cajero          = $dato3['nom'];
+  <style>
+
+    body{
             
-            }
+            background: #F7D358;
+    }
+    .titulo{
 
-            $query4=mysql_query("SELECT * FROM empresa WHERE id='$IdSucursal'");
-            if($dato4=mysql_fetch_array($query4)){
+            background: #e7e7e7;
+            color: #F2F2F2;
+    }
+    .modal-header{
 
-                $sucursal = $dato4['empresa'];
-            
-            }
+            background: #0275d8;
+            color: #F2F2F2;
+    }
+    .listado-tareas {
+            max-height: calc(50vh - 70px);
+            overflow-y: auto;
+    }
+    .btn{
+            border-radius: 0px;
+    }
+    .finish{
+            text-decoration:line-through;
+    }
+    .dropdown-item{
+            color: #E5E8E8;
+    }
+    .dropdown-item:hover{
+            color:#F4F6F6;
+    }
+    .form-control{
+            margin: 0px;
+    }
+    .black{
+        color: black;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+
+</style>
+
+    
 
 
-?>        
-    <tr>
-        <td><?php echo $dato['id'] ?></td>
-        <td><?php echo $cajero ?></td>
-        <td><?php echo $sucursal ?></td>
-        <td><?php echo $dato['b20'] ?></td>
-        <td><?php echo $dato['b50'] ?></td>
-        <td><?php echo $dato['b100'] ?></td>
-        <td><?php echo $dato['b200'] ?></td>
-        <td><?php echo $dato['b500'] ?></td>
-        <td><?php echo $dato['b1000'] ?></td>
-        <td><?php echo $dato['m050'] ?></td>
-        <td><?php echo $dato['m1'] ?></td>
-        <td><?php echo $dato['m2'] ?></td>
-        <td><?php echo $dato['m5'] ?></td>
-        <td><?php echo $dato['m10'] ?></td>
-        <td><?php echo $dato['m20'] ?></td>
-        <td><?php echo $dato['Fecha'] ?></td>
-        <td><?php echo $dato['HoraCierre'] ?></td>
-    </tr>
-<?php   
-        }
-?>          
-</tbody>
-</table>
-</div>
+</head>
+<?php include_once "layout.php"; ?>
+<body>
+
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
+
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">REPORTE DE BILLETES Y MONEDAS CONTABILIZADOS</p>
+										</div>
+									</div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">                        
+                                            
+                                        </div>
+
+                                        <div class="col-md-6">                        
+                                            
+                                        </div>
+
+                                        <div class="col-md-3">
+										           
+                                        </div>
+                                    </div>
+                  
+                                    <br>
+
+									<div class="row">
+
+                                        <div class="col-md-3">
+                                        <form name="f1" id="f1" action="" method="post" enctype="multipart/form-data">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                <label for="">Inicio</label>
+                                                <input class="form-control" type="date" name="inicio" id="inicio" value="<?php echo $datestart ?>"  required>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                <label for="">Fin</label>
+                                                <input class="form-control" type="date" name="fin" id="fin" value="<?php echo $datefinish ?>" required>
+                                        </div>
+
+
+                                        <div class="col-md-6"><br>
+                                            <input type="submit" class="btn btn-primary" value="Mostrar reporte">
+                                            <i id="loading" class="fa fa-circle-o-notch fa-spin fa-2x fa-fw" style="color:#007bff; display:none;"></i>
+                                            </div>
+                                        </form>
+
+									</div>
+
+									<div class="row">
+										<div class="col-md-12"><br>
+
+                                        <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Codigo</th>
+                                                    <th>Cajero</th>
+                                                    <th>Sucursal</th>
+                                                    <th>B. de $20</th>
+                                                    <th>B. de $50</th>
+                                                    <th>B. de $100</th>
+                                                    <th>B. de $200</th>
+                                                    <th>B. de $500</th>
+                                                    <th>B. de $1000</th>
+                                                    <th>M. de  $0.50</th>
+                                                    <th>M. de  $1</th>
+                                                    <th>M. de  $2</th>
+                                                    <th>M. de  $5</th>
+                                                    <th>M. de  $10</th>
+                                                    <th>M. de  $20</th>
+                                                    <th>Fecha</th>
+                                                    <th>Hora de Cierre</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php
+                                                    $query2=mysql_query("SELECT * FROM billetes_monedas WHERE Fecha BETWEEN '$datestart' AND '$datefinish'");
+                                                    while($dato=mysql_fetch_array($query2)){
+
+                                                            $IdCajero            = $dato['id_cajero'];
+                                                            $sucursal            = $dato['sucursal'];
+
+                                                        $query3=mysql_query("SELECT * FROM usuarios WHERE ced='$IdCajero'");
+                                                        if($dato3=mysql_fetch_array($query3)){
+
+                                                            $cajero          = $dato3['nom'];
+                                                        
+                                                        }
+
+                                                        $query4=mysql_query("SELECT * FROM empresa WHERE id='$IdSucursal'");
+                                                        if($dato4=mysql_fetch_array($query4)){
+
+                                                            $sucursal = $dato4['empresa'];
+                                                        
+                                                        }
+
+
+                                            ?>        
+                                                <tr>
+                                                    <td><?php echo $dato['id'] ?></td>
+                                                    <td><?php echo $cajero ?></td>
+                                                    <td><?php echo $sucursal ?></td>
+                                                    <td><?php echo $dato['b20'] ?></td>
+                                                    <td><?php echo $dato['b50'] ?></td>
+                                                    <td><?php echo $dato['b100'] ?></td>
+                                                    <td><?php echo $dato['b200'] ?></td>
+                                                    <td><?php echo $dato['b500'] ?></td>
+                                                    <td><?php echo $dato['b1000'] ?></td>
+                                                    <td><?php echo $dato['m050'] ?></td>
+                                                    <td><?php echo $dato['m1'] ?></td>
+                                                    <td><?php echo $dato['m2'] ?></td>
+                                                    <td><?php echo $dato['m5'] ?></td>
+                                                    <td><?php echo $dato['m10'] ?></td>
+                                                    <td><?php echo $dato['m20'] ?></td>
+                                                    <td><?php echo $dato['Fecha'] ?></td>
+                                                    <td><?php echo $dato['HoraCierre'] ?></td>
+                                                </tr>
+                                            <?php   
+                                                    }
+                                            ?>          
+                                            </tbody>
+                                            </table>
+
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    
 </body>
 </html>
+
+
 
 <script>
 	function GenerarExcel(){
@@ -209,4 +275,44 @@ if(!isset($datestart) or !isset($datefinish)){
                 }
         });
 	}
+
+
+    $(document).ready(function() {
+    tabla();
+} );
+
+function tabla(){
+
+$('#example').DataTable({
+            "ordering": true,
+            "language": {
+                "paginate": {
+                    "previous": "<i class='mdi mdi-chevron-left'>",
+                    "next": "<i class='mdi mdi-chevron-right'>"
+                }
+            },
+            language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+            },
+            
+        });
+
+}
 </script>

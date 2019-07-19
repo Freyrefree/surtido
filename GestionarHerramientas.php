@@ -13,246 +13,326 @@ $sucursal = $_SESSION['sucursal'];
 $IdReparacion = $_REQUEST['IdReparacion'];
 ?>
 
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <title>Listado Producto</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
-	<script src="includes/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="includes/sweetalert/dist/sweetalert.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Refacciones</title>
 
 
-
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="jsV2/jquery-3.1.1.js"></script>
+        <script type="text/javascript" src="jsV2/tether.min.js"></script>
+        <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <!-- SWAL -->
         <script src="js/sweetalert2.all.min.js"></script>
         <!--**-->
-    <style>
+          <!-- "DATA TABLE" -->
+            <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+            <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
 
-    input{
-        
-        text-transform:uppercase;
-    }
-    </style>	
-</head>
-
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-  <div class="control-group info">
-  <?php echo "<a href='ModificarReparacion.php?IdReparacion=$IdReparacion' class='btn btn-primary'>Regresar</a>" ?>
-
-    <table>
-    <form name="formProd" id="formProd">
-        <tr>
-            <td>      
-                <select name="categoria" id="categoria">
-                    <option value="ninguna" selected>Seleccione Categoría</option>
-                    <?php
-                    $can=mysql_query("SELECT DISTINCT categoria FROM producto WHERE id_comision=10 AND categoria <> '' ORDER BY categoria ASC");
-                    while($dato=mysql_fetch_array($can)){
-
-                        $Cate=$dato['categoria'];
-                        $Categoria = str_replace(' ','_',$Cate);  
-
-                    ?>
-                    <?php echo "<option value='$Categoria'>"; ?><?php echo $Cate?></option>
-                    <?php } ?>
-                </select>
-            </td>    
-            <td>      
-                <!-- <div id="ajax"></div> -->
-                <select name="producto" id="producto">
-                    <option value="ninguno" selected>Seleccione Producto </option>
-                </select>
-            </td>
-            <td>         
-                <select name="tipo" id="tipo" reqired>
-                    <!-- <option value="">Selecciona el tipo de precio de refacción</option> -->
-                    <!-- <option value="3">Precio Público</option> -->
-                    <!-- <option value="2">Mayoreo</option>  -->
-                    <option value="1" selected>Especial</option>
-                </select>
-                <input type="hidden" name="IdReparacion" id="IdReparacion" value="<?php echo $IdReparacion ?>">
-                <input type="submit"  value="Agregar Refacción" class="btn">  
-            </td>     
-        </tr>
-    </form>
-        <tr>
-            <td colspan="2">
-            <?php
-
-            $can=mysql_query("SELECT * FROM reparacion where id_reparacion='$IdReparacion'");
-
-            if($dato=mysql_fetch_array($can)){
-            $ManoObra			= $dato['mano_obra'];
-            $precioInicial      =$dato['precio_inicial'];
-            $anticipo           =$dato['abono'];
-            $totalPublico       =$dato['total'];
-            $comisionCajero     =$dato['comisionCajero'];
-            }
-            $can=mysql_query("SELECT SUM(Precio), SUM(CostoRefaccion) FROM reparacion_refaccion WHERE id_reparacion='$IdReparacion'") or die(print("Error al sumar precios"));
-            if($dato=mysql_fetch_array($can)){
-               $SumPrecio  = $dato['SUM(Precio)'];
-            }
-
-            //Precio Publico suma
-            $arrayCodigosProdcuto;
-            $i = 0;
-            $mas = 0;
-            $sum = 0;
-            $consulta = "SELECT id_producto FROM reparacion_refaccion WHERE id_reparacion = '$IdReparacion'";
-            $ejecuta = mysql_query($consulta);
-            if(mysql_num_rows($ejecuta) > 0){
-                while($fila = mysql_fetch_array($ejecuta))
-                {
-                    $arrayCodigosProdcuto[$i]=$fila['id_producto'];
-                    $i++;
-                }
-                foreach ($arrayCodigosProdcuto as &$idProducto) {
-                    $mas = $sum;
-                    $consulta2 = "SELECT venta FROM producto WHERE cod = '$idProducto' AND id_sucursal = '$id_sucursal'";
-                    $ejecuta2 = mysql_query($consulta2);
-                    $dato = mysql_fetch_array($ejecuta2);
-
-                    $precioVentaP = $dato['venta'];
-                    $sum = $precioVentaP + $mas;
-                }
-                $precioPublico = $sum;
-
-            }else{
-                $precioPublico = 0;
-            }
-
-
-            
-
-
-            
-            $total = (($ManoObra + $SumPrecio));
-            if($total > $precioInicial){
-                $nuevoPresupuesto = $total;
-            }else{
-                $nuevoPresupuesto = "";
-            }
-
-            $precioPublicotmp = $SumPrecio + $ManoObra;
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+            <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+            <!-- ********* -->
 
 
 
-                    $html = '<form id="costos">
-                    <label>Presupuesto Inicial:</label>
+        <style>
+
+        body{
                 
-                    
-                <input type="number" name="Precio" id="Precio" value="'.$precioInicial.'" min="'.$precioInicial.'" readonly>
-                    
-                <!--<label>Nuevo Presupuesto:</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$</span>
-                    <input type="number" name="Precio2" id="Precio2" min="'.$precioInicial.'" value="'.$nuevoPresupuesto.'"  >
-                    <span class="add-on">.00</span>
-                </div>-->
+                background: #F7D358;
+        }
+        .titulo{
+
+                background: #e7e7e7;
+                color: #F2F2F2;
+        }
+        .modal-header{
+
+                background: #0275d8;
+                color: #F2F2F2;
+        }
+        .listado-tareas {
+                max-height: calc(50vh - 70px);
+                overflow-y: auto;
+        }
+        .btn{
+                border-radius: 0px;
+        }
+        .finish{
+                text-decoration:line-through;
+        }
+        .dropdown-item{
+                color: #E5E8E8;
+        }
+        .dropdown-item:hover{
+                color:#F4F6F6;
+        }
+        .form-control{
+                margin: 0px;
+        }
+        .black{
+                color: black;
+        }
+        .red{
+                color: red;
+        }
+        .green{
+                color: green;
+        }
+
+        </style>
 
 
-                    <label>Inversión</label>
-                    <div class="input-prepend input-append">
-                    <span class="add-on">$</span>
-                    <input type="number" step="any" name="Inversion" id="Inversion" value="'.$SumPrecio.'"  readonly>
-                    <span class="add-on">.00</span>
-                    </div>    
-                    
-                    <label>Mano de obra</label>
-                    <div class="input-prepend input-append">
-                    <span class="add-on">$</span>
-                    <input type="number"  onkeyup="minInputPrecioPublico();" name="ManoObra" id="ManoObra" value="'.$ManoObra.'" required>
-                    <span class="add-on">.00</span>
-                    </div>
-
-                    <label>Cajero</label>
-                    <div class="input-prepend input-append">
-                    <span class="add-on">$</span>
-                    <input type="number"  name="comisionCajero" id="comisionCajero" value="'.$comisionCajero.'" readonly>
-                    <span class="add-on">.00</span>
-                    </div>
-
-                    <label>Anticipo</label>
-                    <div class="input-prepend input-append">
-                    <span class="add-on">$</span>
-                    <input type="number" step="any" name="anticipo" id="anticipo" value="'.$anticipo.'" readonly>
-                    <span class="add-on">.00</span>
-                    </div>
-
-                    <!--<label>TOTAL:</label>
-                    <div class="input-prepend input-append">
-                    <span class="add-on">$</span>
-                    <input type="number" step="any" name="total" id="total" value="'.$total.'"  readonly>
-                    <span class="add-on">.00</span>
-                    </div>-->
-
-                    <label>Precio Público</label>
-                    <div class="input-prepend input-append">
-                    <span class="add-on">$</span>
-                    <input type="number" onkeyup="comision();" name="totalPublico" min="'.$precioPublicotmp.'"  id="totalPublico" value="'.$totalPublico.'"  required>
-                    <span class="add-on">.00</span>
-                    </div>';
-
-                    //$nota = '<p><span style="color:#FF0000">El total ha superado el presupuesto inicial,<br/>se ha tomado el valor total como nuevo presupuesto</span></p>';
-                    //if($total >  $precioInicial){
-                      //  $html.= $nota;
-                   // }
-                    $html .= '<br/>
-                        <input type="radio" name="estatus" value="2" checked>Concluir<br>
-                        <input type="radio" name="estatus" value="1">Pendiente<br>
-                        <br/>
-                        <button class="btn btn-large btn-primary" type="submit">Continuar</button>
-                        </form>';
-                     
-                    
-                    echo $html;
 
 
-                    ?>
+
+</head>
+<?php include_once "layout.php"; ?>
+<body>
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
+
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">REFACCIONES
+                      <div class="row">
+                          <div class="col-md-6">  
+                        
+                            <?php echo "<a href='ModificarReparacion.php?IdReparacion=$IdReparacion' class='btn btn-info'>Regresar</a>" ?>
+                         
+                          </div>
+
+                          <div class="col-md-2">                        
+                          
+                          
+                          </div>
+
+                          <div class="col-md-4">
+
+            
+                            
+                          </div>
+
+                      </div>
+                  
+                  <br>
+
+									<div class="row">
+										<div class="col-md-12">
+
+                                        <div  class="row">
+                                            <div class="col-md-3">
+
+                                            <form name="formProd" id="formProd">
+
+                                                <label for="">Categoría</label>
+                                                <select class="form-control" name="categoria" id="categoria">
+                                                    <option value="ninguna" selected>Seleccione Categoría</option>
+                                                    <?php
+                                                    $can=mysql_query("SELECT DISTINCT categoria FROM producto WHERE id_comision=10 AND categoria <> '' ORDER BY categoria ASC");
+                                                    while($dato=mysql_fetch_array($can)){
+
+                                                        $Cate=$dato['categoria'];
+                                                        $Categoria = str_replace(' ','_',$Cate);  
+
+                                                    ?>
+                                                    <?php echo "<option value='$Categoria'>"; ?><?php echo $Cate?></option>
+                                                    <?php } ?>
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label  for="">Producto</label>
+                                                <select class="form-control" name="producto" id="producto">
+                                                    <option value="ninguno" selected>Seleccione Producto </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label for="">Tipo Precio</label>
+                                                <select class="form-control" name="tipo" id="tipo" reqired>
+                                                    <!-- <option value="">Selecciona el tipo de precio de refacción</option> -->
+                                                    <!-- <option value="3">Precio Público</option> -->
+                                                    <!-- <option value="2">Mayoreo</option>  -->
+                                                    <option value="1" selected>Especial</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3"><br>
+                                                <input type="hidden" name="IdReparacion" id="IdReparacion" value="<?php echo $IdReparacion ?>">
+                                                <input type="submit"  value="Agregar Refacción" class="btn btn-success">  
+
+                                            </form>
+                                            </div>
+                                        </div>
+                                        <hr>
                                         
-            </td>
 
-            <td>
-                <div id="DivRefacciones" style="display:inline"></div>                        
-            </td>        
-        </tr>    
-    </table>
+                                        <div  class="row">
+                                        <?php
+
+                                            $can=mysql_query("SELECT * FROM reparacion where id_reparacion='$IdReparacion'");
+
+                                            if($dato=mysql_fetch_array($can)){
+                                            $ManoObra			= $dato['mano_obra'];
+                                            $precioInicial      = $dato['precio_inicial'];
+                                            $anticipo           = $dato['abono'];
+                                            $totalPublico       = $dato['total'];
+                                            $comisionCajero     = $dato['comisionCajero'];
+                                            }
+                                            $can=mysql_query("SELECT SUM(Precio), SUM(CostoRefaccion) FROM reparacion_refaccion WHERE id_reparacion='$IdReparacion'") or die(print("Error al sumar precios"));
+                                            if($dato=mysql_fetch_array($can)){
+                                            $SumPrecio  = $dato['SUM(Precio)'];
+                                            }
+
+                                            //Precio Publico suma
+                                            $arrayCodigosProdcuto;
+                                            $i = 0;
+                                            $mas = 0;
+                                            $sum = 0;
+                                            $consulta = "SELECT id_producto FROM reparacion_refaccion WHERE id_reparacion = '$IdReparacion'";
+                                            $ejecuta = mysql_query($consulta);
+                                            if(mysql_num_rows($ejecuta) > 0){
+
+                                                while($fila = mysql_fetch_array($ejecuta))
+                                                {
+                                                    $arrayCodigosProdcuto[$i]=$fila['id_producto'];
+                                                    $i++;
+                                                }
+
+
+                                                foreach ($arrayCodigosProdcuto as &$idProducto) {
+                                                    $mas = $sum;
+                                                    $consulta2 = "SELECT venta FROM producto WHERE cod = '$idProducto' AND id_sucursal = '$id_sucursal'";
+                                                    $ejecuta2 = mysql_query($consulta2);
+                                                    $dato = mysql_fetch_array($ejecuta2);
+
+                                                    $precioVentaP = $dato['venta'];
+                                                    $sum = $precioVentaP + $mas;
+                                                }
+
+                                                $precioPublico = $sum;
+
+                                            }else{
+                                                
+                                                $precioPublico = 0;
+                                            }
+
+
+                                            $total = (($ManoObra + $SumPrecio));
+                                            if($total > $precioInicial){
+                                                $nuevoPresupuesto = $total;
+                                            }else{
+                                                $nuevoPresupuesto = "";
+                                            }
+
+                                            $precioPublicotmp = $SumPrecio + $ManoObra;
+                                            ?>
+
+<?php
+                                            $html='<div class="col-md-3">
+                                            <form id="costos">
+                                                <label>Presupuesto Inicial</label>
+                                                <input class="form-control" type="number" name="Precio" id="Precio" value="'.$precioInicial.'" min="'.$precioInicial.'" readonly>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>Inversión</label>
+                                                <input class="form-control" type="number" step="any" name="Inversion" id="Inversion" value="'.$SumPrecio.'"  readonly>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <label>Mano de obra</label>
+                                                <input class="form-control" type="number"  onkeyup="minInputPrecioPublico();" name="ManoObra" id="ManoObra" value="'.$ManoObra.'" required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Cajero</label>
+                                                <input class="form-control" type="number"  name="comisionCajero" id="comisionCajero" value="'.$comisionCajero.'" readonly>
+                                            </div>
+                                        </div>
+                                        <div  class="row">
+                                            <div class="col-md-3">
+                                                <label>Anticipo</label>
+                                                <input class="form-control" type="number" step="any" name="anticipo" id="anticipo" value="'.$anticipo.'" readonly>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Precio Público</label>
+                                                <input class="form-control" type="number" onkeyup="comision();" name="totalPublico" min="'.$precioPublicotmp.'"  id="totalPublico" value="'.$totalPublico.'"  required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="radio" name="estatus" value="2" checked>Concluir<br>
+                                                <input type="radio" name="estatus" value="1">Pendiente<br>
+                                            </div>
+                                            <div class="col-md-3"><br>
+                                            <button type="submit" class="btn btn-primary" >Continuar</button>
+                                            </form>
+                                            </div>
+                                        </div>
+
+
+                                        
+
+
+
+                                        
+                                        
+                                        ';
+                                        echo $html;
+                                        
+?>
+
+
+										</div>
+									</div>
+
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="DivRefacciones" style="display:inline"></div>                                    
+                                        </div>
+                                    </div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
 </body>
-</html>		
+</html>
+
+	
 
 
 <script type="text/javascript">
@@ -316,6 +396,7 @@ $( document ).ready(function() {
             if(respuesta != 0 && respuesta != 2)
             {
                 $("#DivRefacciones").html(respuesta);
+                tabla();
 
             }else if(respuesta == 2)
             {
@@ -391,102 +472,7 @@ $("#categoria").on("change", function() {
         });
 });
 
-$(document).ready(function() 
-{
-   
-
-        $('#costos').submit(function(e) {
-        e.preventDefault();
-        var id_reparacion = "<?php echo $IdReparacion; ?>";
-        var data = $(this).serialize() + "&IdReparacion=" + id_reparacion;
-        var estatus = $('input[name=estatus]:checked', '#costos').val();
-
-        //verificar que el total no exeda el presupuesto inicial
-        var inversion = $("#Inversion").val();
-        inversion = parseFloat(inversion);
-        var manoObra = $("#ManoObra").val();
-        manoObra = parseFloat(manoObra);
-        var total = $("#total").val();
-
-        
-
-        //var suma = inversion + manoObra;
-        //alert(inversion +" "+manoObra + " " + total + " " + suma);
-        //if(suma > total){
-            //alert("ÑO");
-            //swal("Precaución", "La inversión de refacciones mas mano de obra ha exedido el presupuesto inicial, Automáticamente se ha agregado un nuevo presupuesto y se ha actualizado el total", "warning");
-            //$("#Precio2").val(suma);
-            //$("#total").val(suma);
-            
-
-        //}else{
-
-            if(estatus == 2) //estatus Para confirmar Término de reparacion
-            {
-                swal({
-                title: '¿Está seguro que desa terminar la reparación?',
-                text: "Ya no podrá agregar piezas o modificar mano de obra",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si',
-                cancelButtonText: 'No'
-                }).then((result) => {
-                    if (result.value) {
-                        $.ajax({
-                        method: "POST",
-                        url: "ModificarReparacion2.php",
-                        data: data,
-                        })
-                        .done(function(respuesta) {
-
-                            if(respuesta == 1)
-                            {
-                                let timerInterval
-                                swal({
-                                title: 'Terminado',
-                                text: "La reparación ha cambiado a estatus Terminado",
-                                type: 'success',
-                                showConfirmButton: false,
-                                timer: 1500,
-                                }).then((result) => {
-                                if (result.dismiss === swal.DismissReason.timer) {
-                                    window.location.href = 'ModificarReparacion.php?IdReparacion='+id_reparacion;
-                                }
-                                });
-
-                            }else{
-                                swal("Precaución", "Error, intente más tarde", "warning");
-                            }
-                        });
-                    }
-                })
-                
-            }else if(estatus == 1){ //estatus para permanecer en estatus en proceso
-
-                $.ajax({
-                    method: "POST",
-                    url: "ModificarReparacion2.php",
-                    data: data,
-                })
-                .done(function(respuesta) {
-                    //alert(respuesta);
-                        if(respuesta == 1)
-                        {
-                            window.location.href = 'ModificarReparacion.php?IdReparacion='+id_reparacion;
-
-                        }else{
-                            swal("Precaución", "Error, intente más tarde", "warning");
-                        }
-                    });
-            }
-
-       // }
-
-        });
-    
-});
+ 
 </script>
 <script>
     function minInputPrecioPublico(){
@@ -552,4 +538,152 @@ $(document).ready(function()
 
     }
 
-</script>	 
+</script>
+
+<script>
+
+
+
+
+function tabla(){
+
+  $('#example').DataTable({
+                "ordering": true,
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='mdi mdi-chevron-left'>",
+                        "next": "<i class='mdi mdi-chevron-right'>"
+                    }
+                },
+                language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+                },
+               
+            });
+
+}
+       
+ </script>
+
+<script>
+$(document).ready(function() 
+{
+
+
+$("#costos").submit(function(e) {
+
+    
+e.preventDefault();
+
+var id_reparacion = "<?php echo $IdReparacion; ?>";
+var data = $(this).serialize() + "&IdReparacion=" + id_reparacion;
+// var estatus = $("input[name=estatus]:checked", "#costos").val();
+var estatus = $('input[name="estatus"]:checked').val();
+
+// alert(estatus);
+
+//verificar que el total no exeda el presupuesto inicial
+var inversion = $("#Inversion").val();
+inversion = parseFloat(inversion);
+var manoObra = $("#ManoObra").val();
+manoObra = parseFloat(manoObra);
+var total = $("#total").val();
+
+
+
+//var suma = inversion + manoObra;
+//alert(inversion +" "+manoObra + " " + total + " " + suma);
+//if(suma > total){
+    //alert("ÑO");
+    //swal("Precaución", "La inversión de refacciones mas mano de obra ha exedido el presupuesto inicial, Automáticamente se ha agregado un nuevo presupuesto y se ha actualizado el total", "warning");
+    //$("#Precio2").val(suma);
+    //$("#total").val(suma);
+    
+
+//}else{
+    
+    if(estatus == 2) //estatus Para confirmar Término de reparacion
+    {
+        
+        swal({
+        title: "¿Está seguro que desa terminar la reparación?",
+        text: "Ya no podrá agregar piezas o modificar mano de obra",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: "No"
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                method: "POST",
+                url: "ModificarReparacion2.php",
+                data: data,
+                })
+                .done(function(respuesta) {
+
+                    if(respuesta == 1)
+                    {
+                        let timerInterval
+                        swal({
+                        title: "Terminado",
+                        text: "La reparación ha cambiado a estatus Terminado",
+                        type: "success",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        }).then((result) => {
+                        if (result.dismiss === swal.DismissReason.timer) {
+                            window.location.href = "ModificarReparacion.php?IdReparacion="+id_reparacion;
+                        }
+                        });
+
+                    }else{
+                        swal("Precaución", "Error, intente más tarde", "warning");
+                    }
+                });
+            }
+        })
+        
+    }else if(estatus == 1){ //estatus para permanecer en estatus en proceso
+        
+        $.ajax({
+            method: "POST",
+            url: "ModificarReparacion2.php",
+            data: data,
+        })
+        .done(function(respuesta) {
+            //alert(respuesta);
+                if(respuesta == 1)
+                {
+                    window.location.href = "ModificarReparacion.php?IdReparacion="+id_reparacion;
+
+                }else{
+                    swal("Precaución", "Error, intente más tarde", "warning");
+                }
+            });
+    }
+
+// }
+
+});
+
+});
+</script>

@@ -32,58 +32,23 @@
 /*<tr>
     <td colspan="2" align="right" bgcolor="#FFFFCC"><a role="menuitem" tabindex="-1" href="PDFproducto.php" target="admin" ><img src="img/file_extension_pdf.png" width="32" height="32" boder ="0"  /></a></td>
   </tr>*/
-$codigoHTML='
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Reporte</title>
-<style type="text/css">
-.text {
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 12px;
-}
-body {
-	background-color: #D7EBFF;
-}
-
-.tabla {
- border: 1px solid #0B198C;
- border-width: 0 0 1px 1px;
-}
-
-.tabla td {
- border: 1px solid #0B198C;
- border-with: 0 0 1px 1px;
-}
-
-</style>
-</head>
-
-<body>
-<div align="center">
-<table width="100%" border="0"  class="tabla" cellpading="0" cellspacing="0">
-<caption class="text">
-<strong>Listado de Productos</strong>
-</caption>
-  
-
-</table><br />
-<table width="100%" border="1"  class="tabla" cellpading="0" cellspacing="0">
+$codigoHTML='<table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+<thead>
   <tr>
-    <td width="4%" bgcolor="#A4DBFF">&nbsp;</td>
-    <td width="3%" bgcolor="#A4DBFF"><strong class="text">Codigo</strong></td>
-    <td width="18%" bgcolor="#A4DBFF"><strong class="text">Nombre del Producto</strong></td>
-    <td width="11%" bgcolor="#A4DBFF"><strong class="text">Proveedor</strong></td>
-    <td width="8%" bgcolor="#A4DBFF"><strong class="text">Precio Costo</strong></td>
-    <td width="10%" bgcolor="#A4DBFF"><strong class="text">Precio Mayoreo</strong></td>
-    <td width="9%" bgcolor="#A4DBFF"><strong class="text">Precio Venta</strong></td>
-    <td width="8%" bgcolor="#A4DBFF"><strong class="text">Cant. Actual</strong></td>
-    <td width="8%" bgcolor="#A4DBFF"><strong class="text">Cant. Minima</strong></td>
-    <td width="9%" bgcolor="#A4DBFF"><strong class="text">Sucursal</strong></td>
-    <td width="5%" bgcolor="#A4DBFF"><strong class="text">Faltantes</strong></td>
-    <td width="5%" bgcolor="#A4DBFF"><strong class="text">Sobrantes</strong></td>
-    </tr>';
+    <th>&nbsp;</th>
+    <th>Codigo</th>
+    <th>Nombre del Producto</th>
+    <th>Proveedor</th>
+    <th>Precio Costo</th>
+    <th>Precio Mayoreo</th>
+    <th>Precio Venta</th>
+    <th>Cant. Actual</th>
+    <th>Cant. Minima</th>
+    <th>Sucursal</th>
+    <th>Faltantes</th>
+    <th>Sobrantes</th>
+    </tr>
+</thead><tbody>';
     /*<td width="12%" bgcolor="#A4DBFF"><strong class="text">Cod. del Proveedor</strong></td>*/
   	$num=0;
 
@@ -129,18 +94,7 @@ body {
       $can=mysql_query("SELECT * FROM producto WHERE id_comision = '$id_comision' AND id_sucursal = '$sucursal' ORDER BY id_sucursal") or die(mysql_error());
     }
 
-    /*if ($id_comision != "Todos" && $sucursal == "Todos") {
-      $can=mysql_query("SELECT * FROM producto WHERE id_comision = '$id_comision' AND cantidad > 0 ORDER BY id_sucursal");
-    }
-    if ($id_comision != "Todos" && $sucursal != "Todos") {
-      $can=mysql_query("SELECT * FROM producto WHERE id_comision = '$id_comision' AND id_sucursal = '$sucursal' AND cantidad > 0 ORDER BY id_sucursal");
-    }*/
 
-  	/*if ($id_comision == "Todos") {
-  		$can=mysql_query("SELECT * FROM producto WHERE id_sucursal = '$id_sucursal'");
-  	}else {
-		$can=mysql_query("SELECT * FROM producto WHERE id_comision = '$id_comision' AND id_sucursal = '$id_sucursal'");
-  	}*/
 
 	  while($dato=mysql_fetch_array($can)){
 		$num=$num+1;
@@ -167,32 +121,22 @@ body {
 		}
 $codigoHTML.='
   <tr>
-    <td bgcolor="'.$color.'"><img src="'.$img.'" width="50" height="50"></td>
-    <td bgcolor="'.$color.'"><center><span class="text">'.$dato['cod'].'</span></center></td>
-    <td bgcolor="'.$color.'"><span class="text">'.utf8_encode($dato['nom']).'</span></td>
-    <td bgcolor="'.$color.'"><span class="text">'.$dato['prov'].'</span></td>
-    <td bgcolor="'.$color.'"><span class="text">$ '.number_format($dato['costo'],2,",",".").'</span></td>
-    <td bgcolor="'.$color.'"><span class="text">$ '.number_format($dato['mayor'],2,",",".").'</span></td>
-    <td bgcolor="'.$color.'"><span class="text">$ '.number_format($dato['venta'],2,",",".").'</span></td>
-    <td bgcolor="'.$color.'"><span class="text">'.$dato['cantidad'].'</span></td>
-    <td bgcolor="'.$color.'"><span class="text">'.$dato['minimo'].'</span></td>
-    <td bgcolor="'.$color.'"><span class="text">'.$suc.'</span></td>
-    <td bgcolor="'.$color.'"><span class="text">'.$dato['faltantes'].'</span></td>
-    <td bgcolor="'.$color.'"><span class="text">'.$dato['sobrantes'].'</span></td>
-  </tr>';/*$n_seccion*/
-  /*<td bgcolor="'.$color.'"><span class="text">'.$dato['cprov'].'</span></td>*/
+    <td><img src="'.$img.'" width="50" height="50"></td>
+    <td>'.$dato['cod'].'</td>
+    <td>'.utf8_encode($dato['nom']).'</td>
+    <td>'.$dato['prov'].'</td>
+    <td>$ '.number_format($dato['costo'],2,",",".").'</td>
+    <td>$ '.number_format($dato['mayor'],2,",",".").'</td>
+    <td>$ '.number_format($dato['venta'],2,",",".").'</td>
+    <td>'.$dato['cantidad'].'</td>
+    <td>'.$dato['minimo'].'</td>
+    <td>'.$suc.'</td>
+    <td>'.$dato['faltantes'].'</td>
+    <td>'.$dato['sobrantes'].'</td>
+  </tr>';
   }
-$codigoHTML.='
-</table><br/>
-<div align="right"><span class="text">Registros Encontrados '.$num.'</span></div>
-</div>
-</body>
-</html>';
+$codigoHTML.='</tbody>
+</table>';
 echo $codigoHTML;
-//$codigoHTML=utf8_decode($codigoHTML);
-//$dompdf=new DOMPDF();
-//$dompdf->load_html($codigoHTML);
-//ini_set("memory_limit","128M");
-//$dompdf->render();
-//$dompdf->stream("Listado_Productos_".$fech.".pdf");
+
 ?>

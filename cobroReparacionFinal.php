@@ -1,89 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Contado</title>
-    <style type="text/css" media="print">
-    	#Imprime {
-    		height: auto;
-    		width: 310px;
-    		margin: 0px;
-    		padding: 0px;
-    		float: left;
-    		font-family: Arial, Helvetica, sans-serif;
-    		
-    		color: #000;
-    	}
-    	@page{
-    	   margin: 0;
-    	}
-
-  </style>
-  <style>
-      .nota{
-        border-collapse: collapse;border: 1px solid #0B2161;font-size: 14px;
-        border-radius: 25px;
-        color: #0B2161;
-      }
-      .product{
-        border: 1px solid black;
-      }
-  </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    <script language="javascript">
-
-	  function imprSelec(nombre) {
-	  ////////
-		  var ficha = document.getElementById(nombre);
-		  var ventimp = window.open(' ', 'popimpr');
-		  ventimp.document.write( ficha.innerHTML );
-		  ventimp.document.close();
-		  ventimp.print( );
-		  ventimp.close();
-	  }
-    
-	</script> 
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
-    <!-- descargar en pdf -->
-    <script src="js/jspdf.min.js"></script>
-    <script>
-    </script>
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-</head>
-<body>
-  
-
 <?php
 session_start();
 include("host.php");
@@ -120,49 +34,172 @@ if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) {
 
   PDFLiberar($id_reparacion,$totalPagar,$dineroRecibo,$cambio,$con,$hostDB, $usuarioDB, $claveDB, $baseDB);
 
-  $html = '<center><a href="reparaciones.php" class="btn"><i class="icon-backward"></i> Regresar a Reparaciones</a>
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
-  
-  </center><br>
-  <table width="100%" border="0">
-  <tr>
-    <td width="50%">
-      <center>
-        <pre style="font-size:24px"><strong class="text-success">Total a Pagar</strong></pre>
-        <pre style="font-size:24px"><strong>$ '.$totalPagar.'</strong></pre>
-        <pre style="font-size:24px"><strong class="text-success">Dinero Recibido</strong></pre>
-        <pre style="font-size:24px"><strong>$ '.$dineroRecibo.'</strong></pre>
-        <pre style="font-size:24px"><strong class="text-success">Cambio</strong></pre>
-        <pre style="font-size:24px"><strong>$ '.$cambio.'</strong></pre>
-      </center>
-    </td>
-  <td width="50%" rowspan="2">
-    <div id="titulo"></div>
-    <div id="Imprime" >
-        <embed src="Facturas/RL'.$id_reparacion."_".$idSucursal.'.pdf?#zoom=160" width="100%" height="380" internalinstanceid="4" title>
-    </div>
-  </td>
-  </tr>
-  <tr>
-  <td>
-    <center>
-      <div class="alert alert-success">
-          <strong>Pago realizado con exito</strong><br><a href="reparaciones.php">Regresar a Reparaciones</a>
-      </div>           
-    </center>
-  </td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  </table>
-  </body>
-  </html>';
-
-  echo $html;
-
 }
-
 ?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Contado</title>
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="jsV2/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="jsV2/tether.min.js"></script>
+  <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <style>
+
+    body{
+            
+            background: #F7D358;
+    }
+    .titulo{
+
+            background: #e7e7e7;
+            color: #F2F2F2;
+    }
+    .modal-header{
+
+            background: #0275d8;
+            color: #F2F2F2;
+    }
+    .listado-tareas {
+            max-height: calc(50vh - 70px);
+            overflow-y: auto;
+    }
+    .btn{
+            border-radius: 0px;
+    }
+    .finish{
+            text-decoration:line-through;
+    }
+    .dropdown-item{
+            color: #E5E8E8;
+    }
+    .dropdown-item:hover{
+            color:#F4F6F6;
+    }
+    .form-control{
+            margin: 0px;
+    }
+    .black{
+        color: black;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+
+  </style>
+
+
+</head>
+<?php include_once "layout.php"; ?>
+<body>
+
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
+
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">REPARACIÓN<p>
+										</div>
+									</div>
+
+                      <div class="row">
+                          <div class="col-md-6">  
+                        
+                            <a href="reparaciones.php" class="btn btn-info">REGRESAR A REPARACIONES</a>
+                         
+                          </div>
+
+                          <div class="col-md-2">                        
+                          
+                          
+                          </div>
+
+                          <div class="col-md-4">
+
+            
+                            
+                          </div>
+
+                      </div>
+                  
+                  <br>
+
+									<div class="row">
+										<div class="col-md-12">
+
+                    
+
+                      <div class="row">
+
+                        <div class="col-md-3">
+
+                        <pre style="font-size:24px"><strong class="text-success">Total a Pagar</strong></pre>
+                        <pre style="font-size:24px"><strong>$<?php echo $totalPagar; ?></strong></pre>
+                        <pre style="font-size:24px"><strong class="text-success">Dinero Recibido</strong></pre>
+                        <pre style="font-size:24px"><strong>$<?php echo $dineroRecibo; ?></strong></pre>
+                        <pre style="font-size:24px"><strong class="text-success">Cambio</strong></pre>
+                        <pre style="font-size:24px"><strong>$<?php echo $cambio; ?></strong></pre>
+
+                        </div>
+
+                        <div class="col-md-9">
+                        
+                        <embed src="Facturas/RL<?php echo $id_reparacion."_".$idSucursal; ?>.pdf?#zoom=160" width="100%" height="380" internalinstanceid="4" title>
+                      
+
+                        </div>
+                      </div>
+
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+  
+</body>
+</html>
+
+
+
+
+
+

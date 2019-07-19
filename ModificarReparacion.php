@@ -13,54 +13,78 @@ $sucursal = $_SESSION['sucursal'];
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Listado Producto</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
-	<script src="includes/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="includes/sweetalert/dist/sweetalert.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Listado Producto</title>
 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="jsV2/jquery-3.1.1.js"></script>
+        <script type="text/javascript" src="jsV2/tether.min.js"></script>
+        <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-    <style>
+        <style>
 
-    input{
+            body{
+                    
+                    background: #F7D358;
+            }
+            .titulo{
+
+                    background: #e7e7e7;
+                    color: #F2F2F2;
+            }
+            .modal-header{
+
+                    background: #0275d8;
+                    color: #F2F2F2;
+            }
+            .listado-tareas {
+                    max-height: calc(50vh - 70px);
+                    overflow-y: auto;
+            }
+            .btn{
+                    border-radius: 0px;
+            }
+            .finish{
+                    text-decoration:line-through;
+            }
+            .dropdown-item{
+                    color: #E5E8E8;
+            }
+            .dropdown-item:hover{
+                    color:#F4F6F6;
+            }
+            .form-control{
+                    margin: 0px;
+            }
+            .black{
+                    color: black;
+            }
+            .red{
+                    color: red;
+            }
+            .green{
+                    color: green;
+            }
+            /* extra */
+            input{
         
-        text-transform:uppercase;
-    }
-    </style>	
+                text-transform:uppercase;
+            }
+
+        </style>
+
+
 </head>
+<?php include_once "layout.php"; ?>
+<body>
 
 <?php
+
 $IdReparacion=$_GET['IdReparacion'];
 $can=mysql_query("SELECT * FROM reparacion where id_reparacion='$IdReparacion'");
 
@@ -96,148 +120,182 @@ $can=mysql_query("SELECT * FROM reparacion where id_reparacion='$IdReparacion'")
        $SumPrecio  = $dato['SUM(Precio)'];
        $SumCosto   = $dato['SUM(CostoRefaccion)'];
     }
-    
+?>
 
-    
-    //$total = (($ManoObra + $SumPrecio));
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
 
-    //$total =  $ManoPlusTotal + $Abono;
-    //$totalmenosAnticipo = $total - $Abono;
-  
-    //if($Presupuesto==NULL || $Presupuesto==0 || $Presupuesto=="" || $Presupuesto<$ManoPlusTotal){
-     //  $can=mysql_query("UPDATE reparacion SET 
-      //  precio = '$ManoPlusTotal' 
-      //  WHERE id_reparacion='$IdReparacion'") or die(print("Error al Actualizar"));
-   // }//else if($Presupuesto==NULL || $Presupuesto==0 || $Presupuesto=="" || $Presupuesto>$ManoPlusTotal){
-        //$ManoPlusTotal = $Presupuesto;
-        //$ManoPlusTotal = $precioInicial;
-        //$can=mysql_query("UPDATE reparacion SET 
-        //precio              ='$precioInicial' 
-        //WHERE id_reparacion='$IdReparacion'") or die(print("Error al Actualizar"));
-       // $ManoPlusTotal = $precioInicial;
-    //}   
+							<div class="col-md-12">
+								<br>
 
+								<div class="container">
 
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">REPARACIÓN<p>
+										</div>
+									</div>
 
-$html =  '<body data-spy="scroll" data-target=".bs-docs-sidebar">
-  <div class="control-group info">
-    
-        <table width="80%" border="0" class="table">
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="btn-group" data-toggle="buttons-checkbox">
-                        <a href="reparaciones.php"><button type="button"  class="btn btn-primary">Lista de Reparaciones</button></a>
+                      <div class="row">
+                          <div class="col-md-6">  
+                        
+                            <a href="reparaciones.php" class="btn btn-info">Lista Reparaciones</a>
+                         
+                          </div>
+
+                          <div class="col-md-2">                        
+                          
+                          
+                          </div>
+
+                          <div class="col-md-4">
+
+            
+                            
+                          </div>
+
+                      </div>
+                  
+                  <br>
+
+									<div class="row">
+										<div class="col-md-12">
+
+                    
+<?php
+                      $html='<div class="row">
+                        <div class="col-md-3">
+                            <label for="">ID</label>
+                            <input class="form-control" type="text" name="IdReparacion" id="IdReparacion"  value="'.$IdReparacion.'" readonly>
                         </div>
-                    </td>
-                </tr>
-                <tr class="info">
-                    <td colspan="3"><center><strong>ENTRADA REPARACIONES</strong></center></td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="textfield">* ID: </label>
-                        <input type="text" name="IdReparacion" id="IdReparacion"  value="'.$IdReparacion.'" readonly>
-						
-                        <label for="textfield">IMEI: </label>
-						<input type="text" name="IMEI" id="IMEI" value="'.$IMEI.'" autocomplete="off" maxlength="20" readonly>
-						
-                        <label for="textfield">* Marca: </label>
-						<input type="text" name="Marca" id="Marca" value="'.$Marca.'" autocomplete="off" maxlength="40" required="" readonly>
-						
-                        <label for="textfield">* Modelo: </label>
-						<input type="text" name="Modelo" id="Modelo" value="'.$Modelo.'" autocomplete="off" maxlength="40" required="" readonly>
-						
-                        <label for="textfield">* Color: </label>
-						<input type="text" name="Color" id="Color" value="'.$Color.'" autocomplete="off" maxlength="30" required="" readonly>
-						
-                        <label for="textfield">* Chip: </label>
-                        <input type="radio" name="Chip" id="Chip" value="si" > Si
-                        <input type="radio" name="Chip" id="Chip" value="no" > No
-								
-
-                        <label for="textfield">* Memoria: </label>
-						
-						<input type="radio" name="Memoria" id="Memoria" value="si"> Si
-						<input type="radio" name="Memoria" id="Memoria" value="no"> No
-							
-                        
-                        <label for="textfield">* Nombre del Cliente: </label>
-							<input type="text" name="NombreContacto" id="NombreContacto" value="'.$NombreContacto.'" autocomplete="off" maxlength="30" required="" readonly>
-                            <label for="textfield">* Telefono de Cliente: </label>
-							<input type="text" name="TelefonoContacto" id="TelefonoContacto" value="'.$TelefonoContacto.'" autocomplete="off" maxlength="10" pattern="[0-9]{10}" required="" readonly>
-                            <br>
-                        
-                    </td>
-                    <td>
-                        <label for="textfield">* Motivo de Reparación: </label>
-                        <input type="text" name="Motivo" id="Motivo" value="'.$Motivo.'" autocomplete="off" maxlength="70" required="" readonly>
-                        
-                        <label>Anticipo:</label>
-                        <div class="input-prepend input-append">
-                            <span class="add-on">$</span>
-                            <input type="number" step="any" name="Abono" id="Abono" value="'.$Abono.'" readonly>
-                            <span class="add-on">.00</span>
+                        <div class="col-md-3">
+                            <label for="">IMEI</label>
+						    <input class="form-control" type="text" name="IMEI" id="IMEI" value="'.$IMEI.'" autocomplete="off" maxlength="20" readonly>
                         </div>
-
-                        <label>Presupuesto Inicial:</label>
-                        <div class="input-prepend input-append">
-                            <span class="add-on">$</span>
-                            <input type="text" name="Precio" id="Precio" value="'.$precioInicial.'" required readonly>
-                            <span class="add-on">.00</span>
+                        <div class="col-md-3">
+                            <label for="">Marca</label>
+						    <input class="form-control" type="text" name="Marca" id="Marca" value="'.$Marca.'" autocomplete="off" maxlength="40" required="" readonly>
                         </div>
+                        <div class="col-md-3">
+                            <label for="">Modelo</label>
+						    <input class="form-control" type="text" name="Modelo" id="Modelo" value="'.$Modelo.'" autocomplete="off" maxlength="40" required="" readonly>
+                        </div>
+                      </div>
 
+                      <div class="row">
+                        <div class="col-md-3">
+                            <label for="">Color</label>
+						    <input class="form-control" type="text" name="Color" id="Color" value="'.$Color.'" autocomplete="off" maxlength="30" required="" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Chip</label>
+                            <input type="radio" name="Chip" id="Chip" value="si" > Si
+                            <input type="radio" name="Chip" id="Chip" value="no" > No                        
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Memoria</label>
+                            <input type="radio" name="Memoria" id="Memoria" value="si"> Si
+                            <input type="radio" name="Memoria" id="Memoria" value="no"> No                        
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Nombre del Cliente</label>
+						    <input class="form-control" type="text" name="NombreContacto" id="NombreContacto" value="'.$NombreContacto.'" autocomplete="off" maxlength="30" required="" readonly>
+                        </div>
+                      </div>
 
-                       
-                        <label>* Inversión Refacciones</label>
-                        <div class="input-prepend input-append">
-                           <span class="add-on">$</span>
-                           <input type="number" step="any" name="Inversion" id="Inversion" value="'.$SumPrecio.'" readonly>
-                           <span class="add-on">.00</span>
-                         </div>    
-  
+                      <div class="row">
+                        <div class="col-md-3">
+                            <label for="">Telefono de Cliente</label>
+						    <input class="form-control" type="text" name="TelefonoContacto" id="TelefonoContacto" value="'.$TelefonoContacto.'" autocomplete="off" maxlength="10" pattern="[0-9]{10}" required="" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Motivo de Reparación</label>
+                            <input class="form-control" type="text" name="Motivo" id="Motivo" value="'.$Motivo.'" autocomplete="off" maxlength="70" required="" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Anticipo</label>
+                            <input class="form-control" type="number" step="any" name="Abono" id="Abono" value="'.$Abono.'" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Presupuesto Inicial</label>
+                            <input class="form-control" type="text" name="Precio" id="Precio" value="'.$precioInicial.'" required readonly>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-3">
+                            <label>Inversión Refacciones</label>
+                            <input class="form-control" type="number" step="any" name="Inversion" id="Inversion" value="'.$SumPrecio.'" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Mano de obra</label>                    
+                            <input class="form-control" type="number" step="any" name="ManoObra" id="ManoObra" value="'.$ManoObra.'" readonly>  
+                        </div>
+                        <div class="col-md-3">
+                            <label>TOTAL</label>                       
+                            <input class="form-control" type="number" step="any" name="total" id="total" value="'.$total.'" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Fecha de Ingreso</label>
+                            <input class="form-control" type="date" name="FechaIngreso" id="FechaIngreso" value="'.$FechaIngreso.'" required="" readonly="">
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-3">
+                            <label for="">Observación</label>
+                            <textarea class="form-control" name="Observacion" id="Observacion" cols="20" rows="10" value="" maxlength="300" readonly>'.$Observacion.'</textarea>
+                        </div>
+                        <div class="col-md-3">
                         
-                        <label>* Mano de obra:</label>
-                        <div class="input-prepend input-append">
-                           <span class="add-on">$</span>
-                           <input type="number" step="any" name="ManoObra" id="ManoObra" value="'.$ManoObra.'" readonly>
-                           <span class="add-on">.00</span>
-                         </div>
+                        </div>
+                        <div class="col-md-3">
                         
+                        </div>
+                        <div class="col-md-3"><br>';
 
-                         <label>* TOTAL:</label>
-                        <div class="input-prepend input-append">
-                           <span class="add-on">$</span>
-                           <input type="number" step="any" name="total" id="total" value="'.$total.'" readonly>
-                           <span class="add-on">.00</span>
-                         </div>
-
-                         <br>';
-
-                         if ($estado == 1) {
-                             $html .= '<a href="GestionarHerramientas.php?IdReparacion='.$IdReparacion.'" class="btn btn-primary btn-lg">
+                        if ($estado == 1) {
+                             $html .= '<a href="GestionarHerramientas.php?IdReparacion='.$IdReparacion.'" class="btn btn-primary ">
                            Administrar Refacciones
                          </a>';
                          
                          }
+                        
+                        $html.='</div>
+                      </div>';
+                      echo $html;
 
-                       
+                      ?>
 
-         $html .= '</td>
-                    <td>
-                        <label>* Fecha de Ingreso: </label><input type="date" name="FechaIngreso" id="FechaIngreso" value="'.$FechaIngreso.'" required="" readonly="">
-                        <!--<label>* Fecha Limite de Entrega: </label><input type="date" name="FechaSalida" id="FechaSalida" value="'.$FechaSalida.'" required="" readonly="">-->
-                        <label for="textfield">Observación: </label>
-                        <textarea name="Observacion" id="Observacion" cols="20" rows="10" value="" maxlength="300" readonly>'.$Observacion.'</textarea>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-</div>
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
 </body>
-</html>';
-echo $html;
-?>
+</html>
+
+
+
+
 
 
 <script type="text/javascript">

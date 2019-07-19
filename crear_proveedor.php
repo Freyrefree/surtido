@@ -1,5 +1,5 @@
 <?php
-		session_start();
+		include_once 'APP/config.php';
 		include('php_conexion.php'); 
 		$usu=$_SESSION['username'];
 		if(!$_SESSION['tipo_usu']=='a' or !$_SESSION['tipo_usu']=='ca'){
@@ -25,63 +25,83 @@
 			$boton="Guardar Proveedor";
 		}
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <title>Crear Proveedor</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Crear Proveedor</title>
 
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
-    <![endif]-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="jsV2/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="jsV2/tether.min.js"></script>
+    <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
+
     <style>
-	input{
-        text-transform:uppercase;
-    }
-    </style>
-</head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
 
-  <?php 
+        body{
+                
+                background: #F7D358;
+        }
+        .titulo{
+
+                background: #e7e7e7;
+                color: #F2F2F2;
+        }
+        .modal-header{
+
+                background: #0275d8;
+                color: #F2F2F2;
+        }
+        .listado-tareas {
+                max-height: calc(50vh - 70px);
+                overflow-y: auto;
+        }
+        .btn{
+                border-radius: 0px;
+        }
+        .finish{
+                text-decoration:line-through;
+        }
+        .dropdown-item{
+                color: #E5E8E8;
+        }
+        .dropdown-item:hover{
+                color:#F4F6F6;
+        }
+        .form-control{
+                margin: 0px;
+        }
+        .black{
+            color: black;
+        }
+        .red{
+            color: red;
+        }
+        .green{
+            color: green;
+        }
+
+    </style>
+
+
+
+</head>
+<?php include_once "layout.php"; ?>
+<body>
+
+<?php 
 	if(!empty($_POST['empresa'])){
 
 		$rfc=strtoupper($_POST['rfc']);					$calle=strtoupper($_POST['calle']);
-		$empresa=strtoupper($_POST['empresa']);			$cp=strtoupper($_POST['cp']);				
+		$empresaa=strtoupper($_POST['empresa']);			$cp=strtoupper($_POST['cp']);				
 		$contacto=strtoupper($_POST['contacto']);		$next=strtoupper($_POST['next']);
 		$pais=strtoupper($_POST['pais']);       		$nint=strtoupper($_POST['nint']);
 		$estado=strtoupper($_POST['estado']);			$correo=$_POST['correo'];
@@ -94,7 +114,7 @@
 		if($dato=mysql_fetch_array($can)){
 			if($boton=='Actualizar Proveedor'){
 				$xSQL="UPDATE proveedor SET  
-								empresa =  	 '$empresa',
+								empresa =  	 '$empresaa',
 								calle =    	 '$calle',
 								cp =       	 '$cp',
 								colonia =  	 '$colonia',
@@ -117,59 +137,214 @@
 			}		
 		}else{
 			$sql = "INSERT INTO  proveedor (rfc,empresa,calle,cp,colonia,lestado,ciudad,next,nint,regimen,tel,cel,correo,nom,pais,estado)
-					VALUES ('$rfc','$empresa','$calle','$cp','$colonia','$estado','$municipio','$next','$nint','$regimen','$telefono','$celular','$correo','$contacto','$pais','s');";
+					VALUES ('$rfc','$empresaa','$calle','$cp','$colonia','$estado','$municipio','$next','$nint','$regimen','$telefono','$celular','$correo','$contacto','$pais','s');";
 			mysql_query($sql);	
 			echo '	<div class="alert alert-success">
 					  <button type="button" class="close" data-dismiss="alert">X</button>
 					  <strong>Proveedor! </strong> Guardado con Exito
 					</div>';
 				$contacto='';$correo='';$celular='';
-				$empresa=''; $rfc='';$calle='';$cp='';$colonia='';$estado='';$municipio='';$next='';$nint='';$pais='';$regimen='';$telefono=''; //new dates;
+				$empresaa=''; $rfc='';$calle='';$cp='';$colonia='';$estado='';$municipio='';$next='';$nint='';$pais='';$regimen='';$telefono=''; //new dates;
 		}
 	}
 ?>
-<div align="center">
-<div class="control-group info">
-<form name="form1" method="post" action="">
-  <table width="80%" border="0" class="table">
-  <tr class="warning">
-    <td colspan="2"><center><strong>Crear Proveedor</strong></center></td>
-    </tr>
-  <tr>
-    <td>
-    <?php 
-    	if(!empty($_GET['codigo'])){
-    		?><label for="textfield">* RFC: </label><input type="text" name="rfc" id="rfc" value="<?php echo $rfc; ?>" maxlength="15" required ><?php
-    	}else{
-    		?><label for="textfield">* RFC: </label><input type="text" name="rfc" id="rfc" value="<?php echo $rfc; ?>" maxlength="15" required><?php
-    	}
-     ?>
-    	<label for="textfield">* Empresa/Razon social: </label><input type="text" name="empresa" id="empresa" value="<?php echo $empresa; ?>" required maxlength="100">
-        <label for="textfield">Pais: </label><input type="text" name="pais" id="pais" value="<?php echo $pais; ?>" maxlength="30">
-        <label for="textfield">Estado: </label><input type="text" name="estado" id="estado" value="<?php echo $estado; ?>" maxlength="50">
-        <label for="textfield">Municipio: </label><input type="text" name="municipio" id="municipio" value="<?php echo $municipio; ?>" maxlength="50">
-        <label for="textfield">Colonia: </label><input type="text" name="colonia" id="colonia" value="<?php echo $colonia; ?>" maxlength="50">
-    	<label for="textfield">* Calle: </label><input type="text" name="calle" id="calle" value="<?php echo $calle; ?>" required maxlength="100">
-        <label for="textfield">* Codigo Postal: </label><input type="text" name="cp" id="cp" value="<?php echo $cp; ?>" required maxlength="10">
-      	
-		<br>
-    	<button class="btn btn-large btn-primary" type="submit"><?php echo $boton; ?></button>
-     	<?php if($boton=='Actualizar Proveedor'){ ?> <a href="crear_proveedor.php" class="btn btn-large">Cancelar</a><?php } ?>
 
-    </td>
-    <td>
-        <label for="textfield">N. Ext: </label><input type="text" name="next" id="next" value="<?php echo $next; ?>" maxlength="10">
-        <label for="textfield">N. Int: </label><input type="text" name="nint" id="nint" value="<?php echo $nint; ?>" maxlength="10">
-        <label for="textfield">* Correo: </label><input type="email" name="correo" id="correo" value="<?php echo $correo; ?>" required>
-    	<label for="textfield">* Contacto: </label><input type="text" name="contacto" id="contacto" value="<?php echo $contacto; ?>" required maxlength="50">
-        <label for="textfield">* Telefono: </label><input type="text" name="telefono" id="telefono" value="<?php echo $telefono; ?>" required maxlength="20">
-        <label for="textfield">* Celular: </label><input type="text" name="celular" id="celular" value="<?php echo $celular; ?>" required maxlength="20">
-        <label for="textfield">Regimen: </label><input type="text" name="regimen" id="regimen" value="<?php echo $regimen; ?>">
-    </td>
-  </tr>
-</table>
-</form>
-</div>
-</div>
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
+
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">NUEVO PROVEEDOR</p>
+										</div>
+									</div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">                        
+											<button type="button" class="btn btn-info" onClick="window.location='proveedor.php'">Listado Proveedores</button>
+                                        </div>
+
+                                        <div class="col-md-4">                        
+                                        
+                                        </div>
+
+                                        <div class="col-md-2">                        
+
+                                        </div>
+                                    </div>
+                  
+                                    <br>
+
+									<div class="row">
+										<div class="col-md-12">
+
+										<form name="form1" method="post" action="">
+										<div class="row">
+                                            <div class="col-md-3">
+                                                <?php 
+												if(!empty($_GET['codigo'])){
+													?>
+														<div class="form-group">
+														<label for="">RFC</label>
+														<input  class="form-control" type="text" name="rfc" id="rfc" value="<?php echo $rfc; ?>" maxlength="15" required >
+														</div>
+													<?php
+												}else{
+													?>
+														<div class="form-group">
+														<label for="">RFC</label>
+														<input  class="form-control" type="text" name="rfc" id="rfc" value="<?php echo $rfc; ?>" maxlength="15" required>
+														</div>
+													<?php
+												}
+                                                ?>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+													<label for="">Empresa/Razon social</label>
+													<input class="form-control" type="text" name="empresa" id="empresa" value="<?php echo $empresaa; ?>" required maxlength="100">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+												<div class="form-group">
+													<label for="">Pais</label>
+													<input class="form-control" type="text" name="pais" id="pais" value="<?php echo $pais; ?>" maxlength="30">  
+												</div>
+                                            </div>
+
+                                            <div class="col-md-3">
+												<div class="form-group">
+													<label for="">Estado</label>
+													<input class="form-control" type="text" name="estado" id="estado" value="<?php echo $estado; ?>" maxlength="50">
+												</div>
+                                            </div>
+
+
+                                        </div>
+
+										<div class="row">
+                                            <div class="col-md-3">
+												<div class="form-group">
+													<label for="">Municipio</label>
+													<input class="form-control"  type="text" name="municipio" id="municipio" value="<?php echo $municipio; ?>" maxlength="50">
+												</div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">												
+													<label for="">Colonia</label>
+													<input class="form-control" type="text" name="colonia" id="colonia" value="<?php echo $colonia; ?>" maxlength="50">
+												</div>
+                                            </div>
+
+                                            <div class="col-md-3">
+												<div class="form-group">
+													<label for="">Calle</label>
+													<input class="form-control"  type="text" name="calle" id="calle" value="<?php echo $calle; ?>" required maxlength="100">  
+												</div>
+                                            </div>
+
+                                            <div class="col-md-3">
+												<div class="form-group">
+													<label for="">Codigo Postal</label>
+													<input class="form-control" type="text" name="cp" id="cp" value="<?php echo $cp; ?>" required maxlength="10">
+												</div>
+                                            </div>
+
+
+                                        </div>
+										<div class="row">
+                                            <div class="col-md-3">
+												<div class="form-group">
+													<label for="">N. Ext</label>
+													<input class="form-control" type="text" name="next" id="next" value="<?php echo $next; ?>" maxlength="10">
+												</div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">												
+													<label for="">N. Int</label>
+													<input class="form-control" type="text" name="nint" id="nint" value="<?php echo $nint; ?>" maxlength="10">
+												</div>
+                                            </div>
+
+                                            <div class="col-md-3">
+												<div class="form-group">
+													<label for="">Correo</label>
+													<input class="form-control" type="email" name="correo" id="correo" value="<?php echo $correo; ?>" required>
+												</div>
+                                            </div>
+
+                                            <div class="col-md-3">
+												<div class="form-group">
+													<label for="">Contacto</label>
+													<input class="form-control" type="text" name="contacto" id="contacto" value="<?php echo $contacto; ?>" required maxlength="50">
+												</div>
+                                            </div>
+                                        </div>
+
+										<div class="row">
+                                            <div class="col-md-3">
+												<div class="form-group">
+													<label for="">Telefono</label>
+													<input class="form-control" type="text" name="telefono" id="telefono" value="<?php echo $telefono; ?>" required maxlength="20">
+												</div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">												
+													<label for="">Celular</label>
+													<input class="form-control" type="text" name="celular" id="celular" value="<?php echo $celular; ?>" required maxlength="20">
+												</div>
+                                            </div>
+
+                                            <div class="col-md-3">
+												<div class="form-group">
+													<label for="">Regimen: </label>
+													<input class="form-control" type="text" name="regimen" id="regimen" value="<?php echo $regimen; ?>">
+												</div>
+                                            </div>
+
+                                            <div class="col-md-3">                                           
+												<br>
+												<button class="btn btn-large btn-primary" type="submit"><?php echo $boton; ?></button>
+												<?php if($boton=='Actualizar Proveedor'){ ?> <a href="crear_proveedor.php" class="btn btn-large btn-danger">Cancelar</a><?php } ?>
+                                            
+                                            </div>
+                                        </div>
+
+										</form>                     
+
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	
 </body>
 </html>

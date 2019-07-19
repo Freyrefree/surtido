@@ -11,46 +11,82 @@
             /*echo "el valor obtenido es ".$identificador;*/
         }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Listado Ventas a Credito</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
 
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-    <?php if (!empty($_GET['cambio'])) { 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Listado Ventas a Credito</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="jsV2/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="jsV2/tether.min.js"></script>
+  <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+  <!-- "DATA TABLE" -->
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+  <!-- ********* -->
+
+  <style>
+
+    body{
+            
+            background: #F7D358;
+    }
+    .titulo{
+
+            background: #e7e7e7;
+            color: #F2F2F2;
+    }
+    .modal-header{
+
+            background: #0275d8;
+            color: #F2F2F2;
+    }
+    .listado-tareas {
+            max-height: calc(50vh - 70px);
+            overflow-y: auto;
+    }
+    .btn{
+            border-radius: 0px;
+    }
+    .finish{
+            text-decoration:line-through;
+    }
+    .dropdown-item{
+            color: #E5E8E8;
+    }
+    .dropdown-item:hover{
+            color:#F4F6F6;
+    }
+    .form-control{
+            margin: 0px;
+    }
+    .black{
+        color: black;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+
+  </style>
+
+<?php if (!empty($_GET['cambio'])) { 
         ?>
      <script>
             $(function() {
@@ -112,105 +148,163 @@
         }
     </script>
 
+
 </head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-<table width="100%" border="0">
-  <tr>
-    <td>
-    <!-- <div class="btn-group" data-toggle="buttons-checkbox">
-        <button type="button" class="btn btn-primary" onClick="window.location='PDFproducto.php'">Reporte PDF</button>
-        <button type="button" class="btn btn-primary" onClick="window.location='crear_producto.php'">Ingresar Nuevo</button>
-    </div> -->
-    </td>
-    <td>
-    <div align="right">
-    <form method="post" action="" enctype="multipart/form-data" name="form1" id="form1">
-      <div class="input-append">
-            <label style="padding-right: 100px;"><input type="checkbox" id="nomb" name="nomb" value="name"> Nombre</label>
-             <input name="bus" type="text" class="span2" size="60" list="characters" placeholder="Buscar">
-              <datalist id="characters">
-              <?php
-                $buscar=$_POST['bus'];
-                $can=mysql_query("SELECT * FROM afavor");
-                while($dato=mysql_fetch_array($can)){
-                    echo '<option value="'.$dato['FechaVenta'].'">';
-                    echo '<option value="'.$dato['RfcCliente'].'">';
-                }
-              ?>
-          </datalist>
-            <button class="btn" type="submit">Buscar por Fecha / RFC!</button>
-      </div>
-    </form>
-    </div>
-    </td>
-  </tr>
-</table>
-</div>
-<div align="center">
-<table width="80%" border="0" class="table">
-  <tr class="info">
-    <td colspan="10"><center><strong>Listado de Ventas con saldo a favor</strong></center></td>
-  </tr>
-  <tr>
-    <td><strong>Codigo</strong></td>
-    <td><strong>RFC Cliente</strong></td>
-    <td><strong>Nombre Cliente</strong></td>
-    <td><strong>Cantidad a Favor</strong></td>
-    <td><strong>Fecha de la ultima compra</strong></td>
-  </tr>
-    <?php 
-	if(empty($_POST['bus'])){
-		$can=mysql_query("SELECT * FROM afavor WHERE estatus='0' AND IdSucursal = '$id_sucursal' ORDER BY RfcCliente")or die ((print"Errir al consultar saldos 00".mysql_error()));;
-	}else{
-		$buscar=$_POST['bus'];
-    if (!empty($_POST['nomb'])) {
+<?php include_once "layout.php"; ?>
+<body>
 
-      $que=mysql_query("SELECT rfc FROM cliente WHERE nom LIKE '%$buscar%'");
-      //echo "SELECT rfc FROM cliente WHERE nom LIKE '%$buscar%'";
-      if($row=mysql_fetch_array($que)){
-        $rfc = $row['rfc'];
-      }
-      //echo "rfc: ".$rfc;
-      $can=mysql_query("SELECT * FROM afavor WHERE RfcCliente = '$rfc'")or die ((print"Errir al consultar saldos".mysql_error()));
-      //echo "SELECT * FROM credito WHERE rfc_cliente = '$rfc'";
-    }else {
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
 
-		  $can=mysql_query("SELECT * FROM afavor WHERE IdFactura LIKE '%$buscar%' or RfcCliente LIKE '%$buscar%' OR FechaVenta LIKE '%$buscar%'")or die ((print"Error al consultar Factura".mysql_error()));
-    }
-	}
-	while($dato=mysql_fetch_array($can)){
-		$codigo=$dato['cod'];
-    if ($dato['tipo'] == 1) {
-      if($dato['estatus']=='0'){
-          $estado='<span class="label label-important">Sis. Apartado</span>';
-      }else{
-          $estado='<span class="label label-success">Sis. Apartado</span>';
-      }
-    }else {
-      if($dato['estatus']=='0'){
-          $estado='<span class="label label-important">Sis. Credito</span>';
-      }else{
-          $estado='<span class="label label-success">Sis. Credito</span>';
-      }
-    }
-    $rfc_cliente = $dato['RfcCliente'];
-    $canc=mysql_query("SELECT nom FROM cliente WHERE rfc='$rfc_cliente'") or die ((print"Errir al consultar cliente".mysql_error()));
-    while($datoc=mysql_fetch_array($canc)){
-        $nombre = $datoc['nom'];
-    }
-    $detalle = '<span class="label label-info"><strong>Más</strong></span>';
-	?>
-    <tr>
-        <td><?php echo $dato['Id']; ?></td>
-        <td><?php echo $dato['RfcCliente']; ?></td>
-        <td><?php echo $nombre; ?></td>
-        <td>$ <?php echo number_format($dato['Sobrante'],2,",","."); ?></td>
-        <td><?php echo $dato['FechaVenta']; ?></td>
-        <!-- <td><a  href="VentasCredito.php?id=<?php echo $dato['id']; ?>" data-toggle="modal"><?php echo $estado; ?></a></td> -->
-    </tr>
-    <?php } $nombre="";?>
-</table>
-</div>
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">LISTADO DE VENTAS CON SALDO A FAVOR</p>
+										</div>
+									</div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+
+                                            <form method="post" action="" enctype="multipart/form-data" name="form1" id="form1">
+                                              <div class="input-append">
+                                                    <label style="padding-right: 100px;"><input type="checkbox" id="nomb" name="nomb" value="name"> Nombre</label>
+                                                    <input class="form-control" name="bus" type="text" class="span2" size="60" list="characters" placeholder="Buscar">
+                                                      <datalist id="characters">
+                                                      <?php
+                                                        $buscar=$_POST['bus'];
+                                                        $can=mysql_query("SELECT * FROM afavor");
+                                                        while($dato=mysql_fetch_array($can)){
+                                                            echo '<option value="'.$dato['FechaVenta'].'">';
+                                                            echo '<option value="'.$dato['RfcCliente'].'">';
+                                                        }
+                                                      ?>
+                                                  </datalist>
+                                                    <button class="btn btn-primary" type="submit">Buscar por Fecha / RFC!</button>
+                                              </div>
+                                            </form>                       
+                                        
+                                        </div>
+
+                                        <div class="col-md-3">                        
+                                       
+                                       
+                                        </div>
+
+                                        <div class="col-md-6">
+
+
+                                        </div>
+
+
+                                    </div>
+                  
+                                    <br>
+
+									<div class="row">
+										<div class="col-md-12">
+
+                    <table  class="table">
+                      <thead>
+                      <tr>
+                        <th>Codigo</th>
+                        <th>RFC Cliente</th>
+                        <th>Nombre Cliente</th>
+                        <th>Cantidad a Favor</th>
+                        <th>Fecha de la ultima compra</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+
+                        <?php 
+                      if(empty($_POST['bus'])){
+                        $can=mysql_query("SELECT * FROM afavor WHERE estatus='0' AND IdSucursal = '$id_sucursal' ORDER BY RfcCliente")or die ((print"Errir al consultar saldos 00".mysql_error()));;
+                      }else{
+                        $buscar=$_POST['bus'];
+                        if (!empty($_POST['nomb'])) {
+
+                          $que=mysql_query("SELECT rfc FROM cliente WHERE nom LIKE '%$buscar%'");
+                          //echo "SELECT rfc FROM cliente WHERE nom LIKE '%$buscar%'";
+                          if($row=mysql_fetch_array($que)){
+                            $rfc = $row['rfc'];
+                          }
+                          //echo "rfc: ".$rfc;
+                          $can=mysql_query("SELECT * FROM afavor WHERE RfcCliente = '$rfc'")or die ((print"Errir al consultar saldos".mysql_error()));
+                          //echo "SELECT * FROM credito WHERE rfc_cliente = '$rfc'";
+                        }else {
+
+                          $can=mysql_query("SELECT * FROM afavor WHERE IdFactura LIKE '%$buscar%' or RfcCliente LIKE '%$buscar%' OR FechaVenta LIKE '%$buscar%'")or die ((print"Error al consultar Factura".mysql_error()));
+                        }
+                      }
+                      while($dato=mysql_fetch_array($can)){
+                        $codigo=$dato['cod'];
+                        if ($dato['tipo'] == 1) {
+                          if($dato['estatus']=='0'){
+                              $estado='<span class="badge badge-danger">Sis. Apartado</span>';
+                          }else{
+                              $estado='<span class="badge badge-success">Sis. Apartado</span>';
+                          }
+                        }else {
+                          if($dato['estatus']=='0'){
+                              $estado='<span class="badge badge-danger">Sis. Credito</span>';
+                          }else{
+                              $estado='<span class="badge badge-success">Sis. Credito</span>';
+                          }
+                        }
+                        $rfc_cliente = $dato['RfcCliente'];
+                        $canc=mysql_query("SELECT nom FROM cliente WHERE rfc='$rfc_cliente'") or die ((print"Errir al consultar cliente".mysql_error()));
+                        while($datoc=mysql_fetch_array($canc)){
+                            $nombre = $datoc['nom'];
+                        }
+                        $detalle = '<span class="badge badge-info"><strong>Más</strong></span>';
+                      ?>
+                        <tr>
+                            <td><?php echo $dato['Id']; ?></td>
+                            <td><?php echo $dato['RfcCliente']; ?></td>
+                            <td><?php echo $nombre; ?></td>
+                            <td>$<?php echo number_format($dato['Sobrante'],2,",","."); ?></td>
+                            <td><?php echo $dato['FechaVenta']; ?></td>
+                            
+                        </tr>
+                        <?php } $nombre="";?>
+                        </tbody>
+                    </table>
+
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+  
+</body>
+</html>
+
+
+
 <!-- Modal -- myCredito -->
 <div id="Apertura" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -277,5 +371,3 @@
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
   </div>
 </div>
-</body>
-</html>

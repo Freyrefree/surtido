@@ -138,53 +138,52 @@ error_reporting(0);
     function tabularReparaciones($datos,$tipoUsuario){
 
         // Abrimos la etiqueta table una sola vez:
-        $codigohtml = '<table width="100%" border="0" class="table">
-                    <tr class="info">
-                    <td colspan="17"><center><strong>Listado de Reparaciones</strong></center></td>
-                    </tr>
+        $codigohtml = '<table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:80%" >
+        <thead>
                     <tr>
                     <td><strong>Num.</strong></td>                    
-                    <td width="30%"><strong>Fecha Ingreso</strong></td>
-                    <td width="20%"><strong>Cliente</strong></td>
+                    <td><strong>Fecha Ingreso</strong></td>
+                    <td><strong>Cliente</strong></td>
                     <td><strong>Equipo</strong></td>
                     <td><strong>Teléfono</strong></td>
-                    <td width="10%"><strong>Anticipo</strong></td>
-                    <td width="10%"><strong>Precio Inicial</strong></td>
-                    <td width="10%"><strong>Precio Final</strong></td>
+                    <td><strong>Anticipo</strong></td>
+                    <td><strong>Precio Inicial</strong></td>
+                    <td><strong>Precio Final</strong></td>
                     <td><strong>Estatus</strong></td>
                     <td><strong>Detalle</strong></td>
                     <td><strong>Obs.</strong></td>
-                    <!--<td><strong>Personal</strong></td>-->
-                    </tr>';
+                    </tr>
+                    </thead>';
+                    $codigohtml .= '<tbody>';
     
         // Vamos acumulando de a una fila "tr" por vuelta:
         while ($fila = @mysqli_fetch_array($datos) )
         {
             $si="'si'";
             $no="'no'";
-            $botonVermas = '<span class="label label-info">Ver más</span>';
-            $botonAgregarObs = '<span class="label label-info">Obs.</span>';
+            $botonVermas = '<span class="badge badge-info">Ver más</span>';
+            $botonAgregarObs = '<span class="badge badge-info">Obs.</span>';
 
             $id_sucursalR=$fila['id_sucursal'];
             
             
             if($fila['estado']=='1'){
-            $estado='<a  href="#" onclick="enviar('.$fila['id_reparacion'].')"<span class="label label-warning">Proceso</span></a>';
+            $estado='<a  href="#" onclick="enviar('.$fila['id_reparacion'].')"<span class="badge badge-warning">Proceso</span></a>';
             }else if ($fila['estado'] == '2') {
-            //$estado='<a  href="#" onclick="liberarReparacion('.$fila['id_reparacion'].')"<span class="label label-info">Terminado</span></a>';
-            $estado='<a  href="#" <span class="label label-info">Terminado</span></a>';
+            //$estado='<a  href="#" onclick="liberarReparacion('.$fila['id_reparacion'].')"<span  class="badge badge-info">Terminado</span></a>';
+            $estado='<a  href="#" <span class="badge badge-primary">Terminado</span></a>';
             }else if ($fila['estado'] == '3'){
             //$estado='<a  href="#" onclick="reingresoReparacion('.$fila['id_reparacion'].')"<span class="label label-success">Entregado</span></a>';
-            $estado='<a  href="#" <span class="label label-success">Entregado</span></a>';
+            $estado='<a  href="#" <span class="badge badge-success">Entregado</span></a>';
             }else if ($fila['estado'] == '0'){
-                $estado = '<a  href="#" onclick="aceptarCancelarRepa('.$fila['id_reparacion'].','.$si.')"<span class="label label-important">INICIO</span>';
-                $estado.= '<a  href="#" onclick="aceptarCancelarRepa('.$fila['id_reparacion'].','.$no.')"<span class="label label-important">CANCELAR</span>';
+                $estado = '<a  href="#" onclick="aceptarCancelarRepa('.$fila['id_reparacion'].','.$si.')"<span class="badge badge-danger">INICIO</span>';
+                $estado.= '<a  href="#" onclick="aceptarCancelarRepa('.$fila['id_reparacion'].','.$no.')"<span class="badge badge-danger">CANCELAR</span>';
             }else if ($fila['estado'] == '4'){
-                $estado = '<span class="label label-important">Cancelado</span>';
+                $estado = '<span class="badge badge-danger"><strong>Cancelado</strong></span>';
             }
             
             if ($fila['garantia'] == 's') {
-            $garantia = '<span class="label label-info">Reingreso</span>';
+            $garantia = '<span  class="badge badge-info">Reingreso</span>';
             }
 
             if (($tipoUsuario == 'te' OR $tipoUsuario == 'a') AND ($fila['estado'] != '4') AND ($fila['estado'] != '3') AND ($fila['estado'] != '0')AND ($fila['estado'] != '2')) 
@@ -199,6 +198,8 @@ error_reporting(0);
 
             // Vamos acumulando tantos "td" como sea necesario:
             
+            $codigohtml .= '<tr>';
+            
             $codigohtml .= '<td>'.$fila['id_reparacion'].'</td>';           
             $codigohtml .= '<td>'.$fila['fecha_ingreso'].'</td>';
             $codigohtml .= '<td>'.$fila['nombre_contacto'].'</td>';
@@ -209,27 +210,26 @@ error_reporting(0);
             $codigohtml .= '<td>'.number_format((float)$fila['precio_inicial'], 2, '.', '').'</td>';
             $codigohtml .= '<td>'.number_format((float)$fila['precio'], 2, '.', '').'</td>';
             $codigohtml .= '<td>'.$estado.'</td>';
-            $codigohtml .= '<td><a  href="#" onclick="detalleReparación('.$fila['id_reparacion'].')">'.$botonVermas.'</a></td>';
-            $codigohtml .= '<td><a  href="#" onclick="observacion('.$fila['id_reparacion'].')">'.$botonAgregarObs.'</a></td>';
+            $codigohtml .= '<td><a href="#" onclick="detalleReparación('.$fila['id_reparacion'].')">'.$botonVermas.'</a></td>';
+            $codigohtml .= '<td><a href="#" onclick="observacion('.$fila['id_reparacion'].')">'.$botonAgregarObs.'</a></td>';
 
             $codigohtml .= '</tr>';
     
         }
     
         // Finalizado el bucle, cerramos por única vez la tabla:
-        $codigohtml .= '</table>';
+        $codigohtml .= ' </tbody></table>';
         
         return $codigohtml;
-        
     }
+
+
 
     function tabularRefacciones($datos,$id_reparacion)
     {
         $No=0;
-        $codigohtml = '<table id="TablaRefacciones"  class="table" border="0">
-        <tr class="info"> 
-            <td colspan="8"><center><strong>Listado de Refacciones</strong></center></td>
-        </tr>
+        $codigohtml = '<table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+        <thead>
         <tr>
             <th>No</th>
             <th>ID Refacción</th>
@@ -237,7 +237,7 @@ error_reporting(0);
             <th>Tipo de Precio</th>
             <th>Precio</th>
             <th>Quitar Refacción</th>
-        </tr> ';
+        </tr></thead><tbody> ';
 
         while($fila = @mysqli_fetch_array($datos))
         {
@@ -264,34 +264,33 @@ error_reporting(0);
             
             $codigohtml .= "<td>$TipoPrecio</td>";
             $codigohtml .= "<td>$fila[5]</td>";
-            //$codigohtml .= "<td><a href='QuitarRefaccion.php?id=$fila[0]&id_producto=$fila[2]&IdReparacion=$id_reparacion' class='btn btn-warning'>Quitar</a></td>";
-            $codigohtml .= "<td><a href='#' onclick='quitarRefaccion(".$fila[0].",".$codigoProducto.",".$id_reparacion.")' class='btn btn-warning'>Quitar</a></td>";
+            
+            $codigohtml .= "<td><a href='#' onclick='quitarRefaccion(".$fila[0].",".$codigoProducto.",".$id_reparacion.")' class='btn btn-danger'>Quitar</a></td>";
             $codigohtml .="</tr>";
         }
 
-        $codigohtml .="</table>";
+        $codigohtml .="</tbody></table>";
         return $codigohtml;
     }
 
     function tabularSucursales($datos)
     {
-        $codigohtml = '<table width="80%" border="0" class="table">
-        <tr class="info">
-          <td colspan="6"><center><strong>Listado de Sucursales</strong></center></td>
-        </tr>
+        $codigohtml = '<table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+        <thead>
         <tr>
-          <td width="7%"><strong>Codigo</strong></td>
-          <td width="15%"><strong>Sucursal</strong></td>
-          <td width="14%"><strong>Direccion</strong></td>
-          <td width="12%"><strong>Telefono</strong></td>
-          <td width="13%"><strong>Web</strong></td>
-          <td width="12%"><strong>Eliminar</strong></td>
-        </tr>';
+          <th>Codigo</th>
+          <th>Sucursal</th>
+          <th>Direccion</th>
+          <th>Telefono</th>
+          <th>Web</th>
+          <th>Eliminar</th>
+        </tr>
+        </thead>';
         // Vamos acumulando de a una fila "tr" por vuelta:
         while ($fila = @mysqli_fetch_array($datos))
         {
             if (($fila['id']) != 1) {
-                $estado='<a href="#" onclick="eliminarSucursal('.$fila['id'].')";> <span class="label label-important">Eliminar</span></a>';
+                $estado='<a href="#" onclick="eliminarSucursal('.$fila['id'].')";> <span class="badge badge-danger">Eliminar</span></a>';
             }else{
                 $estado='';
             }
@@ -311,19 +310,17 @@ error_reporting(0);
 
     function tabularUsuarios($datos)
     {
-        $codigohtml = '<table width="80%" border="0" class="table">
-        <tr class="info">
-          <td colspan="6"><center><strong>Listado de Sucursales</strong></center></td>
-        </tr>
+        $codigohtml = '<table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+       <thead>
         <tr>
-          <td width="7%"><strong>CURP</strong></td>
-          <td width="15%"><strong>Nombre</strong></td>
-          <td width="14%"><strong>Estado</strong></td>
-          <td width="12%"><strong>Telefono</strong></td>
-          <td width="13%"><strong>Celular</strong></td>
-          <td width="12%"><strong>Tipo Empleado</strong></td>
-          <td width="12%"><strong>Eliminar</strong></td>
-        </tr>';
+          <th>CURP</th>
+          <th>Nombre</th>
+          <th>Estado</th>
+          <th>Telefono</th>
+          <th>Celular</th>
+          <th>Tipo Empleado</th>
+          <th>Eliminar</th>
+        </tr></thead><tbody>';
 
         while ($fila = @mysqli_fetch_array($datos))
         {
@@ -338,13 +335,13 @@ error_reporting(0);
             }
             
             if($fila['estado']=="n"){
-                $estado='<span class="label label-important">Inactivo</span>';
+                $estado='<span class="badge badge-danger">Inactivo</span>';
             }else{
-                $estado='<span class="label label-success">Activo</span>';
+                $estado='<span class="badge badge-success">Activo</span>';
             }
             
             if (($fila['tipo']) != "a") {
-                $btnEliminar="<a href='#' onclick='eliminarUsuario(".'"'.$fila['ced'].'"'.")';> <span class='label label-important'>Eliminar</span></a>";
+                $btnEliminar="<a href='#' onclick='eliminarUsuario(".'"'.$fila['ced'].'"'.")';> <span class='badge badge-danger'>Eliminar</span></a>";
             }else{
                 $btnEliminar='';
             }
@@ -359,7 +356,7 @@ error_reporting(0);
             $codigohtml.='<td>'.$btnEliminar.'</td>';
             $codigohtml.='</tr>';
         }
-        $codigohtml .="</table>";
+        $codigohtml .="</tbody></table>";
         return $codigohtml;
     }
 
@@ -368,44 +365,14 @@ error_reporting(0);
         include("host.php");
         if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) 
         {
-            $codigohtml = '    <style type="text/css">
-            #table {
-              font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-              border-collapse: collapse;
-              width: 100%;
-            }
-            
-            #table td, #table th {
-              border: 1px solid #ddd;
-              padding: 8px;
-            }
-    
-            #table td.a {
-              padding-top: 5px;
-              padding-bottom: 5px;
-              text-align: left;
-              background-color: #F7D358;
-              color: #000000;
-            }
-    
-            
-            #table th {
-              padding-top: 12px;
-              padding-bottom: 12px;
-              text-align: left;
-              background-color: #F7D358;
-              color: #000000;
-            }
-          </style><table id="table">
-            <tr class="info">
-            <th colspan="6"><center><strong>Productos con existencias</strong></center></th>
-            </tr>
+            $codigohtml = '<table class="table" "style="width:80%">
+            <thead>
             <tr>
             <th><strong>Código Producto</strong></th>
             <th><strong>Nombre</strong></th>
             <th><strong>Sucursal</strong></th>
             <th><strong>Cantidad</strong></th>
-            </tr>';
+            </tr></thead><tbody>';
 
             while ($fila = @mysqli_fetch_array($datos)) {
                 $idSucursal = $fila['id_sucursal'];
@@ -417,12 +384,12 @@ error_reporting(0);
 
                 $codigohtml.='<tr>';
                 $codigohtml.='<td>'.utf8_encode($fila['cod']).'</td>';
-                $codigohtml.='<td>'.utf8_encode($fila['nom']).'</td>';
+                $codigohtml.='<td>'.saltoCadena(utf8_encode($fila['nom'])).'</td>';
                 $codigohtml.='<td>'.$nombreSucursal.'</td>';
                 $codigohtml.='<td>'.$fila['cantidad'].'</td>';
                 $codigohtml.='</tr>';
             }
-            $codigohtml .="</table>";
+            $codigohtml .="</table></tbody>";
             return $codigohtml;
         }
     }
@@ -436,6 +403,8 @@ error_reporting(0);
 
         include("host.php");
         ini_set('max_execution_time', 0);
+
+        $arrayTablas = array();
 
 
         if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) {
@@ -459,7 +428,7 @@ error_reporting(0);
                 $importe1       =   $row1[0];
     
     
-                $codigohtml = '<table class="tblLisado">
+                $codigohtml = '<table class="table">
                 <tr>
                     
                     <th>Cantidad Articulos</th>
@@ -478,10 +447,11 @@ error_reporting(0);
     
                 </table>
     
-                <div id="divId">
+               
                 <br>
     
-                <table class="tblLisado">
+                <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+
                     <thead>
                     <tr> 
                     
@@ -550,14 +520,9 @@ error_reporting(0);
     
                             $nombreempresa = "";
                         }
-    
-                      
-    
-                           
-                    
-            
+
                         
-    
+
                         //......nombre sucursal fin............................................................
     
                         if ($dato['tipo'] == 'CREDITO') {
@@ -601,72 +566,97 @@ error_reporting(0);
                         }
     
                         
-    
-    
-    
                         //**************Comision mostrada en tabla*****************/
-                        $tipo_comision = $dato['tipo_comision'];
-                        if (($tipo_comision == "venta")) {
-                            $tipo_comisionshow = "público";
-                        } else if ($tipo_comision == "especial") {
-                            $tipo_comisionshow = "especial";
-                        } else if ($tipo_comision == "mayoreo") {
-                            $tipo_comisionshow ="mayoreo";
-                        }else if($tipo_comision == "reparacion"){
-                            $tipo_comisionshow ="REPARACIÓN";
-                        }else if($tipo_comision == "apartado"){
-                            $tipo_comisionshow ="APARTADO";
-                        }else if($tipo_comision == ""){
-                            $tipo_comisionshow ="";
+
+                        if($dato['codigo'] == 'TLM'){
+                            $tipo_comisionshow = "VENTA TAE TELCEL MAYOREO";
+
+                        }else if($dato['codigo'] == 'MUL'){
+                            $tipo_comisionshow = "VENTA TAE MULTIRECARGAS MAYOREO";
+
+                        }else{
+
+                            $tipo_comision = $dato['tipo_comision'];
+
+                            if (($tipo_comision == "venta")) {
+                                $tipo_comisionshow = "público";
+                            }else if ($tipo_comision == "especial") {
+                                $tipo_comisionshow = "especial";
+                            }else if ($tipo_comision == "mayoreo") {
+                                $tipo_comisionshow ="mayoreo";
+                            }else if($tipo_comision == "reparacion"){
+                                $tipo_comisionshow ="REPARACIÓN";
+                            }else if($tipo_comision == "apartado"){
+                                $tipo_comisionshow ="APARTADO";
+                            }else if($tipo_comision == ""){
+                                $tipo_comisionshow ="";
+                            }
+                            
                         }
+
+
                         //************************************************************/
                         //**************************Tipo porcentaje de acuerdo al tipo de venta************************
-                                                    
-                        if (($tipo_comision == "venta")) {
-                            $porcentaje_comision = $dato3['porcentaje'];
-                        } else if ($tipo_comision == "especial") {
-                            $porcentaje_comision = $dato3['porcentajeespecial'];
-                        } else if ($tipo_comision == "mayoreo") {
-                            $porcentaje_comision = $dato3['porcentajemayoreo'];
-                        }else if($tipo_comision == "reparacion"){
-    
-                            $queryCom = "SELECT porcentaje FROM comision WHERE tipo = 'REPARACION'";
-                            $ejecCom = consultar($con,$queryCom);
-                            $datoCom  = mysqli_fetch_array($ejecCom);
-                            $porcentaje_comision = $datoCom['porcentaje'];
-                            $costo_producto = 0;
-    
-                            ## obtener precio unitario para comision del cajero ##
-    
-                            if($dato['tipo'] == 'liberacion R'){
-                                $precioU = 0;
-    
-                                $finalReparacion = "SELECT comisionCajero FROM reparacion WHERE id_reparacion = '$factura'";
-                                $paqueteRepa = consultar($con,$finalReparacion);
-                                $datoRepa = mysqli_fetch_array($paqueteRepa);
-                                $precioU = $datoRepa[0];
+
+                        if($dato['codigo'] == 'TLM'){
+                               
+                            $consultaRecargaA = "SELECT porcentaje,porcentajemayoreo,porcentajeespecial FROM comision WHERE codigo = 'TLM'";
+                            $ejecutar4 = consultar($con,$consultaRecargaA);
+                            $dato4  =   mysqli_fetch_array($ejecutar4);
+                            $porcentaje_comision = $dato4['porcentajemayoreo'];
+
+                        }else if($dato['codigo'] == 'MUL'){
+                        
+                            $consultaRecargaB = "SELECT porcentaje,porcentajemayoreo,porcentajeespecial FROM comision WHERE codigo = 'MUL'";
+                            $ejecutar5 = consultar($con,$consultaRecargaB);
+                            $dato5  =   mysqli_fetch_array($ejecutar5);
+                            $porcentaje_comision = $dato5['porcentajemayoreo'];
+
+                        }else{
+
+                            if (($tipo_comision == "venta")) {
+                                $porcentaje_comision = $dato3['porcentaje'];
+                            } else if ($tipo_comision == "especial") {
+                                $porcentaje_comision = $dato3['porcentajeespecial'];
+                            } else if ($tipo_comision == "mayoreo") {
+                                $porcentaje_comision = $dato3['porcentajemayoreo'];
+                            }else if($tipo_comision == "reparacion"){
+        
+                                $queryCom = "SELECT porcentaje FROM comision WHERE tipo = 'REPARACION'";
+                                $ejecCom = consultar($con,$queryCom);
+                                $datoCom  = mysqli_fetch_array($ejecCom);
+                                $porcentaje_comision = $datoCom['porcentaje'];
+                                $costo_producto = 0;
+        
+                                ###### obtener precio unitario para comision del cajero ######
+        
+                                if($dato['tipo'] == 'liberacion R'){
+                                    $precioU = 0;
+        
+                                    $finalReparacion = "SELECT comisionCajero FROM reparacion WHERE id_reparacion = '$factura'";
+                                    $paqueteRepa = consultar($con,$finalReparacion);
+                                    $datoRepa = mysqli_fetch_array($paqueteRepa);
+                                    $precioU = $datoRepa[0];
+                                }
+        
+                            }else if($tipo_comision == "apartado"){
+        
+                                $queryCom = "SELECT porcentaje FROM comision WHERE tipo = 'APARTADO'";
+                                $ejecCom = consultar($con,$queryCom);
+                                $datoCom  = mysqli_fetch_array($ejecCom);
+                                $porcentaje_comision = $datoCom['porcentaje'];
+        
+                                //$costo_producto = 0;
+        
+                            }else if($tipo_comision == ""){
+                                $porcentaje_comision = 0;
+                                $costo_producto = 0;
                             }
-    
-                        }else if($tipo_comision == "apartado"){
-    
-                            $queryCom = "SELECT porcentaje FROM comision WHERE tipo = 'APARTADO'";
-                            $ejecCom = consultar($con,$queryCom);
-                            $datoCom  = mysqli_fetch_array($ejecCom);
-                            $porcentaje_comision = $datoCom['porcentaje'];
-    
-                            ///$costo_producto = 0;
-    
-                        
-                           
-                        }else if($tipo_comision == ""){
-    
-                          
-                            $porcentaje_comision = 0;
-                            $costo_producto = 0;
-    
-                        
+
                            
                         }
+                                                    
+
                         //************************************************************************************************
     
                         $esComision = $dato['esComision'];
@@ -707,22 +697,18 @@ error_reporting(0);
                                             $comisionEmpresa0 += (($precioU-$costo_producto)*(2/100)*$cantidad);
     
                                         }
-    
+
                                         $pro_comision = $pro_comision0;
                                         $comisionEmpresa = $comisionEmpresa0;
-    
                                     }
-    
+                                    
     
                                 }else{
     
                                     $pro_comision    = (($precioU-$costo_producto)*($porcentaje_comision/100)*$cantidad);
                                     $comisionEmpresa = (($precioU-$costo_producto)*(2/100)*$cantidad);
-    
                                 }
-    
-                                
-    
+        
                             }else{
     
                                 $pro_comision    = "";
@@ -786,45 +772,47 @@ error_reporting(0);
                             
                     }
 
+            $codigohtml .= '</tbody>
 
-                    $codigohtml .= '<tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>TOTAL COMISIONES</td>
-            <td colspan="5">$'.$total_comisiones.'</td>';
+            </table>';
 
-            if ($tipoUsuario == 'a') {
-                $codigohtml .= '<td>TOTAL COMISION EMPRESA</td>
-                <td>$'.$totalComEmpresa.'</td>';
-            }
+            $codigohtmlB = '
+            <table class="table">
 
+            <thead>
+                <tr>
+                    <th>TOTAL COMISIONES</th>';
 
-            $codigohtml .= '</tr>
-            </tbody>
+                    if ($tipoUsuario == 'a') {
+                        $codigohtmlB .= '<th>TOTAL COMISION EMPRESA</th>';
+                    }
+                    
 
+            $codigohtmlB .= '</tr>
+            </thead>
+            <tbody>
+
+                    <td>$'.$total_comisiones.'</td>';
+                    if ($tipoUsuario == 'a') {
+                        $codigohtmlB .= '<td>$'.$totalComEmpresa.'</td>';
+                    }
+
+            $codigohtmlB .= '</tbody>
             </table>
-            </div>
-            <p>&nbsp;</p>
-            </body>
-            </html>';
-            return $codigohtml;
+            ';
 
+            // $arrayTablas[] = array("codigohtml",$codigohtmlB);
+            //$arrayTablas(1) = $codigohtmlB;
+
+            //$respuesta["codigohtml"] = $codigohtml;
+            //$respuesta["codigohtmlB"] = $codigohtmlB;
+
+            $respuesta[]=array("codigohtml" => $codigohtml,"codigohtmlB" => $codigohtmlB);
+
+           return $respuesta;
         }
-
-
     }
-    
 
-       
     }
 
 
@@ -836,7 +824,7 @@ error_reporting(0);
 
         if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB))
         {
-            $codigohtml = '<table class="tblLisado">
+            $codigohtml = '<table id="exampleA" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
             <thead>
             <tr> 
             
@@ -870,10 +858,10 @@ error_reporting(0);
 
                     switch ($estatus) {
                         case 0:
-                            $botonEstatus = '<span class="label label-important">PENDIENTE</span>';
+                            $botonEstatus = '<span class="badge badge-danger">PENDIENTE</span>';
                             break;
                         case 1:
-                            $botonEstatus = '<span class="label label-success">PAGADO</span>';
+                            $botonEstatus = '<span class="badge badge-success">PAGADO</span>';
                             break;
                     }
 
@@ -896,14 +884,14 @@ error_reporting(0);
                    
 
                     if($estatus == '0'){
-                        $botonProductos = '<a  href="#" onclick="verProdcutos('.$idCA.')" <span class="label label-info ">VER<br> PRODUCTOS</span></a>';
-                        $botonPagos     = '<a  href="#" onclick="verPagos('.$idCA.')" <span class="label label-info ">VER<br> PAGOS</span></a>';
-                        $botonEnviar    = '<a  href="#" onclick="enviar('.$idCA.')" <span class="label label-info ">AGREGAR <br> PAGO</span>';
+                        $botonProductos = '<a  href="#" onclick="verProdcutos('.$idCA.')" <span  class="badge badge-info">VER<br> PRODUCTOS</span></a>';
+                        $botonPagos     = '<a  href="#" onclick="verPagos('.$idCA.')" <span  class="badge badge-info">VER<br> PAGOS</span></a>';
+                        $botonEnviar    = '<a  href="#" onclick="enviar('.$idCA.')" <span  class="badge badge-info">AGREGAR <br> PAGO</span>';
                        
                     }else{
 
-                        $botonProductos = '<a  href="#" onclick="verProdcutos('.$idCA.')" <span class="label label-info">VER <br> PRODUCTOS</span></a>';
-                        $botonPagos     = '<a  href="#" onclick="verPagos('.$idCA.')" <span class="label label-info">VER<br> PAGOS</span></a>';
+                        $botonProductos = '<a  href="#" onclick="verProdcutos('.$idCA.')" <span  class="badge badge-info">VER <br> PRODUCTOS</span></a>';
+                        $botonPagos     = '<a  href="#" onclick="verPagos('.$idCA.')" <span  class="badge badge-info">VER<br> PAGOS</span></a>';
                         $botonEnviar    = '';
                       
 
@@ -926,8 +914,6 @@ error_reporting(0);
                             
                         $codigohtml.='<td>$ '.number_format((float)$abono, 2, '.', '').'</td>';
                         $codigohtml.='<td>$ '.number_format((float)$restante, 2, '.', '').'</td>';
-
-
 
                         $codigohtml.='<td>'.$botonProductos.'</td>';
                         $codigohtml.='<td>'.$botonPagos.'</td>';
@@ -1021,7 +1007,7 @@ error_reporting(0);
         include("host.php");
 
         if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) {
-            $codigohtml = '<table class="tblLisado">
+            $codigohtml = '<table class="table">
             <thead>
             <tr> 
                 <th>#</th> 
@@ -1072,7 +1058,7 @@ function tabularCAProdcutos($idCa, $ti_usu)
         $jo="";
 
         if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) {
-            $codigohtml = '<table class="tblLisado">
+            $codigohtml = '<table id="exampleB" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
             <thead>
             <tr> 
                 <th>No</th> 
@@ -1169,11 +1155,8 @@ function tabularCAProdcutos($idCa, $ti_usu)
              
                 }    
                  // $codigohtml.=$btncancelartodos;
+                 $codigohtml.='</tbody></table>';
           
-
-                 
-                             
-
 
             }else{
                 $codigohtml = "";
@@ -1584,6 +1567,7 @@ function productoconiccideimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$
                      $condicioncreditodet="WHERE idProducto='$idprocam' and idCredito='$idcrecam'";
                 }
                 $consultaregresarstock="SELECT * FROM creditodetalle ".$condicioncreditodet."";
+
                 if($resultadoregrestock = consultar($con,$consultaregresarstock))
                 {
                     while($dato4 = mysqli_fetch_array($resultadoregrestock))
@@ -1699,7 +1683,7 @@ function productoconiccideimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$
                         {
                             // echo "solo IMEI tiene el prodcuto";
                              $sql = "INSERT INTO codigo_producto (id_producto,tipo_identificador,identificador,numero,fecha,estado,id_sucursal)
-                            VALUES ('$idProductoimei', 'IMEI', '$proime','0','$fecha','s','$ids')";
+                            VALUES ('$idProductoimei', 'IMEI', '$proime','0','$fecha','s','$ids')"; 
                             // $result2 = mysqli_query($con,$sql) or die("Couldn't execute query.".mysql_error()); 
                             $agregaimei = agregar($con,$sql);
                             $actualizaproductoimei="UPDATE producto SET cantidad= cantidad+1 where cod='$idProductoimei' AND id_sucursal='$ids'";
@@ -2166,8 +2150,6 @@ function productoconiccideimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$
                             // echo "RESTO CREDITO SIN CAMBIOS:".$restocr."<br>";
                             // echo "<br>";
 
-
-
                             // echo "PRECIO DEL PRODUCTO A CAMBIAR:".$preciopro."<br>";
                             // echo "COMISION DEL PRODUCTO A CAMBIAR:".$comisioncambio."<br>";
                             // echo "<br>";
@@ -2397,8 +2379,6 @@ function productoconiccideimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$
                         // echo "RESTO CREDITO SIN CAMBIOS:".$restocr."<br>";
                         // echo "<br>";
 
-
-
                         // echo "PRECIO DEL PRODUCTO A CAMBIAR:".$preciopro."<br>";
                         // echo "COMISION DEL PRODUCTO A CAMBIAR:".$comisioncambio."<br>";
                         // echo "<br>";
@@ -2464,8 +2444,6 @@ function productoconiccideimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$
                         }  
 
              
-                        
-
                         $actualizaproducdetalle="UPDATE creditodetalle SET idProducto='$codpronompro',precioUnitario='$nuevoprecioproducto',precioProducto='$nuevoprecioproducto',
                         iccid='', imei='', idProductoChip='' where idProducto='$idprocam' AND idCredito='$idcrecam'";
                         $actuprodet= actualizar($con,$actualizaproducdetalle);
@@ -2516,9 +2494,9 @@ function productoconiccideimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$
                     $adelanto = $dato['adelanto'];
                     $resto = $dato['resto'];
                      // echo "<br>"."<br>"."<br>"."DATOS CREDITO SIN CAMBIOS";
-                     //    echo "TOTAL:".$total."<br>";
-                     //    echo "ADELANTO:".$adelanto."<br>";
-                     //    echo "RESTO:".$resto."<br>";
+                     // echo "TOTAL:".$total."<br>";
+                     // echo "ADELANTO:".$adelanto."<br>";
+                     // echo "RESTO:".$resto."<br>";
 
                     if($valorcheck =="si")
                     {
@@ -2530,7 +2508,7 @@ function productoconiccideimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$
                         $resta= $suma - $adelanto;
 
                        //  echo "<br>"."<br>"."<br>"."RESULTADOS OPERACIONES"."<br>"."<br>"."<br>";
-                       // echo "VALOR DE COMISION POR VIGENCIA:".$valorcomision."<br>";
+                       //  echo "VALOR DE COMISION POR VIGENCIA:".$valorcomision."<br>";
                        //  echo "NUEVO TOTAL:".$suma."<br>";
                        //  echo "ADELANTOL:".$adelanto."<br>";
                        //  echo "NUEVO RESTO:".$resta."<br>";
@@ -2545,7 +2523,7 @@ function productoconiccideimei($Codimei,$Codiccid,$codpronompro,$ids,$idprocam,$
                         $resta= $suma - $adelanto;
 
                        //  echo "<br>"."<br>"."<br>"."RESULTADOS OPERACIONES"."<br>"."<br>"."<br>";
-                       // echo "VALOR DE COMISION POR VIGENCIA:".$valorcomision."<br>";
+                       //  echo "VALOR DE COMISION POR VIGENCIA:".$valorcomision."<br>";
                        //  echo "NUEVO TOTAL:".$suma."<br>";
                        //  echo "ADELANTOL:".$adelanto."<br>";
                        //  echo "NUEVO RESTO:".$resta."<br>";

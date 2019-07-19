@@ -101,26 +101,26 @@
             }           
         }
 
-$html = '<table class="table" border="1">
-<tbody>
-    <tr class="success">
-        <td colspan="13"><center><strong>Movimientos Autorizados</strong></center></td>
-    </tr>
+$html = '<table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+
+<thead>
     <tr>
-        <th><strong>No. Lote</strong></td>
-        <th><strong>Sucursal Salida</strong></td>
-        <th><strong>Usu Salida</strong></td>
-        <th><strong>Sucursal Entrada</strong></td>
-        <th><strong>Usu Entrada</strong></td>
-        <th><strong>Código producto</strong></td>
-        <th><strong>Producto</strong></td>
-        <th><strong>IMEI</strong></td>
-        <th><strong>ICCID</strong></td>
-        <th><strong>Cantidad Enviada</strong></td>
-        <th><strong>Cantidad Recibida</strong></td>
-        <th><strong width="200px">Fecha Entrada</strong></td>
-        <th><strong>Recibido</strong></td>
+        <th>No. Lote</th>
+        <th>Sucursal Salida</th>
+        <th>Usu Salida</th>
+        <th>Sucursal Entrada</th>
+        <th>Usu Entrada</th>
+        <th>Código producto</th>
+        <th>Producto</th>
+        <th>IMEI</th>
+        <th>ICCID</th>
+        <th>Cantidad Enviada</th>
+        <th>Cantidad Recibida</th>
+        <th>Fecha Entrada</th>
+        <th>Recibido</th>
     </tr>
+</thead>
+<tbody>
     </tr>';
         
         while($dato=mysql_fetch_array($query2))
@@ -152,7 +152,8 @@ $html = '<table class="table" border="1">
               }     
 
         
-            $html.= '<tr>
+            $html.= '
+            <tr>
                     <td>'.$dato['IdLote'].'</td>
                     <td>'.$SucursalSalida.'</td>
                     <td>'.$usuSalida.'</td>
@@ -161,11 +162,11 @@ $html = '<table class="table" border="1">
                     <td>'.$dato['IdProducto'].'</td>
                     <td>'.$NombreProducto.'</td>
                     <td>'.$IMEI.'</td>
-                    <td>'.$ICCID.'</td>                    
                     <td>'.$dato['Cantidad'].'</td>
                     <td>'.$dato['CantRecibida'].'</td>
-                    <td width="200px">'.$dato['FechaEntrada'].'</td>
-                    <td><strong>✓</strong></td>
+                    <td>'.$dato['FechaEntrada'].'</td>
+                    <td>'.$ICCID.'</td>                    
+                    <td>✓</td>
             </tr>';
         }
        

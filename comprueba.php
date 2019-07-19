@@ -49,7 +49,8 @@ include('php_conexion.php');
 						$sqla = "UPDATE caja SET horainicio='$hora' WHERE id_cajero='$ced'";
                   		mysql_query($sqla);
 					}
-					header('location:Administrador.php');
+					//header('location:Administrador.php');
+					header('location:inicio.php');
 				}
 				
 			}else{

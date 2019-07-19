@@ -132,7 +132,7 @@ $(document).ready(function(){
 	            <li class="dropdown">
               <?php       
                   if($_SESSION['tipo_usu']=='a'){
-                  echo'<a class="brand" href=""  target="admin" style="font-size:16px"><i class="icon-bar"></i> Administrador</a>';
+                  echo'<a class="brand" href="#"  style="font-size:16px"><i class="icon-bar"></i> Administrador</a>';
                   }
                 ?>
               </li>

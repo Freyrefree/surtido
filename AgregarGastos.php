@@ -34,69 +34,131 @@
             $fecha=date("Y-m-d");
         }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Agregar Gasto</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Agregar Gasto</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="jsV2/jquery-3.1.1.js"></script>
+        <script type="text/javascript" src="jsV2/tether.min.js"></script>
+        <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
-    <style>
-    input{
+        <style>
+
+        body{
+                
+                background: #F7D358;
+        }
+        .titulo{
+
+                background: #e7e7e7;
+                color: #F2F2F2;
+        }
+        .modal-header{
+
+                background: #0275d8;
+                color: #F2F2F2;
+        }
+        .listado-tareas {
+                max-height: calc(50vh - 70px);
+                overflow-y: auto;
+        }
+        .btn{
+                border-radius: 0px;
+        }
+        .finish{
+                text-decoration:line-through;
+        }
+        .dropdown-item{
+                color: #E5E8E8;
+        }
+        .dropdown-item:hover{
+                color:#F4F6F6;
+        }
+        .form-control{
+                margin: 0px;
+        }
+        .black{
+                color: black;
+        }
+        .red{
+                color: red;
+        }
+        .green{
+                color: green;
+        }
+        /* Extra */
+        input{
         text-transform:uppercase;
-    }
-    </style>
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
-    <![endif]-->
+        }
 
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-    <script>
-        //Mostrar automaticamente el iva al 16%
-        //-------------------------------------------------------------------------------------------------------
-        $(document).ready(function(){
-                $('#total').keyup(function(event){
-                  var valor = $('#total').val();
-                  var iva = valor*0.16;
-                  document.getElementById('iva').value =iva.toFixed(2);
-                });
-            });
-        //--------------------------------------------------------------------------------------------------------
-    </script>
+        </style>
+
+
 </head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-  <?php
+<?php include_once "layout.php"; ?>
+<body>
+
+
+
+
+</head>
+<body>
+
+
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
+
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">GASTOS<p>
+										</div>
+									</div>
+
+                      <div class="row">
+                          <div class="col-md-6">  
+                        
+                            <a href="Gastos.php" class="btn btn-info">Listado gastos</a>
+                         
+                          </div>
+
+                          <div class="col-md-2">                        
+                          
+                          
+                          </div>
+
+                          <div class="col-md-4">
+
+            
+                            
+                          </div>
+
+                      </div>
+                  
+                  <br>
+
+									<div class="row">
+										<div class="col-md-12">
+
+                                        <?php
     if(!empty($_POST['id']) and !empty($_POST['concepto']) and !empty($_POST['factura'])){// and !empty($_POST['tipo'])
         
         $id_gasto=$_POST['id'];$concepto=strtoupper($_POST['concepto']);$num_factura=$_POST['factura'];$fecha=$_POST['fecha'];
@@ -200,63 +262,121 @@
                   }
               }
     ?>
-<div class="control-group info">
-  <form name="form1" enctype="multipart/form-data" method="post" action="">
-<table width="80%" border="0" class="table">
-  <tr class="info">
-    <td colspan="3"><center><strong>! NUEVO GASTO ¡</strong></center></td> <? //=$sucursal ?>
-  </tr>
-  <tr>
-    <td>
-        <label for="textfield">* Identificador: </label>
-        <input type="text" name="id" id="id" <?php if(!empty($id_gasto)){echo 'readonly';} ?> value="<?php echo $id_gasto; ?>">
-        <label for="textfield">* Camion (Placa) / Otro: </label>
-        <select name="camion" id="camion">
-            <option value="0">Otro</option>
-            <?php 
-                $can=mysql_query("SELECT * FROM camion");
-                while($dato=mysql_fetch_array($can)){
-            ?>
-              <option value="<?php echo $dato['id']; ?>" <?php if($prov==$dato['id']){ echo 'selected'; } ?>><?php echo $dato['placa']; ?></option>
-            <?php } ?>
-        </select>
-        <label for="textfield">* Concepto: </label><input type="text" name="concepto" id="concepto" value="<?php echo $concepto; ?>" autocomplete="off" maxlength="30" required>
-        <label for="textfield">* Número de Factura: </label><input type="text" name="factura" id="factura" value="<?php echo $num_factura; ?>" autocomplete="off" maxlength="30" required><br>
-        <div class="input-prepend input-append">
-            <label for="textfield">* Total: </label>
-            <span class="add-on">$</span><input type="text" name="total" id="total" value="<?php echo $total; ?>" autocomplete="off" required><span class="add-on">.00</span>
-        </div>
-        <label for="textfield">* Sucursal: </label>
-        <select name="sucursal" id="sucursal" required>
-            <option value="">Selecciona sucursal</option>
-            <?php 
-                $can=mysql_query("SELECT * FROM empresa");
-                while($dato=mysql_fetch_array($can)){
-            ?>
-              <option value="<?php echo $dato['id']; ?>" <?php if($prov==$dato['id']){ echo 'selected'; } ?>><?php echo $dato['empresa']; ?></option>
-            <?php } ?>
-        </select>
-        <br>
-        <button class="btn btn-large btn-primary" type="submit"><?php echo $boton; ?></button>
-        <?php if($boton=='Actualizar Gasto'){ ?> <a href="AgregarGastos.php" class="btn btn-large">Cancelar</a><?php }  ?>
-    </td>
-    <td>
-        <label for="textfield">Fecha: </label><input type="date" name="fecha" id="fecha" value="<?php echo $fecha; ?>">
-        <br>
-        <div class="input-prepend input-append">
-            <label for="textfield">Importe de Iva: </label>
-            <span class="add-on">$</span><input type="text" name="iva" id="iva" value="<?php echo $iva; ?>" autocomplete="off" required maxlength="100" readonly><span class="add-on">.00</span>
-        </div>
-        <label for="textfield">Descripcion: </label>
-        <textarea name="descripcion" id="descripcion" cols="20" rows="10" value="" maxlength="300"><?php echo $descripcion; ?></textarea>
-    </td>
-    <td>
-        <label for="textfield">Comprobantes Digitales: </label>
-        <input type="file" multiple="true" id="archivo" name="archivo[]">
-    </td>
-  </tr>
-</table>
-</form>
-</div>
+
+										</div>
+									</div>
+
+                                    <div class="row">
+                                    <div clas="col-md-12">
+
+                                    <div class="row">
+                                    
+                                        <div class="col-md-3">
+                                        <form name="form1" enctype="multipart/form-data" method="post" action="">
+                                            <label for="">Identificador</label>
+                                            <input class="form-control" type="text" name="id" id="id" <?php if(!empty($id_gasto)){echo 'readonly';} ?> value="<?php echo $id_gasto; ?>">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Camion (Placa)/Otro</label>
+                                            <select class="form-control" name="camion" id="camion">
+                                                <option value="0">Otro</option>
+                                                <?php 
+                                                    $can=mysql_query("SELECT * FROM camion");
+                                                    while($dato=mysql_fetch_array($can)){
+                                                ?>
+                                                <option value="<?php echo $dato['id']; ?>" <?php if($prov==$dato['id']){ echo 'selected'; } ?>><?php echo $dato['placa']; ?></option>
+                                                <?php } ?>
+                                            </select>                                        
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Concepto</label>
+                                            <input class="form-control" type="text" name="concepto" id="concepto" value="<?php echo $concepto; ?>" autocomplete="off" maxlength="30" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Número de Factura</label>
+                                            <input class="form-control" type="text" name="factura" id="factura" value="<?php echo $num_factura; ?>" autocomplete="off" maxlength="30" required>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="">Total</label>
+                                            <input class="form-control" type="text" name="total" id="total" value="<?php echo $total; ?>" autocomplete="off" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Sucursal</label>
+                                            <select class="form-control" name="sucursal" id="sucursal" required>
+                                                <option value="">Selecciona sucursal</option>
+                                                <?php 
+                                                    $can=mysql_query("SELECT * FROM empresa");
+                                                    while($dato=mysql_fetch_array($can)){
+                                                ?>
+                                                <option value="<?php echo $dato['id']; ?>" <?php if($prov==$dato['id']){ echo 'selected'; } ?>><?php echo $dato['empresa']; ?></option>
+                                                <?php } ?>
+                                            </select>                                        
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Fecha</label>
+                                            <input class="form-control" type="date" name="fecha" id="fecha" value="<?php echo $fecha; ?>">                                        
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Importe de Iva</label>
+                                            <input class="form-control" type="text" name="iva" id="iva" value="<?php echo $iva; ?>" autocomplete="off" required maxlength="100" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="">Descripcion</label>
+                                            <textarea class="form-control" name="descripcion" id="descripcion" cols="20" rows="10" value="" maxlength="300"><?php echo $descripcion; ?></textarea>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Comprobantes Digitales: </label>
+                                            <input class="form-control" type="file" multiple="true" id="archivo" name="archivo[]">                                        
+                                        </div>
+                                        <div class="col-md-3">
+
+                                        
+                                        </div>
+                                        <div class="col-md-3"><br>
+
+                                        <button class="btn btn-large btn-primary" type="submit"><?php echo $boton; ?></button>
+                                        <?php if($boton=='Actualizar Gasto'){ ?> <a href="AgregarGastos.php" class="btn btn-danger">Cancelar</a><?php }  ?>
+                                        </form>
+                                        </div>
+                                    
+                                    </div>
+
+
+
+                                    </div>
+                                    </div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
 </body>
 </html>
+<script>
+        //Mostrar automaticamente el iva al 16%
+        //-------------------------------------------------------------------------------------------------------
+        $(document).ready(function(){
+                $('#total').keyup(function(event){
+                  var valor = $('#total').val();
+                  var iva = valor*0.16;
+                  document.getElementById('iva').value =iva.toFixed(2);
+                });
+            });
+        //--------------------------------------------------------------------------------------------------------
+    </script>
+

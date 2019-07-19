@@ -18,7 +18,8 @@
 					$id_comision = $row['id_comision'];
 				}
 				$poblaciones = array();
-				$peticion = mysql_query("SELECT * FROM producto WHERE id_sucursal = '$id_sucursal' AND (nom LIKE '%$palabra%' OR modelo LIKE '%$palabra%' OR marca LIKE '%$palabra%' OR compania LIKE '%$palabra%') AND id_comision='$id_comision'" );
+				$consulta="SELECT * FROM producto WHERE id_sucursal = '$id_sucursal' AND (nom LIKE '%$palabra%' OR modelo LIKE '%$palabra%' OR marca LIKE '%$palabra%' OR compania LIKE '%$palabra%') AND id_comision='$id_comision' ORDER BY nom ASC";
+				$peticion = mysql_query($consulta);
 				//echo "SELECT * FROM producto WHERE id_sucursal = '$id_sucursal' AND (nom LIKE '%$palabra%' OR modelo LIKE '%$palabra%' OR marca LIKE '%$palabra%' OR compania LIKE '%$palabra%') AND id_comision='$id_comision'";
 				while($fila = mysql_fetch_array($peticion)) {
 					$poblaciones[] = $fila['nom'];/*$fila['nom']*/

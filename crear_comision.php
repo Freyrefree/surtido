@@ -32,147 +32,220 @@
             $boton="Guardar Comision";
         }
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <title>Crear Comision</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Crear Comision</title>
 
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="jsV2/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="jsV2/tether.min.js"></script>
+    <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
     <style>
-    input{
-        text-transform:uppercase;
+
+    body{
+            
+            background: #F7D358;
     }
-    </style>
+    .titulo{
+
+            background: #e7e7e7;
+            color: #F2F2F2;
+    }
+    .modal-header{
+
+            background: #0275d8;
+            color: #F2F2F2;
+    }
+    .listado-tareas {
+            max-height: calc(50vh - 70px);
+            overflow-y: auto;
+    }
+    .btn{
+            border-radius: 0px;
+    }
+    .finish{
+            text-decoration:line-through;
+    }
+    .dropdown-item{
+            color: #E5E8E8;
+    }
+    .dropdown-item:hover{
+            color:#F4F6F6;
+    }
+    .form-control{
+            margin: 0px;
+    }
+    .black{
+        color: black;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+
+</style>
+
 </head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
+<?php include_once "layout.php"; ?>
+<body>
 
-  <?php 
-    if(!empty($_POST['codigo']) and !empty($_POST['nombre'])){
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
 
-        $codigo=$_POST['codigo'];$nombre=strtoupper($_POST['nombre']);$tipo=$_POST['tipo'];
-        $porcentaje=$_POST['porcentaje'];
-        $porcentajemaypost=$_POST['porcentajemay'];
-        $porcentajeesppost=$_POST['porcentajeesp'];
-        $descripcion=strtoupper($_POST['descripcion']);
+							<div class="col-md-12">
+								<br>
 
-        $can=mysql_query("SELECT * FROM comision where id_comision='$codigo'");
-        if($dato=mysql_fetch_array($can)){
-            if($boton=='Actualizar Comision'){
-                $xSQL="UPDATE comision SET nombre='$nombre',
-                                                tipo='$tipo',
-                                                porcentaje='$porcentaje',
-                                                porcentajemayoreo='$porcentajemaypost',
-                                                porcentajeespecial='$porcentajeesppost',
-                                                descripcion='$descripcion'
-                                    WHERE id_comision='$codigo'";
-                mysql_query($xSQL); 
-                echo '  <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">X</button>
-                          <strong>Comision</strong> Actualizado con Exito</div>';
-                }else{
-                    echo ' <div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">X</button><strong>Error! </strong>El codigo Comision ya existe '.$dato['nombre'].'</div>';
-            }       
-        }else{
-               $sql = "INSERT INTO comision (nombre, tipo, porcentaje, descripcion,porcentajemayoreo,porcentajeespecial)
-                             VALUES ('$nombre','$tipo','$porcentaje','$descripcion','$porcentajemaypost','$porcentajeesppost')";
-                mysql_query($sql);
-                
-                $nombre='';$tipo='';$porcentaje='';$descripcion='';
-                echo '  <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">X</button>
-                          <strong>Comision</strong> Guardado con Exito</div>';
-                $codigo = genera();      
-                  }
-              }
-?>
+								<div class="container">
 
-<div class="control-group info">
-  <form name="form1" method="post" action="">
-<table width="80%" border="0" class="table">
-  <tr class="info">
-    <td colspan="2"><center><strong>Crear Comision</strong></center></td>
-  </tr>
-  <tr>
-    <td>
-        <label for="textfield">* Codigo: </label>
-        <input type="text" name="codigo" id="codigo" <?php if(!empty($codigo)){echo 'readonly';} ?> value="<?php echo $codigo; ?>">
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">COMISIONES</p>
+										</div>
+									</div>
 
-        <label for="textfield">* Nombre Comision: </label>
-        <input type="text" name="nombre" id="nombre" value="<?php echo $nombre; ?>" autocomplete="off" required maxlength="40">
-        
-        <label>* Tipo:</label>
-            <select name="tipo" id="tipo">
-              <option value="TELEFONO"   <?php if($tipo=="TELEFONO"){ echo 'selected'; } ?> >TELEFONIA</option>
-              <option value="CHIP"       <?php if($tipo=="CHIP"){ echo 'selected'; } ?> >CHIPS</option>
-              <option value="FICHA"      <?php if($tipo=="FICHA"){ echo 'selected'; } ?> >FICHAS</option>
-              <option value="ACCESORIO"  <?php if($tipo=="ACCESORIO"){ echo 'selected'; } ?> >ACCESORIOS</option>
-              <option value="REPARACION" <?php if($tipo=="REPARACION"){ echo 'selected'; } ?> >REPARACIONES</option>
-              <option value="REFACCION"  <?php if($tipo=="REFACCION"){ echo 'selected'; } ?> >REFACCIONES</option>
-              <option value="RECARGA"  <?php if($tipo=="RECARGA"){ echo 'selected'; } ?> >TAE</option>
-            </select>
-        <label>* Porcentaje Público:</label>
-            <div class="input-prepend input-append">
-                <input type="text" name="porcentaje" id="porcentaje" value="<?php echo $porcentaje; ?>">
-                <span class="add-on">%</span>
-            </div>
-            <label>* Porcentaje Mayoreo:</label>
-            <div class="input-prepend input-append">
-                <input type="text" name="porcentajemay" id="porcentajemay" value="<?php echo $porcentajemay; ?>">
-                <span class="add-on">%</span>
-            </div>
-            <label>* Porcentaje Especial:</label>
-            <div class="input-prepend input-append">
-                <input type="text" name="porcentajeesp" id="porcentajeesp" value="<?php echo $porcentajeesp; ?>">
-                <span class="add-on">%</span>
-            </div>
-            <br>
-        <button class="btn btn-large btn-primary" type="submit"><?php echo $boton; ?></button>
-        <?php if($boton=='Actualizar Comision'){ ?> <a href="Comisiones.php" class="btn btn-large">Cancelar</a><?php } ?>
-    </td>
-    <td>
-        <label for="textfield">Descripcion: </label>
-        <textarea name="descripcion" id="descripcion" cols="20" rows="10" value="" maxlength="280"><?php echo $descripcion; ?></textarea>
-        
-    </td>
-  </tr>
-</table>
-</form>
-</div>
+                                    <div class="row">
+                                        <div class="col-md-3">                        
+                                            <button type="button" class="btn btn-info" onClick="window.location='Comisiones.php'">Listado</button>
+                                        </div>
+
+                                        <div class="col-md-3">                        
+                                            
+                                        </div>
+                                        <div class="col-md-3">                        
+                                            
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                        </div>
+                                    </div>
+<hr>
+                                        <?php 
+                                            if(!empty($_POST['codigo']) and !empty($_POST['nombre'])){
+
+                                                $codigo=$_POST['codigo'];$nombre=strtoupper($_POST['nombre']);$tipo=$_POST['tipo'];
+                                                $porcentaje=$_POST['porcentaje'];
+                                                $porcentajemaypost=$_POST['porcentajemay'];
+                                                $porcentajeesppost=$_POST['porcentajeesp'];
+                                                $descripcion=strtoupper($_POST['descripcion']);
+
+                                                $can=mysql_query("SELECT * FROM comision where id_comision='$codigo'");
+                                                if($dato=mysql_fetch_array($can)){
+                                                    if($boton=='Actualizar Comision'){
+                                                        $xSQL="UPDATE comision SET nombre='$nombre',
+                                                                                        tipo='$tipo',
+                                                                                        porcentaje='$porcentaje',
+                                                                                        porcentajemayoreo='$porcentajemaypost',
+                                                                                        porcentajeespecial='$porcentajeesppost',
+                                                                                        descripcion='$descripcion'
+                                                                            WHERE id_comision='$codigo'";
+                                                        mysql_query($xSQL); 
+                                                        echo '  <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">X</button>
+                                                                <strong>Comision</strong> Actualizado con Exito</div>';
+                                                        }else{
+                                                            echo ' <div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">X</button><strong>Error! </strong>El codigo Comision ya existe '.$dato['nombre'].'</div>';
+                                                    }       
+                                                }else{
+                                                    $sql = "INSERT INTO comision (nombre, tipo, porcentaje, descripcion,porcentajemayoreo,porcentajeespecial)
+                                                                    VALUES ('$nombre','$tipo','$porcentaje','$descripcion','$porcentajemaypost','$porcentajeesppost')";
+                                                        mysql_query($sql);
+                                                        
+                                                        $nombre='';$tipo='';$porcentaje='';$descripcion='';
+                                                        echo '  <div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">X</button>
+                                                                <strong>Comision</strong> Guardado con Exito</div>';
+                                                        $codigo = genera();      
+                                                        }
+                                                    }
+                                        ?>
+
+
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        <form name="form1" method="post" action="">
+                                            <label for="">Codigo</label>
+                                            <input class="form-control" type="text" name="codigo" id="codigo" <?php if(!empty($codigo)){echo 'readonly';} ?> value="<?php echo $codigo; ?>">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Nombre Comision</label>
+                                            <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo $nombre; ?>" autocomplete="off" required maxlength="40">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Tipo:</label>
+                                                <select class="form-control" name="tipo" id="tipo">
+                                                <option value="TELEFONO"   <?php if($tipo=="TELEFONO"){ echo 'selected'; } ?> >TELEFONIA</option>
+                                                <option value="CHIP"       <?php if($tipo=="CHIP"){ echo 'selected'; } ?> >CHIPS</option>
+                                                <option value="FICHA"      <?php if($tipo=="FICHA"){ echo 'selected'; } ?> >FICHAS</option>
+                                                <option value="ACCESORIO"  <?php if($tipo=="ACCESORIO"){ echo 'selected'; } ?> >ACCESORIOS</option>
+                                                <option value="REPARACION" <?php if($tipo=="REPARACION"){ echo 'selected'; } ?> >REPARACIONES</option>
+                                                <option value="REFACCION"  <?php if($tipo=="REFACCION"){ echo 'selected'; } ?> >REFACCIONES</option>
+                                                <option value="RECARGA"  <?php if($tipo=="RECARGA"){ echo 'selected'; } ?> >TAE</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Porcentaje Público:</label>                                            
+                                            <input class="form-control" type="text" name="porcentaje" id="porcentaje" value="<?php echo $porcentaje; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Porcentaje Mayoreo:</label>                                            
+                                            <input class="form-control" type="text" name="porcentajemay" id="porcentajemay" value="<?php echo $porcentajemay; ?>">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Porcentaje Especial:</label>
+                                            <input class="form-control" type="text" name="porcentajeesp" id="porcentajeesp" value="<?php echo $porcentajeesp; ?>">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Descripcion</label>
+                                            <textarea class="form-control" name="descripcion" id="descripcion"  value="" maxlength="280"><?php echo $descripcion; ?></textarea>
+                                        </div>
+                                        <div class="col-md-3"><br>
+                                            <button class="btn btn-large btn-primary" type="submit"><?php echo $boton; ?></button>
+                                            <?php if($boton=='Actualizar Comision'){ ?> <a href="Comisiones.php" class="btn btn-danger">Cancelar</a><?php } ?>
+                                        </form>
+                                        </div>
+									</div>
+                  
+                                    <br>
+
+									<div class="row">
+										<div class="col-md-12">
+                      
+
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
 </body>
 </html>

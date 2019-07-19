@@ -9,170 +9,282 @@ if(!$_SESSION['tipo_usu']=='a' or !$_SESSION['tipo_usu']=='ca'){
 $usuario=$_SESSION['username'];
 $fecha=date("Y-m-d");
 ?>
-<!-- Inician los estilos -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Listado Producto</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
-	<script src="includes/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="includes/sweetalert/dist/sweetalert.css">
-    
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
-    <![endif]-->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cierre de Caja</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="jsV2/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="jsV2/tether.min.js"></script>
+  <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
+
+      <!-- SWAL -->
+      <script src="js/sweetalert2.all.min.js"></script>
+    <!--**-->
+
+
+  <style>
+
+    body{
+            
+            background: #F7D358;
+    }
+    .titulo{
+
+            background: #e7e7e7;
+            color: #F2F2F2;
+    }
+    .modal-header{
+
+            background: #0275d8;
+            color: #F2F2F2;
+    }
+    .listado-tareas {
+            max-height: calc(50vh - 70px);
+            overflow-y: auto;
+    }
+    .btn{
+            border-radius: 0px;
+    }
+    .finish{
+            text-decoration:line-through;
+    }
+    .dropdown-item{
+            color: #E5E8E8;
+    }
+    .dropdown-item:hover{
+            color:#F4F6F6;
+    }
+    .form-control{
+            margin: 0px;
+    }
+    .black{
+        color: black;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+
+</style>
+
+    
+
+
 </head>
-<!-- Terminan los estilos -->
-<?php
-$cans=mysql_query("SELECT * FROM usuarios where usu='$usuario'");
-if($datos=mysql_fetch_array($cans)){
-   $ced = $datos['ced'];
-}
+<?php include_once "layout.php"; ?>
+<body>
 
-$sqle = mysql_query("SELECT * FROM caja WHERE id_cajero='$ced'");
-if($dat=mysql_fetch_array($sqle)){
-   $dinerocaja = $dat['apertura']+$dat['cantidad'];
-}   
-?>
 
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
+
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">CIERRE DE CAJA</p>
+										</div>
+									</div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">                        
+                                            
+                                        </div>
+
+                                        <div class="col-md-6">                        
+                                            
+                                        </div>
+
+                                        <div class="col-md-3">
+										          
+                                        </div>
+                                    </div>
+                  
+                                    <br>
+
+									<div class="row">
+
+
+
+									<div class="col-md-3">
+                                   
+									</div>
+
+									<div class="col-md-3">
+											
+									</div>
+
+
+									<div class="col-md-6"><br>
+                                       
+									</div>
+
+									<div class="row">
+										<div class="col-md-12"><br>
+
+
+                                        
 <div id="ajax"></div>
-<table align="center">
-<tbody>
+<table class="table">
+<thead>
 <tr>
     <th>Contabilizar Billetes</th>
     <th>Contabilizar Monedas</th>
     <th>Retiro de Efectivo</th>
-</tr>    
+</tr>
+</thead> 
+<tbody>  
     <tr>
         <td valign="top">
             <form id="form1" name="corte" method="post" action="">
-                <label for="ccpago">Billetes de $20</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$20</span>
-                    <input type="number" name="b20" id="b20" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />
-                </div>
-                <label for="ccpago">Billetes de $50</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$50</span>
-                    <input type="number" name="b50" id="b50" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />
-                </div>
-                <label for="ccpago">Billetes de $100</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$100</span>
-                    <input type="number" name="b100" id="b100" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />
-                </div>
-                <label for="ccpago">Billetes de $200</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$200</span>
-                    <input type="number" name="b200" id="b200" min="0" step="any"  autocomplete="on" onchange="sumar()" value="0" required />
-                </div>
-                <label for="ccpago">Billetes de $500</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$500</span>
-                    <input type="number" name="b500" id="b500" min="0" step="any" autocomplete="on"  onchange="sumar()" value="0" required />
-                </div>
-                <label for="ccpago">Billetes de $1000</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$1000</span>
-                    <input type="number" name="b1000" id="b1000" min="0" autocomplete="on" onchange="sumar()" value="0" required />
-                </div>
+
+            <div class="form-group">
+                <label for="">Billetes de $20</label>
+                <input class="form-control" type="number" name="b20" id="b20" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />
+            </div>
+                
+            <div class="form-group">
+                <label for="">Billetes de $50</label>
+                <input class="form-control" type="number" name="b50" id="b50" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />
+            </div>
+                
+            <div class="form-group">
+                <label for="">Billetes de $100</label>
+                <input class="form-control" type="number" name="b100" id="b100" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />
+            </div>
+            
+            <div class="form-group">
+                <label for="">Billetes de $200</label>
+                <input class="form-control" type="number" name="b200" id="b200" min="0" step="any"  autocomplete="on" onchange="sumar()" value="0" required />
+            </div>
+                
+            <div class="form-group">
+                <label for="">Billetes de $500</label>
+                <input class="form-control" type="number" name="b500" id="b500" min="0" step="any" autocomplete="on"  onchange="sumar()" value="0" required />
+            </div> 
+                
+            <div class="form-group">    
+                <label for="">Billetes de $1000</label>
+                <input class="form-control" type="number" name="b1000" id="b1000" min="0" autocomplete="on" onchange="sumar()" value="0" required />
+            </div>
+                
         </td>
         <td valign="top">
+            <div class="form-group">
                 <label for="">Monedas de $0.50</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$0.50</span>
-                    <input type="number" name="m050" id="m050" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
-                </div>
+                <input class="form-control" type="number" name="m050" id="m050" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
+            </div>    
+            <div class="form-group">    
                 <label for="">Monedas de $1</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$1</span>
-                    <input type="number" name="m1" id="m1" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
-                </div>
-                <label for="">Monedas de $2</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$2</span>
-                    <input type="number" name="m2" id="m2" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
-                </div>
+                <input class="form-control" type="number" name="m1" id="m1" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
+            </div>
+            <div class="form-group">
+                <label for="">Monedas de $2</label>          
+                <input class="form-control" type="number" name="m2" id="m2" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
+            </div>    
+            <div class="form-group">
                 <label for="">Monedas de $5</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$5</span>
-                    <input type="number" name="m5" id="m5" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
-                </div>
+                <input class="form-control" type="number" name="m5" id="m5" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
+            </div>
+            <div class="form-group">
                 <label for="">Monedas de $10</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$10</span>
-                    <input type="number" name="m10" id="m10" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
-                </div>
+                <input class="form-control" type="number" name="m10" id="m10" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
+            </div>
+            <div class="form-group">
                 <label for="">Monedas de $20</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$20</span>
-                    <input type="number" name="m20" id="m20" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
-                </div>
+                <input class="form-control" type="number" name="m20" id="m20" min="0" step="any" autocomplete="on" onchange="sumar()" value="0" required />                 
+            </div>
           </td>
           <td valign="top">
-                <label for="ccpago">Saldo en caja</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$</span>
-                    <input type="text" name="efectivo" id="efectivo" value="<?php echo $dinerocaja; ?>" readonly>                    
-                </div>
-                <label for="ccpago">Retiro de Efectivo</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$</span>
-                    <input type="number" name="cierre" id="cierre" min="0" step="any" autocomplete="on" required />
-                </div>
-                <label for="ccpago">Usuario Responsable</label>
-                    <input type="text" name="usuario" id="usuario" min="0" step="any" autocomplete="on" required />
-                </div>
-                <label for="ccpago">Contraseña</label>
-                    <input type="password" name="password" id="password" min="0" step="any" autocomplete="on" required />
-                </div>
+            <div class="form-group">
+                <label for="">Saldo en caja</label>
+                <input class="form-control" type="text" name="efectivo" id="efectivo" value="<?php echo $dinerocaja; ?>" readonly>
+            </div>
+                                
+            <div class="form-group">
+                <label for="">Retiro de Efectivo</label>
+                <input class="form-control" type="number" name="cierre" id="cierre" min="0" step="any" autocomplete="on" required />
+            </div>
+
+            <div class="form-group">
+                <label for="">Usuario Responsable</label>
+                <input class="form-control" type="text" name="usuario" id="usuario" min="0" step="any" autocomplete="on" required />
+            </div>
+
+
+            <div class="form-group">
+                <label for="">Contraseña</label>
+                <input class="form-control" type="password" name="password" id="password" min="0" step="any" autocomplete="on" required />
+            </div>
+                
           <br>     
-          <input type="submit" class="btn btn-success" name="button" id="button" value="Aceptar" />
+          <input type="submit" class="btn btn-primary" name="button" id="button" value="Aceptar" />
           </form>
         </td>   
     </tr> 
  </tbody>
-</table>            
+</table>   
 
-</div>
+
+                                            
+
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
 </body>
 </html>
+
+
+
+
+    
+</body>
+</html>
+         
+
+
+
+
+
+
+
+
 
 <script type="text/javascript">
 $(function (e) {

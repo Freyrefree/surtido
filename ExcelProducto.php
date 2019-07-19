@@ -1,7 +1,8 @@
 <?php
 error_reporting(0);
 session_start();
-include('php_conexion.php'); 
+include('php_conexion.php');
+include('funciones.php');
 $usu = $_SESSION['username'];
 if((!$_SESSION['tipo_usu']=='a') || (!$_SESSION['tipo_usu']=='su') || (!$_SESSION['tipo_usu']=='ca') || (!$_SESSION['tipo_usu']=='te')){
     header('location:error.php');
@@ -11,6 +12,19 @@ if ($_SESSION['tipo_usu']=='a')
 {
     #datos recibidos para consulta
     $id_sucursal = $_SESSION['id_sucursal'];
+
+    $consultaSucursal = "SELECT empresa FROM empresa WHERE id = $id_sucursal";
+    $ejecutar = mysql_query($consultaSucursal);
+    if(mysql_num_rows($ejecutar) > 0){
+
+        $dato = mysql_fetch_array($ejecutar);
+        $nombreSucursal = $dato['empresa'];
+    }
+
+
+
+
+
     $id_comision = $_REQUEST['producto'];
     $sucursal = $_REQUEST['sucursal'];
     $coin = $_REQUEST['coin'];
@@ -132,7 +146,7 @@ if ($_SESSION['tipo_usu']=='a')
         ),
     ),
 );
-    $namefile = "REPORTE_PRODUCTOS".$_SESSION['username'].".xlsx";
+    $namefile = "REPORTE_PRODUCTOS".$_SESSION['username']."-".$nombreSucursal.".xlsx";
     $objPHPExcel->getActiveSheet()->getColumnDimension("A")->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension("B")->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension("C")->setAutoSize(true);
@@ -160,6 +174,12 @@ if ($_SESSION['tipo_usu']=='a')
 {
         #datos recibidos para consulta
         $id_sucursal = $_SESSION['id_sucursal'];
+
+        $consultaSucursal = "SELECT empresa FROM empresa WHERE id = $id_sucursal";
+
+
+
+
         $id_comision = $_REQUEST['producto'];
         $sucursal = $_REQUEST['sucursal'];
         $coin = $_REQUEST['coin'];
@@ -275,7 +295,7 @@ if ($_SESSION['tipo_usu']=='a')
             ),
         ),
     );
-        $namefile = "REPORTE_PRODUCTOS".$_SESSION['username'].".xlsx";
+        $namefile = "REPORTE_PRODUCTOS".$_SESSION['username']."-".$nombreSucursal.".xlsx";
         $objPHPExcel->getActiveSheet()->getColumnDimension("A")->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getColumnDimension("B")->setAutoSize(true);
         $objPHPExcel->getActiveSheet()->getColumnDimension("C")->setAutoSize(true);

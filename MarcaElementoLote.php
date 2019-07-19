@@ -8,7 +8,7 @@
         }
         $id_sucursal = $_SESSION['id_sucursal'];
 
-        $IdElemento=$_REQUEST['Elemento'];
+        $IdElemento=$_POST['Elemento'];
         $elemento = explode("?", $IdElemento);
         $IdProducto = $elemento[0]; // IdProducto
         $IMEI       = $elemento[1]; // IMEI
@@ -16,7 +16,7 @@
         $IdFicha    = $elemento[3]; // IdFicha
         $IdLote     = $elemento[4]; // IdLote
 
-       $Aceptados=$_REQUEST['Aceptados'];
+       $Aceptados=$_POST['Aceptados'];
 
         $consulta1 = "UPDATE movimientosxlote SET Recibido=1, FechaEntrada=NOW(), IdSucEntrada=$id_sucursal, UsuEntrada='$usu' WHERE IdProducto='$IdProducto' AND IMEI='$IMEI' AND ICCID='$ICCID' AND IdFicha='$IdFicha' AND IdLote=$IdLote";
         
@@ -110,9 +110,12 @@ if(($dato['IMEI']!="") && ($dato['ICCID']!=""))
                         } 
         }       
 ?>
-<div class="label label-success" role="alert" style="font-size: x-large; padding: 6.5px">
-        <strong>✓</strong>
-</div>
+
+<?php
+
+echo'<span class="badge badge-success">✓ Aceptado</span>';
+
+?>
 
 <?php
 function sucursal($id_sucursal)

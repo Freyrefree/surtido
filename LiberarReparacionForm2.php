@@ -14,6 +14,17 @@ if(isset($_SESSION['id_sucursal'])){
     ##DATOS POST####
     $idReparacion = trim($_POST['noReparacion']);
     $descripLi = $_POST['descripLi'];
+
+    $dineroRecibo = $_POST['dineroRecibo'];
+    $resto = $_POST['resto'];
+
+    if($dineroRecibo < $resto)
+    {
+        echo 7; // Error dinero recibido
+        exit;
+    }
+
+
     ##############
 
 if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB)) 
@@ -39,9 +50,15 @@ if ($con = conectarBase($hostDB, $usuarioDB, $claveDB, $baseDB))
             $precioFinal      = $fila['precio'];
             $adelanto         = $fila['abono'];
 
-            $precioFinal = $precioFinal - $adelanto;
+            if($precioFinal == $adelanto){
 
+                $precioFinal = $adelanto;
 
+            }else{
+                
+                $precioFinal = $precioFinal - $adelanto;
+            }
+               
             
             ## Cosulta comision
             $consultaComision="SELECT porcentaje FROM comision WHERE id_comision = '$idComision'";

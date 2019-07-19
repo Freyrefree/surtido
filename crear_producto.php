@@ -8,124 +8,188 @@
 
     $permiso = $_SESSION['tipo_usu'];
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <title>Inventario</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-    
-	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Producto</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="jsV2/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="jsV2/tether.min.js"></script>
+    <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- Código de barras -->
     <script src="js/jquery-barcode.js"></script>
     <script src="js/html2canvas.js"></script>
     <script src="js/jspdf.debug.js"></script>
+    <!-- **************** -->
 
 
-
-    
-
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="assets/js/html5shiv.js"></script>
-    <![endif]-->
-
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-  
     <style>
+
+        body{
+
+        background: #F7D358;
+        }
+        .titulo{
+
+        background: #e7e7e7;
+        color: #F2F2F2;
+        }
+        .modal-header{
+
+        background: #0275d8;
+        color: #F2F2F2;
+        }
+        .listado-tareas {
+        max-height: calc(50vh - 70px);
+        overflow-y: auto;
+        }
+        .btn{
+        border-radius: 0px;
+        }
+        .finish{
+        text-decoration:line-through;
+        }
+        .dropdown-item{
+        color: #E5E8E8;
+        }
+        .dropdown-item:hover{
+        color:#F4F6F6;
+        }
+        .form-control{
+        margin: 0px;
+        }
+        .black{
+        color: black;
+        }
+        .red{
+        color: red;
+        }
+        .green{
+        color: green;
+        }
+
+
+
         .codebar{
-            border: 1px;
-            border-style: solid;
-            border-color: #000;
-            margin-left: 30px;
-            margin-bottom: 0px;
-            margin-right: 10px;
-            margin-top: 10px;
-            padding: 5px;
+        border: 1px;
+        border-style: solid;
+        border-color: #000;
+        margin-left: 30px;
+        margin-bottom: 0px;
+        margin-right: 10px;
+        margin-top: 10px;
+        padding: 5px;
         }
-        .hr{
-            /* background: blue; */
-            margin-bottom: -20px;
-        }
+        
         .thumb{
-             height: 140px;
-             width: 200px;
-             border: 1px solid #000;
-             margin: 5px 5px 0 0;
+        height: 140px;
+        width: 200px;
+        border: 1px solid #000;
+        margin: 5px 5px 0 0;
         }
         .panel-compra{
-            padding-left: 10px;
-            padding-top: 10px;
-          border-style: solid;
-          border-color: #BDBDBD;
-          border-top-width: 1px;
-          border-right-width: 1px;
-          border-bottom-width: 1px;
-          border-left-width: 1px;
+        padding-left: 10px;
+        padding-top: 10px;
+        border-style: solid;
+        border-color: #BDBDBD;
+        border-top-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 1px;
+        border-left-width: 1px;
         }
-        /* .incd{
-            margin-top: 20px;
-        } */
+       
         input{
         text-transform:uppercase;
         }
     </style>
 </head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-<div align="center">
-<table width="80%" border="0" class="table">
-  <tr class="info">
-    <td colspan="4"><center><strong>Creacion de Productos</strong></center></td>
-  </tr>
-   <tr>
-    <td colspan="4">
-    <div class="control-group info">
-    <form name="form1" method="post" action="crear_producto.php">
-    	<div class="input-append hr">
-   			 <input class="span2 incd" id="ccodigo" name="ccodigo" type="text" placeholder="Codigo del Articulo" maxlength="13">
-    	 	 <button class="btn incd" id="btnc"  type="submit">Confirmar Codigo</button>
-                 <?php 
-                    if (!empty($_POST['ccodigo']) or !empty($_GET['codigo'])) {
-                        //echo "<div id='barcode'></div>";
-                        echo "<canvas id='Barcode' class='codebar' width='235' height='70'></canvas>";
-                        echo '<button class="btn down" id="btnd" onclick="downloadcodebar();" type="button">Guardar/PDF</button>';
-                    
-                 ?>
-                 <!-- <div id="Barcode"></div> -->
-                 <?php } ?>
-        </div>
-    </form>
-    </div>
-    
-    <!-- inicia agregar y actualizar producto -->
+<?php include_once "layout.php"; ?>
+<body>
+
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
+
+							<div class="col-md-12">
+								<br>
+
+								<div class="container">
+
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">CREACIÓN DE PRODUCTOS</p>
+										</div>
+									</div>
+
+                                    <div class="row">
+                                        <div class="col-md-3">                        
+                                            
+                                        </div>
+
+                                        <div class="col-md-3">                        
+                                            
+                                        </div>
+
+                                        <div class="col-md-2">                        
+
+                                        </div>
+                                    </div>
+                  
+                                    <br>
+
+									<div class="row">
+										<div class="col-md-12">
+
+                                        <div class="row">
+
+                                        
+                                            <div class="col-md-3">
+                                            <form name="form1" method="post" action="crear_producto.php">
+                                                <label for="">Codigo del Articulo</label>                                       
+                                                <input class=" form-control" id="ccodigo" name="ccodigo" type="text" placeholder="Codigo del Articulo" maxlength="13">
+                                            </div>
+                                            <div class="col-md-3">
+                                            <br>
+                                                <button class="btn  btn-success" id="btnc"  type="submit">Confirmar Codigo</button>
+                                                </form>
+                                            </div>
+                                       
+                                            <div class="col-md-3">
+                                                <?php 
+                                                    if (!empty($_POST['ccodigo']) or !empty($_GET['codigo'])) {
+                                                        echo "<canvas  id='Barcode' class='codebar form-control' ></canvas>";                                                  
+                                                    }                                    
+                                                ?>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <?php 
+                                                    if (!empty($_POST['ccodigo']) or !empty($_GET['codigo'])) {                                                        
+                                                        echo '<button class="btn btn-info" id="btnd" onclick="downloadcodebar();" type="button">Guardar Código en PDF</button>';                                       
+                                                    }                                                    
+                                                ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+
+
+
+                                                <!-- inicia agregar y actualizar producto -->
      <?php 
         if(!empty($_POST['codigo'])){
             $gcodigonuevo=strtoupper(trim($_POST['codigonuevo']));
@@ -144,17 +208,10 @@
 
            
 
-            //$consulta="SELECT * FROM producto WHERE cod = '$gcodigo'";
-            //$ejecutar=mysql_query($consulta);
-            //if(((mysql_num_rows($ejecutar))>0))
+         
             if($gcodigonuevo == "")
             {
-                //echo"there are rows";
-              
-            
-
-            
-                //echo"there aren´t rows";
+               
             
         #identiticadores unicos
             $imeis  = array_filter(explode("\n", $imei));
@@ -173,13 +230,9 @@
                 $gnom = $tipo." ".$gcompania;
                 $gmarca = "";
             }
-            /*if ($tipo == "REFACCION") {
-                $gnom = $categoria."/".$gnom;
-                $gmarca = "";
-            }*/
+           
 
-            //$ncantidad=$_POST['cantidad'];$remision = $_POST['remision'];
-            //echo "codigo producto:".$gcodigo."<br>";
+           
             $can=mysql_query("SELECT * FROM producto where cod='$gcodigo'");
             if($dato=mysql_fetch_array($can)){
             #nueva entrada de identificador unico  del producto atual
@@ -817,9 +870,9 @@
         
 
         ?>
-    <!-- finaliza agregar y actualizar producto -->
+         <!-- finaliza agregar y actualizar producto -->
 
-    <?php 
+         <?php 
 		//echo $_POST['codigo'];
 		if(!empty($_POST['ccodigo']) or !empty($_GET['codigo'])){
 
@@ -839,19 +892,7 @@
                 $codig=$_POST['ccodigo'];
                 $ac = str_split($codig);
                 
-                // $suma_impares = $ac[0]+$ac[2]+$ac[4]+$ac[6]+$ac[8]+$ac[10];
-                // $suma_pares = $ac[1]+$ac[3]+$ac[5]+$ac[7]+$ac[9]+$ac[11];
-                // $multres = $suma_pares*3;
-                // $suma_resultados = $multres+$suma_impares;
-                // $arrdig = str_split($suma_resultados);
-                // $cuenta = count($arrdig);
-                // $suma_resultados = $suma_resultados-1000;
-                // $ultimodig = $arrdig[$cuenta-1];
-                // $valord = 10-$ultimodig;
-                // if ($valord == 10) {
-                //     $valord = 0;
-                // }
-                //$codigo = $ac[0].$ac[1].$ac[2].$ac[3].$ac[4].$ac[5].$ac[6].$ac[7].$ac[8].$ac[9].$ac[10].$ac[11].$valord;
+
                 #Fin formula obtener digito adicional de codigo de barras ||ean13||
                 $codigo = $codig;
 
@@ -905,174 +946,231 @@
 				$boton="Guardar Producto";
 			}
 	?>
-    
-    </td>    
-    <div class="control-group info">
-    <form name="form2" method="post" enctype="multipart/form-data" action="crear_producto.php">
-  	<tr>
-    	<td width="24%">
 
-        	<label>ACTUALIZAR CÓDIGO</label> <input type="checkbox" id="check" onclick="toggleBoxVisibility()">
-            <div id="divcodigonuevo" style="display :none;"><input  type="text" name="codigonuevo" id="codigonuevo" value="" placeholder="CÓDIGO NUEVO"></div>
-            <label>* Codigo: </label><input type="text" name="codigo" id="codigo" value="<?php echo $codigo; ?> " readonly>
-            <label>* Tipo Articulo/Servicio: </label> 
-            <select name="comision" id="comision" class="comision" required>
-            <option value="">Elige una opcion</option>
-            <?php
-                $can=mysql_query("SELECT * FROM comision WHERE tipo != 'REPARACION' AND tipo != 'RECARGA'");
-                while($dato=mysql_fetch_array($can)){
-            ?>
-              <option value="<?php echo $dato['id_comision']; ?>" <?php if($id_comision==$dato['id_comision']){ echo 'selected'; } ?>><?php echo $dato['nombre']; ?></option>
-            <?php } ?>
-            </select>
-            <label  id="lcategoria" <?php if (empty($categoria)) { echo 'style="display:none;visibility:hidden;"'; } ?>>* Categoria:</label>
-            <input  type="text" name="categoria" id="categoria" value="<?php echo $categoria; ?>" <?php if (empty($categoria)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
-            <!-- ------------------------------- Cambio en el formulario ------------------------------------- -->
-            
 
-            <label id="lmarca" <?php if ($TipoComision == 'CHIP' OR $TipoComision == 'FICHA') { echo 'style="display:none;visibility:hidden;"'; } ?>>* Marca:</label>
-            <input  type="text" name="marca" id="marca" value="<?php echo $marca; ?>" <?php if ($TipoComision == 'CHIP' OR $TipoComision == 'FICHA') { echo 'style="display:none;visibility:hidden;"'; } ?> >
-            <!-- <select name="marca" id="marca" <?php if ($TipoComision == 'CHIP' OR $TipoComision == 'FICHA') { echo 'style="display:none;visibility:hidden;"'; } ?>>
-            <?php
-            $can=mysql_query("SELECT * FROM marca where estado='s'");
-                while($dato=mysql_fetch_array($can)){
-            ?>
-              <option value="<?php echo $dato['id_marca']; ?>" <?php if($id_marca==$dato['id_marca']){ echo 'selected'; } ?>><?php echo $dato['nombre']; ?></option>
-            <?php } ?>
-            </select> -->
-            <label id="lnombre" >Nombre: </label><input type="text" name="nom" id="nom" value="<?php echo $nom; ?>" maxlength="250">
 
-            <label  id="lmodelo" <?php if (empty($modelo)) { echo 'style="display:none;visibility:hidden;"'; } ?>>* Modelo:</label>
-            <input  type="text" name="modelo" id="modelo" value="<?php echo $modelo; ?>" <?php if (empty($modelo)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
+                                            </div> 
 
-            <label id="lcompania" <?php if (empty($compania)) { echo 'style="display:none;visibility:hidden;"'; } ?>>*Confirmar Nombre/Compañia:</label>
-            <input type="text" name="compania" id="compania" value="<?php echo $compania; ?>" <?php if (empty($compania)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
+                                                                                             
+                                        </div>
 
-            <label id="lvalor" <?php if (empty($valor)) { echo 'style="display:none;visibility:hidden;"'; } ?>>* Valor:</label>
-            <input type="text" name="valor" id="valor" value="<?php echo $valor; ?>" <?php if (empty($valor)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
+                                        <div class="row">
 
-            <label id="ltipo" for="radio" <?php if (empty($tipo)) { echo 'style="display:none;visibility:hidden;"'; } ?> >* Tipo </label><!-- Ficha -->
-            <label id="lltipo" class="radio" <?php if (empty($tipo)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
-            <input type="radio" name="tipo" id="optionsRadios2" value="normal" <?php if($tipo=="NORMAL"){ echo 'checked'; } ?>>Normal
-            </label>
-            <label id="llltipo" class="radio" <?php if (empty($tipo)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
-            <input type="radio"   name="tipo" id="optionsRadios1" value="distribuidor" <?php if($tipo=="DISTRIBUIDOR"){ echo 'checked'; } ?>>Distribuidor
-            </label>
+                                            <div class="col-md-3">
+                                            <form name="form2" method="post" enctype="multipart/form-data" action="crear_producto.php">
+                                                
+                                                <input class="form-check-input" type="checkbox" id="check" onclick="toggleBoxVisibility()">
+                                                <label class="form-check-label">Actualizar Código</label>
+                                            </div>
 
-            <label id="lcolor" <?php if (empty($color)) { echo 'style="display:none;visibility:hidden;"'; } ?>>* Color:</label>
-            <input type="text" name="color" id="color" value="<?php echo $color; ?>" <?php if (empty($color)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
-            <!-- ------------------------------- fin cambio formulario --------------------------------------- -->
-            <label>Proveedor</label>
-            <input name="prov" id='prov' type="text" class="span2" size="60" list="proveedor" placeholder="Proveedor" value="<?php echo $prov ?>">
-            <datalist id="proveedor">
-            <?php 
-                 echo "<option value='aaaaaaa' selected>aaaaa</option>";        
+                                            <div class="col-md-3">
+                                                <div id="divcodigonuevo" style="display :none;">
+                                                    <label>Código Nuevo</label>
+                                                    <input class="form-control"  type="text" name="codigonuevo" id="codigonuevo" value="" placeholder="Código Nuevo">
+                                                </div>
+                                            </div>
 
-				$can=mysql_query("SELECT * FROM proveedor where estado='s'");
-				while($dato=mysql_fetch_array($can)){
-                    echo "<option value='$dato[empresa]'></option>";                    
-                } 
-            ?>
-            </datalist>
-            <!-- <label>* Cod. Articulo del Proveedor: </label><input type="text" name="cprov" id="cprov" value="<?php echo $cprov; ?>" required maxlength="30"> -->
-            
-            <br><br>
-                <button type="submit"  class="btn btn-large btn-primary"><?php echo $boton; ?></button>
-        </td>
-        <td width="5%">
-            <label>Fecha: </label><input type="date" name="fecha" id="fecha" value="<?php echo $fechay; ?>" required>
-            <label>Precio Costo</label>
-            <div class="input-prepend input-append">
-                <span class="add-on">$</span>
-                <input type="text" name="costo" id="costo" value="<?php echo $costo; ?>" required> 
-                <span class="add-on">.00</span>
-            </div>
-            <label>Precio Especial: </label>
-            <div class="input-prepend input-append">
-                <span class="add-on">$</span>
-                <input type="text" name="especial" id="especial" value="<?php echo $especial; ?>" required> 
-                <span class="add-on">.00</span>
-            </div>
-            <label>Precio Mayoreo: </label>
-             <div class="input-prepend input-append">
-                <span class="add-on">$</span>
-                <input type="text" name="mayor" id="mayor" value="<?php echo $mayor; ?>" required>
-                <span class="add-on">.00</span>
-            </div>
-            <label>Precio Venta: </label>
-            <div class="input-prepend input-append">
-                <span class="add-on">$</span>
-                <input type="text" name="venta" id="venta" value="<?php echo $venta; ?>" required> 
-                <span class="add-on">.00</span>
-            </div>
-            
-        	<label>Cantidad Actual: </label><input type="text" name="cantidad" id="cantidad" value="<?php echo $cantidad; ?>" required maxlength="25" readonly>
-            
-           
-            
-            <label> + Nueva Cantidad: </label>
-            <input type="number" name="ncantidad" id="ncantidad" value="0" maxlength="3" min="0" pattern=" 0+\.[0-9]*[1-9][0-9]*$" onkeypress="return event.charCode >= 48 && event.charCode <= 57"  <?php if ($TipoComision == 'TELEFONO' or $TipoComision == 'CHIP' or $TipoComision == 'FICHA') {
-                    echo 'readonly';
-                } ?>>
-            
+                                            <div class="col-md-3">
+                                                <label>Código</label>
+                                                <input class="form-control" type="text" name="codigo" id="codigo" value="<?php echo $codigo; ?> " readonly>
+                                            </div>
 
-            <label>Cantidad Minima: </label><input type="text" name="minimo" id="minimo" value="<?php echo $minimo; ?>" maxlength="25">
-            <label>Seccion del Articulo: </label> 
-            <select name="seccion" id="seccion">
-            <?php
-				$can=mysql_query("SELECT * FROM seccion where estado='s'");
-				while($dato=mysql_fetch_array($can)){
-			?>
-              <option value="<?php echo $dato['id']; ?>" <?php if($seccion==$dato['id']){ echo 'selected'; } ?>><?php echo $dato['nombre']; ?></option>
-            <?php } ?>
-            </select>
-            <label>Unidad de medida: </label>
-            <select name="unidad" id="unidad">
-            <?php
-                $can=mysql_query("SELECT * FROM unidad_medida");
-                while($dato=mysql_fetch_array($can)){ ?>
-              <option value="<?php echo $dato['id']; ?>" <?php if($unidad==$dato['id']){ echo 'selected'; } ?>><?php echo $dato['nombre']; ?></option>
-            <?php } ?>
-            </select>
-              <!-- <div class="panel-compra">
-                
-                <label>Nueva Cantidad: </label><input type="text" name="cantidad" id="cantidad" value="0" required maxlength="25">
-                <label>Orden de Compra: </label><input type="text" name="remision" id="remision" maxlength="25">
-                <label for="textfield">Comprobantes Digitales: </label><input type="file" multiple="true" id="archivo" name="archivo[]">
-              </div> -->
-        </td>
-    	<td width="48%">
-            <center><label id="limei" for="textfield" <?php if ($TipoComision != 'TELEFONO') { echo 'style="display:none;visibility:hidden;"'; } ?> >IMEI: </label></center>
-            <center><textarea name="imei" id="imei" cols="15" rows="10" value="" <?php if ($TipoComision != 'TELEFONO') { echo 'style="display:none;visibility:hidden;"'; } ?>></textarea></center>
-            <!-- <br> -->
-            <center><label id="lidentifi" for="textfield" <?php if ($TipoComision != 'FICHA') { echo 'style="display:none;visibility:hidden;"'; } ?> >IDENTIFICADOR: </label></center>
-            <center><textarea name="identifi" id="identifi" cols="15" rows="10" value="" <?php if ($TipoComision != 'FICHA') { echo 'style="display:none;visibility:hidden;"'; } ?>></textarea></center>
-            <!-- <br> -->
-            <center><label id="liccid" for="textfield" <?php if ($TipoComision != 'TELEFONO' and $TipoComision != 'CHIP') { echo 'style="display:none;visibility:hidden;"'; } ?>>ICCID: </label></center>
-            <center><textarea name="iccid" id="iccid" cols="15" rows="10" value="" <?php if ($TipoComision != 'TELEFONO' and $TipoComision != 'CHIP') { echo 'style="display:none;visibility:hidden;"'; } ?>></textarea></center>
-        </td>      
-        <td width="48%">
-            
-            <center><label>Imagen del Producto</label></center>
-            <center>
-            <?php
-                if (file_exists("articulo/".$codigo.".jpg")){
-                    echo '<img src="articulo/'.$codigo.'.jpg" width="200" height="200" class="img-polaroid">';
-                }else{  
-                    /*echo '<img src="articulo/producto.png" width="200" height="200" class="img-polaroid">';*/
-                }
-            ?>
-            </center><br>
-            <center><output id="list"></output><!-- <br /> -->
-            <input type="file" name="files" id="files"></center>
-        </td>
-	</tr>
-    </form>
-    </div>
-	<?php } ?>
-  </table>
-  
-</div>
+                                            <div class="col-md-3">
+                                                <label>Tipo Articulo/Servicio</label> 
+                                                <select class="form-control" name="comision" id="comision" class="comision" required>
+                                                    <option value="">Elige una opcion</option>
+                                                    <?php
+                                                        $can=mysql_query("SELECT * FROM comision WHERE tipo != 'REPARACION' AND tipo != 'RECARGA'");
+                                                        while($dato=mysql_fetch_array($can)){
+                                                    ?>
+                                                    <option value="<?php echo $dato['id_comision']; ?>" <?php if($id_comision==$dato['id_comision']){ echo 'selected'; } ?>><?php echo $dato['nombre']; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label  id="lcategoria" <?php if (empty($categoria)) { echo 'style="display:none;visibility:hidden;"'; } ?>>Categoria</label>
+                                                <input class="form-control" type="text" name="categoria" id="categoria" value="<?php echo $categoria; ?>" <?php if (empty($categoria)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
+
+                                                <label id="lmarca" <?php if ($TipoComision == 'CHIP' OR $TipoComision == 'FICHA') { echo 'style="display:none;visibility:hidden;"'; } ?>>Marca</label>
+                                                <input class="form-control"  type="text" name="marca" id="marca" value="<?php echo $marca; ?>" <?php if ($TipoComision == 'CHIP' OR $TipoComision == 'FICHA') { echo 'style="display:none;visibility:hidden;"'; } ?> >
+
+                                                <label  id="lmodelo" <?php if (empty($modelo)) { echo 'style="display:none;visibility:hidden;"'; } ?>>Modelo</label>
+                                                <input class="form-control" type="text" name="modelo" id="modelo" value="<?php echo $modelo; ?>" <?php if (empty($modelo)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
+
+                                                <label id="lcompania" <?php if (empty($compania)) { echo 'style="display:none;visibility:hidden;"'; } ?>>Confirmar Nombre/Compañia</label>
+                                                <input class="form-control" type="text" name="compania" id="compania" value="<?php echo $compania; ?>" <?php if (empty($compania)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
+
+                                                <label id="lvalor" <?php if (empty($valor)) { echo 'style="display:none;visibility:hidden;"'; } ?>>Valor</label>
+                                                <input class="form-control" type="text" name="valor" id="valor" value="<?php echo $valor; ?>" <?php if (empty($valor)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
+
+                                                <label id="ltipo" for="" <?php if (empty($tipo)) { echo 'style="display:none;visibility:hidden;"'; } ?> >Tipo</label>
+                                                
+                                                <label id="lltipo" class="radio" <?php if (empty($tipo)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
+                                                <input type="radio" name="tipo" id="optionsRadios2" value="normal" <?php if($tipo=="NORMAL"){ echo 'checked'; } ?>>Normal
+                                                </label>
+
+                                                <label id="llltipo" class="radio" <?php if (empty($tipo)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
+                                                <input  type="radio"   name="tipo" id="optionsRadios1" value="distribuidor" <?php if($tipo=="DISTRIBUIDOR"){ echo 'checked'; } ?>>Distribuidor
+                                                </label>
+
+                                                <label id="lcolor" <?php if (empty($color)) { echo 'style="display:none;visibility:hidden;"'; } ?>>Color</label>
+                                                <input class="form-control" type="text" name="color" id="color" value="<?php echo $color; ?>" <?php if (empty($color)) { echo 'style="display:none;visibility:hidden;"'; } ?> >
+                                                                                
+
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label id="lnombre" >Nombre</label>
+                                                <input class="form-control" type="text" name="nom" id="nom" value="<?php echo $nom; ?>" maxlength="250">                                            
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <label>Proveedor</label>
+                                                <input class="form-control" name="prov" id='prov' type="text" class="span2" size="60" list="proveedor" placeholder="Proveedor" value="<?php echo $prov ?>">
+                                                <datalist id="proveedor">
+                                                <?php 
+                                                          
+                                                    $can=mysql_query("SELECT * FROM proveedor where estado='s'");
+                                                    while($dato=mysql_fetch_array($can)){
+                                                        echo "<option value='$dato[empresa]'></option>";                    
+                                                    } 
+                                                ?>
+                                                </datalist>
+                                            
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Fecha</label>
+                                                <input class="form-control" type="date" name="fecha" id="fecha" value="<?php echo $fechay; ?>" required>                                                            
+                                            </div>                       
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label>Precio Costo</label>                                           
+                                                <input class="form-control" type="text" name="costo" id="costo" value="<?php echo $costo; ?>" required> 
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Precio Especial</label>                                           
+                                                <input class="form-control" type="text" name="especial" id="especial" value="<?php echo $especial; ?>" required> 
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Precio Mayoreo</label>                                            
+                                                <input class="form-control" type="text" name="mayor" id="mayor" value="<?php echo $mayor; ?>" required>                                            
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Precio Venta</label>                                               
+                                                <input class="form-control" type="text" name="venta" id="venta" value="<?php echo $venta; ?>" required>                                                    
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label>Cantidad Actual</label>
+                                                <input class="form-control" type="text" name="cantidad" id="cantidad" value="<?php echo $cantidad; ?>" required maxlength="25" readonly>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>+ Nueva Cantidad</label>
+                                                <input class="form-control" type="number" name="ncantidad" id="ncantidad" value="0" maxlength="3" min="0" pattern=" 0+\.[0-9]*[1-9][0-9]*$" onkeypress="return event.charCode >= 48 && event.charCode <= 57"  <?php if ($TipoComision == 'TELEFONO' or $TipoComision == 'CHIP' or $TipoComision == 'FICHA') {
+                                                        echo 'readonly';
+                                                    } ?>>                                            
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Cantidad Minima</label>
+                                                <input class="form-control" type="text" name="minimo" id="minimo" value="<?php echo $minimo; ?>" maxlength="25">                                            
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Seccion del Articulo</label> 
+                                                <select class="form-control" name="seccion" id="seccion">
+                                                <?php
+                                                    $can=mysql_query("SELECT * FROM seccion where estado='s'");
+                                                    while($dato=mysql_fetch_array($can)){
+                                                ?>
+                                                <option value="<?php echo $dato['id']; ?>" <?php if($seccion==$dato['id']){ echo 'selected'; } ?>><?php echo $dato['nombre']; ?></option>
+                                                <?php } ?>
+                                                </select>                                            
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+
+                                                <label>Unidad de medida</label>
+                                                <select class="form-control" name="unidad" id="unidad">
+                                                <?php
+                                                    $can=mysql_query("SELECT * FROM unidad_medida");
+                                                    while($dato=mysql_fetch_array($can)){ ?>
+                                                <option value="<?php echo $dato['id']; ?>" <?php if($unidad==$dato['id']){ echo 'selected'; } ?>><?php echo $dato['nombre']; ?></option>
+                                                <?php } ?>
+                                                </select>
+
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <label id="limei" for="textfield" <?php if ($TipoComision != 'TELEFONO') { echo 'style="display:none;visibility:hidden;"'; } ?> >IMEI</label>
+                                                <textarea class="form-control" name="imei" id="imei" cols="15" rows="10" value="" <?php if ($TipoComision != 'TELEFONO') { echo 'style="display:none;visibility:hidden;"'; } ?>></textarea>
+                                                
+                                                <label id="lidentifi" for="textfield" <?php if ($TipoComision != 'FICHA') { echo 'style="display:none;visibility:hidden;"'; } ?> >IDENTIFICADOR</label>
+                                                <textarea class="form-control" name="identifi" id="identifi" cols="15" rows="10" value="" <?php if ($TipoComision != 'FICHA') { echo 'style="display:none;visibility:hidden;"'; } ?>></textarea>
+                                                
+                                                <label id="liccid" for="textfield" <?php if ($TipoComision != 'TELEFONO' and $TipoComision != 'CHIP') { echo 'style="display:none;visibility:hidden;"'; } ?>>ICCID</label>
+                                                <textarea class="form-control" name="iccid" id="iccid" cols="15" rows="10" value="" <?php if ($TipoComision != 'TELEFONO' and $TipoComision != 'CHIP') { echo 'style="display:none;visibility:hidden;"'; } ?>></textarea>
+                                                                                
+                                            </div>
+                                            <div class="col-md-3">
+
+                                                <label>Imagen del Producto</label>                                                
+                                                <?php
+                                                    if (file_exists("articulo/".$codigo.".jpg")){
+                                                        echo '<img src="articulo/'.$codigo.'.jpg" width="200" height="200" class="img-polaroid">';
+                                                    }else{
+
+                                                    }
+                                                ?>
+                                                <br>
+                                                <output id="list"></output>
+                                                    <input class="form-control-file btn btn-primary btn-sm" type="file" name="files" id="files">
+                                                    
+                                                    
+                                                
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        <br>
+                                        <div clas="row">
+                                            <div class="col-md-12">
+                                            
+                                                <button type="submit"  class="btn btn-primary"><?php echo $boton; ?></button>
+                                                <?php } ?>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                      
+
+										</div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12">
+								
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+
 <script>
           function archivo(evt) {
               var files = evt.target.files; // FileList object
@@ -1094,18 +1192,7 @@
           }
           document.getElementById('files').addEventListener('change', archivo, false);
 </script>
-</body>
-</html>
-<!-- <select name="modelo" id="modelo">
-            <?php
-                $can=mysql_query("SELECT * FROM modelo where estado='s'");
-                while($dato=mysql_fetch_array($can)){
-            ?>
-              <option value="<?php echo $dato['id_modelo']; ?>" <?php if($id_modelo==$dato['id_modelo']){ echo 'selected'; } ?>><?php echo $dato['nombre']; ?></option>
-            <?php } ?>
-            </select> -->
-
-
+    
   <script>
         $(document).ready(function(){
             var codigob = "<?= $valcog; ?>"//$('#codigo').val();

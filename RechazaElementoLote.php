@@ -110,33 +110,48 @@ $('#$IdModals').modal({
 <a href="#" class="btn btn-default" id="openBtn">Open modal</a>
 -->
 <form name="form<?php echo $IdModals ?>" id="form<?php echo $IdModals ?>" action="" target="_SELFT">
-<div id="<?php echo $IdModals ?>" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>Razón del rechazo</h3>
-            </div>
-            <div class="modal-body">
-                <p>     
-                    <label for="male">Cantidad Rechazada</label>    
-                    <input type="text" id="CantRechazada" name="CantRechazada" style="width:95%;" value="<?php echo $RestaCant ?>" disabled/>
-                    <label for="male">Cantidad Aceptada (Excedente será ignorado)</label> 
-                    <input type="text" id="CantAceptada" name="CantAceptada" style="width:95%;" value="<?php echo $Aceptados ?>"  disabled/>
-                    <input type="hidden" id="Elemento" name="Elemento" style="width:95%;"  value="<?php echo $IdElemento ?>"/>
-                    <input type="radio" name="RazonRechazo" value="No coincide" required> No coincide<br>
-                    <input type="radio" name="RazonRechazo" value="Está roto"   required> Esta roto<br>
-                    <input type="radio" name="RazonRechazo" value="usado"       required> Usado
-                </p>
-            </div>
-            <div id="hayajax<?php echo $IdModals ?>"></div>
-            <div class="modal-footer"> 
-                <a href="#" class="btn" data-dismiss="modal">Cerrar</a>
-                <input type="submit" class="btn btn-primary" value="Continuar">   
-            </div>
+
+
+
+<div id="<?php echo $IdModals ?>" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Razón Rechazo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+            <label for="">Cantidad Rechazada</label>    
+            <input class="form-control form-control-sm" type="text" id="CantRechazada" name="CantRechazada"  value="<?php echo $RestaCant; ?>" disabled>
         </div>
+
+        <div class="form-group">
+            <label for="">Cantidad Aceptada (Excedente será ignorado)</label> 
+            <input class="form-control form-control-sm" type="text" id="CantAceptada" name="CantAceptada"  value="<?php echo $Aceptados; ?>"  disabled>
+        </div>
+
+                    
+        <input type="hidden" id="Elemento" name="Elemento"   value="<?php echo $IdElemento ?>"/>
+        <input type="radio" name="RazonRechazo" value="No coincide" required> No coincide<br>
+        <input type="radio" name="RazonRechazo" value="Está roto"   required> Esta roto<br>
+        <input type="radio" name="RazonRechazo" value="usado"       required> Usado
+        
+        <div id="hayajax<?php echo $IdModals ?>"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <input type="submit" class="btn btn-primary" value="Aceptar">
+      </div>
     </div>
+  </div>
 </div>
+
+
 </form> 
 
 

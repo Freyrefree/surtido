@@ -5,19 +5,7 @@
 			header('location:error.php');
 		}
 ?>
-<?php header( 'Content-type: text/html; charset=iso-8859-1' );?>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
-</script>
-
-<style type="text/css">
-.fila_0 { background-color: #FFFFFF;}
-.fila_1 { background-color: #E1E8F1;}
-</style>
-</head>
-<body>
 
 <?php
 
@@ -45,45 +33,50 @@ $resto= $row1[0];
 
 $rango_fecha = $fecha_ini3 ." / " .$fecha_fin3;
 ?>
-<table width="70%" border=".5" cellpadding="0" cellspacing="0" bordercolor="#AAAAAA" id="Exportar_a_Excel2" FRAME="border" RULES="none" align="center">
+<table class="table">
   <tr>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">No. Ventas</td>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">Cantidad</td>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">Abonos</td>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">Restantes</td>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">Fecha Venta</td>
+  <thead>
+    <th>No. Ventas</th>
+    <th>Cantidad</th>
+    <th>Abonos</th>
+    <th>Restantes</th>
+    <th>Fecha Venta</th>
   </tr>
+  </thead>
+  <tbody>
   <tr>
-    <td  align="center" style="font-size:16px"><?php echo $registros  ?></td>
-    <td align="center" style="font-size:16px">$ <?php echo number_format($importe1, 2, ',', ' ') ?></td>
-    <td align="center" style="font-size:16px" >$ <?php echo number_format($adelanto, 2, ',', ' ') ?></td>
-    <td align="center" style="font-size:16px" >$ <?php echo number_format($resto, 2, ',', ' ') ?></td>
-    <td  align="center" style="font-size:16px"><?php echo $rango_fecha  ?></td>
+    <td><?php echo $registros  ?></td>
+    <td>$ <?php echo number_format($importe1, 2, ',', ' ') ?></td>
+    <td>$ <?php echo number_format($adelanto, 2, ',', ' ') ?></td>
+    <td>$ <?php echo number_format($resto, 2, ',', ' ') ?></td>
+    <td><?php echo $rango_fecha  ?></td>
   </tr>
+  </tbody>
 </table>
-<p>
-<table width="100%" border=".5" cellpadding="0" cellspacing="0" bordercolor="#AAAAAA" id="Exportar_a_Excel" FRAME="border" RULES="none" align="center">
+
+
+<table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
  	<thead>
       <tr> 
-        <td style="color:#000;  font-size:14px" width="40"bgcolor="#CEE3F6" align="center" height="27"><h3><span ><SMALL>Id</SMALL></span></h3></td> 
+        <td>Id</td> 
         
-        <td style="color:#000; font-size:14px" width="60"bgcolor="#CEE3F6" height="27"><h3><span ><SMALL>Factura</SMALL></span></h3></td> 
+        <td>Factura</td> 
         
-        <td style="color:#000; font-size:14px" width="60"bgcolor="#CEE3F6" height="27"><h3><span ><SMALL>RFC Cliente</SMALL></span></h3></td> 
+        <td>RFC Cliente</td> 
          
-        <td style="color:#000; font-size:14px" width="60"bgcolor="#CEE3F6" height="27"><h3><span ><SMALL>Importe</SMALL></span></h3></td> 
+        <td>Importe</td> 
           
-        <td style="color:#000; font-size:14px" width="60"bgcolor="#CEE3F6" height="27"><h3><span ><SMALL>Adelanto</SMALL></span></h3></td> 
+        <td>Adelanto</td> 
           
-        <td style="color:#000; font-size:14px" width="60"bgcolor="#CEE3F6" height="27"><h3><span ><SMALL>Restante</SMALL></span></h3></td> 
+        <td>Restante</td> 
           
-        <td style="color:#000; font-size:14px" width="60"bgcolor="#CEE3F6" height="27"><h3><span ><SMALL>Fecha venta</SMALL></span></h3></td>
+        <td>Fecha venta</td>
 
-        <td style="color:#000; font-size:14px" width="60"bgcolor="#CEE3F6" height="27"><h3><span ><SMALL>Fecha Limite</SMALL></span></h3></td>
+        <td>Fecha Limite</td>
 
-        <td style="color:#000; font-size:14px" width="60"bgcolor="#CEE3F6" height="27"><h3><span ><SMALL>Estatus</SMALL></span></h3></td>
+        <td>Estatus</td>
       </tr>
-  </thead>
+  </thead><tbody>
 
 <?php
 
@@ -100,34 +93,24 @@ if ($dato['estatus'] == 1) {
       $estatus = "Pendiente";
     }
 ?>
-  <tfoot>
+  
 <tr>
-  <td style="color:#000; font-size:14px" align="center" class="fila_<?php echo $i%2; ?>"><span ><SMALL> <?php echo $dato['id']; ?></SMALL></span></td>
-
-  <td style="color:#000;  font-size:14px" class="fila_<?php echo $i%2; ?>"><span ><SMALL><?php echo $dato['id_factura']; ?></SMALL></span></td>
+  <td> <?php echo $dato['id']; ?></td>
+  <td><?php echo $dato['id_factura']; ?></td>
+  <td><?php echo $dato['rfc_cliente']; ?></td>
+  <td>$ <?php echo number_format($dato['total'], 2, ',', ' ') ?></td>
+  <td>$ <?php echo  number_format($dato['adelanto'], 2, ',', ' '); ?></td>
+  <td>$ <?php echo  number_format($dato['resto'], 2, ',', ' '); ?></td>
+  <td><?php echo $dato['fecha_venta']; ?></td>
+  <td><?php echo $dato['fecha_pago']; ?></td>
+  <td><?php echo $estatus; ?></td>
   
-  <td style="color:#000;  font-size:14px" class="fila_<?php echo $i%2; ?>"><span ><SMALL><?php echo $dato['rfc_cliente']; ?></SMALL></span></td>
-  
-
-  <td style="color:#000;  font-size:14px" class="fila_<?php echo $i%2; ?>"><span ><SMALL>$ <?php echo number_format($dato['total'], 2, ',', ' ') ?></SMALL></span></td>
- 
-  <td  style="color:#000;  font-size:14px" class="fila_<?php echo $i%2; ?>"><span ><SMALL>$ <?php echo  number_format($dato['adelanto'], 2, ',', ' '); ?></SMALL></span></td>
-
-  <td  style="color:#000;  font-size:14px" class="fila_<?php echo $i%2; ?>"><span ><SMALL>$ <?php echo  number_format($dato['resto'], 2, ',', ' '); ?></SMALL></span></td>
-  
-  <td style="color:#000;  font-size:14px" class="fila_<?php echo $i%2; ?>"><span ><SMALL><?php echo $dato['fecha_venta']; ?></SMALL></span></td>
-   
-  <td style="color:#000;  font-size:14px" class="fila_<?php echo $i%2; ?>"><span ><SMALL><?php echo $dato['fecha_pago']; ?></SMALL></span></td>
-
-  <td style="color:#000;  font-size:14px" class="fila_<?php echo $i%2; ?>"><span ><SMALL><?php echo $estatus; ?></SMALL></span></td>
+  </tr>
 <?php
 $i ++;
  }
 ?>  
-
+</tbody>
 </table>
-<p>&nbsp;</p>
 
-</body>
-</html>
 

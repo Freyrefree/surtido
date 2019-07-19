@@ -314,23 +314,27 @@ if($categoria==""){
 // Termina sección de cantidad de ventas
 ?>
 
-<table width="100%" border=".5" cellpadding="0" cellspacing="0" bordercolor="#AAAAAA" id="Exportar_a_Excel2" FRAME="border" RULES="none" align="center">
+<table class="table">
+<thead>
   <tr>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">Usuario</td>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">Producto</td>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">Cantidad Ventas</td>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">Cantidad Articulos</td>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">Venta Total</td>
-    <td bgcolor="#FFCC33" style="font-size:16px" align="center">Año Venta</td>
+    <th>Usuario</th>
+    <th>Producto</th>
+    <th>Cantidad Ventas</th>
+    <th>Cantidad Articulos</th>
+    <th>Venta Total</th>
+    <th>Año Venta</th>
   </tr>
-  <tr>
-    <td align="center" style="font-size:16px"><?php echo $tipo_user  ?></td>
-    <td align="center" style="font-size:16px"><?php echo $tipo_producto  ?></td>
-    <td align="center" style="font-size:16px"><?php echo $VentasCantidad ?></td>
-    <td align="center" style="font-size:16px"><?php echo $cantidad_art ?></td>
-    <td align="center" style="font-size:16px" >$ <?php echo number_format($importe1, 2, ',', ' ') ?></td>
-    <td align="center" style="font-size:16px" ><?php echo $year ?></td>
-  </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td><?php echo $tipo_user  ?></td>
+        <td><?php echo $tipo_producto  ?></td>
+        <td><?php echo $VentasCantidad ?></td>
+        <td><?php echo $cantidad_art ?></td>
+        <td>$ <?php echo number_format($importe1, 2, ',', ' ') ?></td>
+        <td><?php echo $year ?></td>
+    </tr>
+</tbody>
 </table>
 
 <script type="text/javascript">

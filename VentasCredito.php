@@ -14,161 +14,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Listado Ventas a Credito</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/docs.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/tbl.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Listado Ventas a Credito</title>
 
-    <link href="js/google-code-prettify/prettify.css" rel="stylesheet">
-  	<script src="js/jquery.js"></script>
-    <script src="js/bootstrap-transition.js"></script>
-    <script src="js/bootstrap-alert.js"></script>
-    <script src="js/bootstrap-modal.js"></script>
-    <script src="js/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap-tab.js"></script>
-    <script src="js/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap-popover.js"></script>
-    <script src="js/bootstrap-button.js"></script>
-    <script src="js/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap-typeahead.js"></script>
-    <script src="js/bootstrap-affix.js"></script>
-    <script src="js/holder/holder.js"></script>
-    <script src="js/google-code-prettify/prettify.js"></script>
-    <script src="js/application.js"></script>
 
-    <!-- Le fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-    <?php if (!empty($_GET['cambio'])) { 
-        ?>
-     <script>
-            $(function() {
-                $('#Cambio').modal('show');
-            })
-     </script>
-     <?php } ?>
-    <script>
-        
-        function mostrar(id){
-          var valores = "codigo="+id;
-          $.ajax({
-                url: "DetalleVenta.php", /* Llamamos a tu archivo */
-                data: valores, /* Ponemos los parametros de ser necesarios */
-                type: "POST",
-                contentType: "application/x-www-form-urlencoded",
-                dataType: "json",  /* Esto es lo que indica que la respuesta será un objeto JSon */
-                success: function(data){
-                    /* Supongamos que #contenido es el tbody de tu tabla */
-                    /* Inicializamos tu tabla */
-                  //data = $.parseJSON(data);
-                  $('#filtro').modal('show');
-                    $("#tablafiltro").html('');
-                    /* Vemos que la respuesta no este vacía y sea una arreglo */
-                    if(data != null && $.isArray(data)){
-                        $("#tablafiltro").append("<tr class='info'><td colspan='4'><center><strong>Productos</strong></center></td><tr>");
-                        $("#tablafiltro").append("<tr><td width='3%'>codigo</td><td width='7%'>Nombre</td><td width='7%'>Cantidad</td><td width='7%'>Precio</td></tr>");
-                        /* Recorremos tu respuesta con each */
-                        $.each(data, function(index, value){
-                            /* Vamos agregando a nuestra tabla las filas necesarias */
-                            //alert(value.nombre);
-                            $("#tablafiltro").append("<tr><td>" + value.id_articulo + "</td><td>" + value.nombre + "</td><td>" + value.cantidad + "</td><td> $ " + value.valor + "</td></tr>");
-                        });
-                    }
-                }
-            });
-        }
-        function aceptar(){
-            $('#Cambio').modal('hide');
-        }
-    </script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="jsV2/jquery-3.1.1.js"></script>
+  <script type="text/javascript" src="jsV2/tether.min.js"></script>
+  <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+  <!-- "DATA TABLE" -->
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+  <!-- ********* -->
+
+  <style>
+
+    body{
+            
+            background: #F7D358;
+    }
+    .titulo{
+
+            background: #e7e7e7;
+            color: #F2F2F2;
+    }
+    .modal-header{
+
+            background: #0275d8;
+            color: #F2F2F2;
+    }
+    .listado-tareas {
+            max-height: calc(50vh - 70px);
+            overflow-y: auto;
+    }
+    .btn{
+            border-radius: 0px;
+    }
+    .finish{
+            text-decoration:line-through;
+    }
+    .dropdown-item{
+            color: #E5E8E8;
+    }
+    .dropdown-item:hover{
+            color:#F4F6F6;
+    }
+    .form-control{
+            margin: 0px;
+    }
+    .black{
+        color: black;
+    }
+    .red{
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+
+  </style>
 
 </head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
+<?php include_once "layout.php"; ?>
+<body>
 
-<table width="100%" border="0" align="center" class="table">
-  <tr class="info">
-    <td><center><strong>Lista de ventas a Crédito/Apartado</center></strong></td>
-  </tr>
-</table>
+<?php if (!empty($_GET['cambio'])) { ?>
+  <script>
+    $(function() {
+      $('#Cambio').modal('show');
+    })
+  </script>
+<?php } ?>
 
-<table width="100%" border="0" class="table">
-  <form method="post" action="" enctype="multipart/form-data" name="formCA" id="formCA">
-      <tr class="info">
-      
-            <td><center><strong>No</strong></center></td>
-            <td><center><strong>Nombre</strong></center></td>
-            <td><center><strong>Correo</strong></center></td>
-            <td><center><strong>Telefono</strong></center></td>
-            <td><center><strong>Tipo Producto</strong></center></td>
-            <td><center><strong>Buscar</strong></center></td>
-      </tr >
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-block titulo"></div>
+					<div class="card-block">
+						<div class="row">
 
-      <tr class="info">
-        <td>      
-          <input  type="text" name="noCA" id="noCA"  placeholder="No">      
-        </td>
-        <td>
-          <input  type="text" name="nombreCA" id="nombreCA"  placeholder="Nombre">
-        </td>
-        <td>
-          <input  type="email" name="correoCA" id="correoCA"  placeholder="Correo">
-        </td>
-        <td>
-          <input  type="text" name="telefonoCA" id="telefonoCA"  placeholder="Telefono">
-        </td>
-        <td>
+							<div class="col-md-12">
+								<br>
 
-          <select name="categoriaCA" id="categoriaCA">
-            <option value="" selected>TODO</option>
-                  <?php 
-                  $can=mysql_query("SELECT id_comision, nombre FROM comision WHERE tipo <> 'RECARGA' AND tipo <> 'FICHA' AND tipo <> 'REPARACION' AND tipo <> 'APARTADO' ");
-                  while($dato=mysql_fetch_array($can)){
-                  ?>
-                    <option value="<?php echo $dato['id_comision']; ?>"><?php echo $dato['nombre']; ?></option>
-              
-                  <?php } ?>
-          </select>
+								<div class="container">
 
-        </td>
-        <td>
-          <input  type="submit" class="btn btn-info" name="submitCA" id="submitCA" value="BUSCAR">
-        </td>
-      </tr>
+									<div class="row">
+										<div class="col-md-12">
+											<p class="black font-weight-bold titulo text-center">LISTA DE VENTAS A CRÉDITO APARTADO</p>
+										</div>
+									</div>
 
-  </form>
-</table>
+                                    <div class="row">
+                                        <div class="col-md-3">                        
+                                            
+                                        </div>
 
+                                        <div class="col-md-3">                        
+                                           
+                                        </div>
 
-<div id = "listadoPrincipal"></div>
+                                        <div class="col-md-2">                        
+
+                                        </div>
+                                    </div>
+                  
+                                    <br>
+
+									<div class="row">
+                    <div class="col-md-12">
+
+                      <div class="row">
+
+                        <div class="col-md-2">
+                          <form method="post" action="" enctype="multipart/form-data" name="formCA" id="formCA">
+                          <input class="form-control" type="text" name="noCA" id="noCA"  placeholder="No">
+                        </div>
+                        <div class="col-md-2">
+                          <input class="form-control" type="text" name="nombreCA" id="nombreCA"  placeholder="Nombre">
+                        </div>
+                        <div class="col-md-2">
+                          <input class="form-control" type="email" name="correoCA" id="correoCA"  placeholder="Correo">
+                        </div>
+                        <div class="col-md-2">
+                          <input class="form-control" type="text" name="telefonoCA" id="telefonoCA"  placeholder="Telefono">
+                        </div>
+                        <div>
+                          <select class="form-control" name="categoriaCA" id="categoriaCA">
+                            <option value="" selected>TODO</option>
+                                <?php 
+                                $can=mysql_query("SELECT id_comision, nombre FROM comision WHERE tipo <> 'RECARGA' AND tipo <> 'FICHA' AND tipo <> 'REPARACION' AND tipo <> 'APARTADO' ");
+                                while($dato=mysql_fetch_array($can)){
+                                ?>
+                                  <option value="<?php echo $dato['id_comision']; ?>"><?php echo $dato['nombre']; ?></option>
+                            
+                                <?php } ?>
+                          </select>
+                        </div>
+                        <div class="col-md-2"><br>
+                          <input  type="submit" class="btn btn-primary" name="submitCA" id="submitCA" value="BUSCAR">
+                          <i id="loading" class="fa fa-circle-o-notch fa-spin fa-2x fa-fw" style="color:#007bff; display:none;"></i>
+
+                        </form>
+                        </div>
+
+                      </div>
+
+                    </div>
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="col-md-12"><br><br>
+                <div id = "listadoPrincipal"></div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+  
+</body>
+</html>
 
 
 <!-- *****************************MODAL PRODUCTOS******************************* -->
 
 
-<div id="modalProductos" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
+
+
+<div id="modalProductos" class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">SISTEMA CREDITO / APARTADO</h4>
+      <div class="modal-header">
+        <h5 class="modal-title" id="">SISTEMA CREDITO / APARTADO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
-        <div id="tablaPoductos"></div>
+      
+      <div id="tablaPoductos"></div>
+     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        
       </div>
     </div>
   </div>
@@ -179,18 +227,25 @@
 <!-- *****************************MODAL PAGOS******************************* -->
 
 
-<div id="modalPagos" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
+
+
+<div id="modalPagos" class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">SISTEMA CREDITO / APARTADO</h4>
+      <div class="modal-header">
+        <h5 class="modal-title" id="">SISTEMA CREDITO / APARTADO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
-        <div id="tablaPagos"></div>
+      
+      <div id="tablaPagos"></div>
+     
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        
       </div>
     </div>
   </div>
@@ -200,33 +255,33 @@
 <!-- ***************************************************************************** -->
 
 <!-- *****************************MODAL ABONO******************************* -->
-<div id="Apertura" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 id="myModalLabel">SISTEMA CREDITO / APARTADO</h4>
-  </div>
-  <div class="modal-body">
+
+
+<div id="Apertura" class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="">SISTEMA CREDITO / APARTADO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
       <p align="center" class="text-info"><strong id="cliente"></strong></p>
-      <p align="center" class="text-info"><strong>Resto a Pagar</strong></p>
-      <!-- <label align="center"><input type="text" readonly="true" id="mont"></label> -->
+      <p align="center" class="text-info"><strong>Resto a Pagar</strong></p>     
       <pre style="font-size:30px; text-align:center" id="mont"><center></center></pre>
-    <!-- <p align="center" class="text-info"><strong>Forma de Pago "Credito"</strong></p> -->
-        <div align="center">
+    
+        
           <form id="formAbono" name="formAbono" method="POST" action="PostAbono.php">
           <p align="center" class="text-info"><strong>Fecha de Pago</strong></p>
-          <input type="date" name="fecha" id="fecha" readonly>
+          <input class="form-control" type="date" name="fecha" id="fecha" readonly>
 
 
-          <label for="">Dinero Recibido</label>
-                <div class="input-prepend input-append">
-                    <span class="add-on">$</span>
-                    <input type="number" name="denominacion"  step="any" id="denominacion" min="0" autocomplete="on" required/>
-                    <span class="add-on">.00</span>
-                </div>
-
-
-
-            <label for="ccpago">Abona a Cuenta</label>
+          <label for="">Dinero Recibido</label>               
+          <input class="form-control" type="number" name="denominacion"  step="any" id="denominacion" min="0" autocomplete="on" required/>
+                   
+              
             <input type="hidden" name="idventa" id="idventa">
             <input type="hidden" name="tpagar" id="tpagar">
 
@@ -235,75 +290,91 @@
             <input type="hidden" name="inputiccid" id="inputiccid">
             <input type="hidden" name="opcion" id="opcion" value="2">
 
-            <div class="input-prepend input-append">
-                <span class="add-on">$</span>
-                <input type="number" name="ccpago" id="ccpago" onkeyup="minInput();" step="any" min="0" autocomplete="on" required />
-                <span class="add-on">.00</span>
-            </div>
-
+            <label for="ccpago">Abona a Cuenta</label>
+            <input class="form-control" type="number" name="ccpago" id="ccpago" onkeyup="minInput();" step="any" min="0" autocomplete="on" required />
+               
             <div id="divICCID"  style="display:none">
               <label for="" class="control">ICCID</label>
-              <input type="text" name="finaliccid" id="finaliccid" placeholder="ICCID"/>
+              <input class="form-control" type="text" name="finaliccid" id="finaliccid" placeholder="ICCID"/>
             </div>
-            
             
             <br>
 
-
-
             <input type="submit" class="btn btn-success" name="button" id="button" value="Cobrar Dinero Recibido" />
           </form>
-        </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        
+      </div>
+    </div>
   </div>
 </div>
 <!-- ***************************************************************************** -->
 
 
 <!-- modal muestra cambio si lo hay -->
-<div id="Cambio" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">CAMBIO DEL PAGO</h3>
-  </div>
-  <div class="modal-body">
+
+
+<div id="Cambio" class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="">CAMBIO DEL PAGO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
       <p align="center" class="text-info"><strong>Cantidad cambio</strong></p>
       <pre style="font-size:30px; text-align:center" id="cambioresto"><center>$ <?php echo $_GET['cambio']; ?></center></pre>
       <input type="submit" onclick="aceptar()" class="btn btn-success" name="button" id="button" value="Aceptar" />
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-  </div>
-</div>
-<!-- -------------------------- modal Filtros ---------------------------------- -->
-<div id="filtro" class="modal hide fade modal-admin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">DETALLE DE VENTA</h3>
-  </div>
-  <div class="modal-body">
-      <div style="width: 100%; height: 250px; overflow-y: scroll;">
-        <table width="80%" border="0" class="table" id="tablafiltro">
-          <tr class="info">
-            <td colspan="4"><center><strong>Productos/Accesorios</strong></center></td>
-          </tr>
-        </table>
+     
       </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        
+      </div>
+    </div>
   </div>
 </div>
-</body>
-</html>
+
+
+
+<!-- -------------------------- modal Filtros ---------------------------------- -->
+
+<div id="filtro" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="">DETALLE DE VENTA</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      
+        <table class="table" id="tablafiltro">
+        </table>
+     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- ******************************************************************************************************************************************** -->
 <script>
 $(document).ready(function() 
-{  
+{
+  $("#loading").show();  
   var data = $('#formCA').serialize()+ "&opcion=" + 1;
     //data.push({name: 'tag', value: 'login'});
     $.ajax({
@@ -313,6 +384,8 @@ $(document).ready(function()
     }).done(function(respuesta){
 
       $("#listadoPrincipal").html(respuesta);
+      tabla();
+      $("#loading").hide(); 
 
         });
 });
@@ -321,6 +394,8 @@ $(document).ready(function()
 <script>
 
 $('#formCA').submit(function(e) {
+  $("#loading").show(); 
+
     e.preventDefault();
     var data = $(this).serialize()+ "&opcion=" + 1;
     //data.push({name: 'tag', value: 'login'});
@@ -331,7 +406,8 @@ $('#formCA').submit(function(e) {
     }).done(function(respuesta){
 
       $("#listadoPrincipal").html(respuesta);
-
+      tabla();
+      $("#loading").hide();
         });
     
 });
@@ -341,7 +417,8 @@ $('#formCA').submit(function(e) {
 
 <script>
 
-function verProdcutos(id){
+function verProdcutos(id)
+{
 
   $("#tablaPoductos").html("");
 
@@ -349,10 +426,11 @@ function verProdcutos(id){
     method: "POST",
     url: "VentasCredito2.php",
     data: { idCA: id, opcion: 2}
-    })
-    .done(function(respuesta){
+
+    }).done(function(respuesta){
 
         $("#tablaPoductos").html(respuesta);
+        tablaB();
         
     });
     $('#modalProductos').modal('show');
@@ -464,3 +542,117 @@ $("#ccpago").removeAttr("max");
 
 }
 </script>
+
+<script>
+        
+        function mostrar(id){
+          var valores = "codigo="+id;
+          $.ajax({
+                url: "DetalleVenta.php", /* Llamamos a tu archivo */
+                data: valores, /* Ponemos los parametros de ser necesarios */
+                type: "POST",
+                contentType: "application/x-www-form-urlencoded",
+                dataType: "json",  /* Esto es lo que indica que la respuesta será un objeto JSon */
+                success: function(data){
+                    /* Supongamos que #contenido es el tbody de tu tabla */
+                    /* Inicializamos tu tabla */
+                  //data = $.parseJSON(data);
+                  $('#filtro').modal('show');
+                    $("#tablafiltro").html('');
+                    /* Vemos que la respuesta no este vacía y sea una arreglo */
+                    if(data != null && $.isArray(data)){
+                        $("#tablafiltro").append("<tr class='info'><td colspan='4'><center><strong>Productos</strong></center></td><tr>");
+                        $("#tablafiltro").append("<tr><td width='3%'>codigo</td><td width='7%'>Nombre</td><td width='7%'>Cantidad</td><td width='7%'>Precio</td></tr>");
+                        /* Recorremos tu respuesta con each */
+                        $.each(data, function(index, value){
+                            /* Vamos agregando a nuestra tabla las filas necesarias */
+                            //alert(value.nombre);
+                            $("#tablafiltro").append("<tr><td>" + value.id_articulo + "</td><td>" + value.nombre + "</td><td>" + value.cantidad + "</td><td> $ " + value.valor + "</td></tr>");
+                        });
+                    }
+                }
+            });
+        }
+        function aceptar(){
+            $('#Cambio').modal('hide');
+        }
+    </script>
+
+<script>
+
+// $(document).ready(function() {
+//   tabla();
+// } );
+
+
+function tabla(){
+
+  $('#exampleA').DataTable({
+                "ordering": true,
+                "language": {
+                    "paginate": {
+                        "previous": "<i class='mdi mdi-chevron-left'>",
+                        "next": "<i class='mdi mdi-chevron-right'>"
+                    }
+                },
+                language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+                },
+               
+            });
+
+}
+
+function tablaB(){
+
+$('#exampleB').DataTable({
+              "ordering": true,
+              "language": {
+                  "paginate": {
+                      "previous": "<i class='mdi mdi-chevron-left'>",
+                      "next": "<i class='mdi mdi-chevron-right'>"
+                  }
+              },
+              language: {
+              "decimal": "",
+              "emptyTable": "No hay información",
+              "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+              "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+              "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+              "infoPostFix": "",
+              "thousands": ",",
+              "lengthMenu": "Mostrar _MENU_ Entradas",
+              "loadingRecords": "Cargando...",
+              "processing": "Procesando...",
+              "search": "Buscar:",
+              "zeroRecords": "Sin resultados encontrados",
+              "paginate": {
+                  "first": "Primero",
+                  "last": "Ultimo",
+                  "next": "Siguiente",
+                  "previous": "Anterior"
+              }
+              },
+             
+          });
+
+}
+       
+ </script>

@@ -24,27 +24,16 @@
  		$hoy=$dias[date('w')]." ".date('d')." de ".$meses[date('n')-1]. " del ".date('Y');
 		/*$fecha=date('Ymd');*/
 		$fech=date('d')."".$meses[date('n')-1]."".date('y');
-		
-		//Salida: Viernes 24 de Febrero del 2012
-$codigoHTML='
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Proveedores</title>
-<style type="text/css">
-<style type="text/css">
-.tabla {
- border: 1px solid #0B198C;
- border-width: 0 0 1px 1px;
-}
 
-.tabla td {
- border: 1px solid #0B198C;
- border-with: 0 0 1px 1px;
-}
-</style>
-</head>
+		?>
+
+		<?php
+
+
+
+
+$codigoHTML='
+
 
 <body>
 <div align="center" class="text">
@@ -113,21 +102,8 @@ $codigoHTML='
 </body>
 </html>';
 	
-		$mpdf->WriteHTML($codigoHTML);  
-    	$mpdf->Output('Listado_Proveedores_'.$fech.'.pdf','D');
-		/*try {
-		    $pdf = new HTML2PDF('P', 'A4', 'es');
-		    $pdf -> WriteHTML($codigoHTML);
-		    $pdf -> output('Listado_Proveedores_'.$fecha.'.pdf','D');
-		  } catch (Exception $e) {
-		    echo $e;
-		  }*/
+		 $mpdf->WriteHTML($codigoHTML);  
+    	 $mpdf->Output('Listado_Proveedores_'.$fech.'.pdf','D');
 
-	    /*$codigoHTML=utf8_decode($codigoHTML);
-	    $dompdf=new DOMPDF();
-	    $dompdf->load_html($codigoHTML);
-	    ini_set("memory_limit","128M");
-	    $dompdf->render();
-	    $dompdf->stream("Listado_Proveedores_".$fecha.".pdf");*/
 
 ?>
